@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="LUMINE">
+<title>LUMINE — Pocket Space</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;background:#000;overflow:hidden}
+body{display:flex;justify-content:center;align-items:center}
+#app{width:100%;height:100%;max-width:430px;position:relative;overflow:hidden;background:#000;font-family:Georgia,serif}
+canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
+
+/* 탐험 화면 */
+#exp-header{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:52px 24px 16px;z-index:5;pointer-events:none}
+#exp-logo{color:rgba(255,255,255,0.65);font-size:11px;letter-spacing:0.28em;font-family:sans-serif}
+#exp-coords{color:rgba(255,255,255,0.22);font-size:9px;letter-spacing:0.12em;font-family:sans-serif}
+#exp-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.22);font-size:10px;letter-spacing:0.18em;font-family:sans-serif;white-space:nowrap;transition:opacity 1.2s;z-index:5;pointer-events:none}
+
+/* 상세 화면 */
+#screen-detail{
+  position:absolute;inset:0;z-index:10;
+  background:#05060f;
+  transform:translateY(100%);
+  transition:transform 0.6s cubic-bezier(0.32,0.72,0,1);
+  overflow-y:auto;-webkit-overflow-scrolling:touch
+}
+#screen-detail.open{transform:translateY(0)}
+#detail-star-wrap{position:relative;width:100%;height:300px;overflow:hidden;flex-shrink:0}
+canvas#dv{width:100%;height:300px;display:block}
+#detail-close{
+  position:absolute;top:52px;left:18px;z-index:20;
+  background:rgba(255,255,255,0.06);
+  border:0.5px solid rgba(255,255,255,0.14);
+  border-radius:50%;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:rgba(255,255,255,0.55);
+  font-size:15px;font-family:sans-serif
+}
+#detail-content{padding:0 24px 60px}
+#detail-name{font-size:44px;color:rgba(255,228,170,0.92);font-weight:400;letter-spacing:0.01em;line-height:1.1;margin-bottom:5px;padding-top:24px}
+#detail-discoverer{font-size:9px;letter-spacing:0.24em;color:rgba(255,255,255,0.28);font-family:sans-serif;margin-bottom:30px}
+#detail-stats{display:grid;grid-template-columns:1fr 1fr;border-top:0.5px solid rgba(255,255,255,0.08);margin-bottom:30px}
+.stat-item{padding:15px 0;border-bottom:0.5px solid rgba(255,255,255,0.08)}
+.stat-item:nth-child(odd){padding-right:18px;border-right:0.5px solid rgba(255,255,255,0.08)}
+.stat-item:nth-child(even){padding-left:18px}
+.stat-val{font-size:24px;color:rgba(255,228,170,0.82);font-weight:400;line-height:1}
+.stat-unit{font-size:11px;color:rgba(255,228,170,0.45);margin-left:3px}
+.stat-label{font-size:8px;letter-spacing:0.18em;color:rgba(255,255,255,0.22);font-family:sans-serif;margin-top:6px;text-transform:uppercase}
+#comments-label{font-size:8px;letter-spacing:0.22em;color:rgba(255,255,255,0.25);font-family:sans-serif;text-transform:uppercase;margin-bottom:14px}
+#detail-quote{font-style:italic;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:22px}
+#detail-desc{font-size:12px;color:rgba(255,255,255,0.32);line-height:1.85;font-family:sans-serif;margin-bottom:32px}
+#comment-box{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px}
+#comment-box textarea{width:100%;background:transparent;border:none;outline:none;color:rgba(255,255,255,0.62);font-size:13px;font-family:Georgia,serif;line-height:1.7;resize:none;height:76px}
+#comment-box textarea::placeholder{color:rgba(255,255,255,0.18)}
+#comment-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+#comment-count{font-size:10px;color:rgba(255,255,255,0.2);font-family:sans-serif;letter-spacing:0.1em}
+#comment-send{background:rgba(255,228,170,0.08);border:0.5px solid rgba(255,228,170,0.18);border-radius:20px;padding:8px 22px;color:rgba(255,228,170,0.65);font-size:10px;letter-spacing:0.14em;font-family:sans-serif;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="cv"></canvas>
+
+  <!-- 탐험 헤더 -->
+  <div id="exp-header">
+    <span id="exp-logo">LUMINE</span>
+    <span id="exp-coords">RA 00.0h · DEC +00.0°</span>
+  </div>
+  <div id="exp-hint">✦ &nbsp; 빛나는 별을 터치하세요</div>
+
+  <!-- 별 상세 화면 -->
+  <div id="screen-detail">
+    <div id="detail-star-wrap">
+      <canvas id="dv"></canvas>
+      <div id="detail-close">←</div>
+    </div>
+    <div id="detail-content">
+      <div id="detail-name">Aurora</div>
+      <div id="detail-discoverer">DISCOVERED BY OLIVIA</div>
+      <div id="detail-stats">
+        <div class="stat-item"><div class="stat-val" id="s0">5,325<span class="stat-unit">K</span></div><div class="stat-label">Surface Temp</div></div>
+        <div class="stat-item"><div class="stat-val" id="s1">490<span class="stat-unit">LY</span></div><div class="stat-label">Distance</div></div>
+        <div class="stat-item"><div class="stat-val" id="s2">−0.3<span class="stat-unit">mag</span></div><div class="stat-label">Magnitude</div></div>
+        <div class="stat-item"><div class="stat-val" id="s3">K2</div><div class="stat-label">Star Type</div></div>
+      </div>
+      <div id="comments-label">Comments</div>
+      <div id="detail-quote"></div>
+      <div id="detail-desc"></div>
+      <div id="comment-box">
+        <textarea id="cta" placeholder="이 별에 대한 감상을 남겨보세요..."></textarea>
+        <div id="comment-footer">
+          <span id="comment-count">✦ 0 감상</span>
+          <button id="comment-send">남기기 ✦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const app=document.getElementById('app');
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const dv=document.getElementById('dv'),dctx=dv.getContext('2d');
+const detail=document.getElementById('screen-detail');
+const closeBtn=document.getElementById('detail-close');
+const coordsEl=document.getElementById('exp-coords');
+const hintEl=document.getElementById('exp-hint');
+const cta=document.getElementById('cta');
+const sendBtn=document.getElementById('comment-send');
+
+const DB=[
+  {name:'Aurora',by:'OLIVIA',temp:'5,325',dist:'490',mag:'−0.3',type:'K2',col:'#f5a030',
+   quote:'"화려함 속 뜨거운 온도.\n마치 불나방 같다."',
+   desc:'Aurora는 K형 거성으로, 새벽과 황혼의 색을 담은 별입니다.\n이 별의 빛이 지구를 향해 출발한 건 490년 전이었습니다.',
+   comments:0},
+  {name:'Veran',by:'새벽_여행자',temp:'8,100',dist:'312',mag:'+1.2',type:'A7',col:'#a0b8ff',
+   quote:'"수천 년 전 출발한 빛이\n지금 당신의 눈에 닿았습니다."',
+   desc:'Veran은 청백색 A형 별입니다.\n그 빛이 지구를 향해 출발했을 때, 인류는 막 문명을 시작하고 있었습니다.',
+   comments:0},
+  {name:'Solune',by:'drifter',temp:'6,050',dist:'98',mag:'−0.1',type:'G2',col:'#fff080',
+   quote:'"우주는 당신에게\n조용히 말을 겁니다.\n귀를 기울여보세요."',
+   desc:'Solune은 우리 태양과 같은 G형 별입니다.\n그 고요한 빛 속에 수십억 년의 이야기가 담겨 있습니다.',
+   comments:0},
+  {name:'Nyx',by:'고요한_자',temp:'3,400',dist:'720',mag:'+2.8',type:'M5',col:'#ff5533',
+   quote:'"침묵은 가장 깊은\n언어입니다."',
+   desc:'Nyx는 작지만 수천억 년을 살아가는 적색왜성입니다.\n어둠 속에서 가장 오래, 가장 조용히 빛납니다.',
+   comments:0},
+  {name:'Kael',by:'unknown',temp:'11,200',dist:'1,400',mag:'+0.5',type:'B3',col:'#c0d8ff',
+   quote:'"광활한 침묵 속에서도\n인간은 서로를 발견합니다."',
+   desc:'Kael은 뜨겁고 거대한 B형 별입니다.\n짧은 생애지만 가장 강렬한 빛을 남깁니다.',
+   comments:0},
+  {name:'Eiru',by:'밤의_항해자',temp:'4,800',dist:'230',mag:'+0.8',type:'K5',col:'#ffaa55',
+   quote:'"이 별을 발견한 건\n우연이 아닐지도 모릅니다."',
+   desc:'Eiru는 따뜻한 오렌지빛의 K형 별입니다.\n이 별을 발견한 당신에게만 전해지는 메시지가 있습니다.',
+   comments:0}
+];
+
+let W,H,stars=[],ox=0,oy=0,dragging=false,sx,sy,lox,loy,moved=false,hintGone=false;
+let currentDB=null;
+
+function resize(){
+  W=cv.width=app.clientWidth||window.innerWidth;
+  H=cv.height=app.clientHeight||window.innerHeight;
+  dv.width=app.clientWidth||window.innerWidth;
+  dv.height=300;
+}
+
+function mkStar(){
+  const special=Math.random()<0.05;
+  return{
+    x:(Math.random()-0.5)*W*10,
+    y:(Math.random()-0.5)*H*10,
+    r:special?Math.random()*1.6+1.0:Math.random()*0.7+0.1,
+    a:special?Math.random()*0.3+0.6:Math.random()*0.22+0.12,
+    tw:Math.random()*Math.PI*2,
+    sp:Math.random()*0.007+0.002,
+    special,
+    dbIdx:special?Math.floor(Math.random()*DB.length):-1
+  };
+}
+
+function init(){resize();stars=Array.from({length:700},mkStar);}
+
+function sp(s){
+  const bx=W*5,by=H*5;
+  return{
+    sx:((s.x+ox%(W*10)+bx)%(W*10))-W*4.5,
+    sy:((s.y+oy%(H*10)+by)%(H*10))-H*4.5
+  };
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#01020c';ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,W*0.85);
+  g.addColorStop(0,'rgba(8,10,30,0.7)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+  const ra=Math.abs((-ox/W)*0.38).toFixed(1);
+  const dec=((oy/H)*0.2).toFixed(1);
+  coordsEl.textContent=`RA ${ra}h · DEC ${Number(dec)>=0?'+':''}${dec}°`;
+
+  stars.forEach(s=>{
+    s.tw+=s.sp;
+    const f=Math.sin(s.tw)*0.18+0.82;
+    const {sx,sy}=sp(s);
+    if(sx<-40||sx>W+40||sy<-40||sy>H+40)return;
+    if(s.special&&s.dbIdx>=0){
+      const db=DB[s.dbIdx];
+      const pulse=Math.sin(s.tw*0.85)*0.5+0.5;
+      const r=parseInt(db.col.slice(1,3),16);
+      const gc=parseInt(db.col.slice(3,5),16);
+      const b=parseInt(db.col.slice(5,7),16);
+      ctx.beginPath();ctx.arc(sx,sy,s.r*10,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${r},${gc},${b},${0.025*pulse})`;ctx.fill();
+      ctx.beginPath();ctx.arc(sx,sy,s.r*4.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${r},${gc},${b},${0.07*pulse})`;ctx.fill();
+      ctx.beginPath();ctx.arc(sx,sy,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${r},${gc},${b},${s.a*f})`;ctx.fill();
+    } else {
+      ctx.beginPath();ctx.arc(sx,sy,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,210,245,${s.a*f})`;ctx.fill();
+    }
+  });
+  requestAnimationFrame(draw);
+}
+
+function drawDetailStar(col){
+  const dw=dv.width,dh=dv.height;
+  dctx.clearRect(0,0,dw,dh);
+  dctx.fillStyle='#05060f';dctx.fillRect(0,0,dw,dh);
+  const cx=dw/2,cy=dh*0.52;
+  const r=parseInt(col.slice(1,3),16);
+  const g=parseInt(col.slice(3,5),16);
+  const b=parseInt(col.slice(5,7),16);
+  for(let i=5;i>0;i--){
+    const gr=dctx.createRadialGradient(cx,cy,0,cx,cy,70*i);
+    gr.addColorStop(0,`rgba(${r},${g},${b},${0.15/i})`);
+    gr.addColorStop(1,'rgba(0,0,0,0)');
+    dctx.fillStyle=gr;dctx.fillRect(0,0,dw,dh);
+  }
+  dctx.beginPath();dctx.arc(cx,cy,24,0,Math.PI*2);
+  dctx.fillStyle=col;dctx.fill();
+  dctx.beginPath();dctx.arc(cx-6,cy-6,9,0,Math.PI*2);
+  dctx.fillStyle=`rgba(255,255,255,0.35)`;dctx.fill();
+  for(let i=0;i<120;i++){
+    const bx=Math.random()*dw,by=Math.random()*dh,br=Math.random()*0.9+0.1;
+    dctx.beginPath();dctx.arc(bx,by,br,0,Math.PI*2);
+    dctx.fillStyle=`rgba(200,212,248,${Math.random()*0.38+0.08})`;dctx.fill();
+  }
+}
+
+function openDetail(s){
+  const db=DB[s.dbIdx];
+  if(!db)return;
+  currentDB=db;
+  document.getElementById('detail-name').textContent=db.name;
+  document.getElementById('detail-discoverer').textContent='DISCOVERED BY '+db.by.toUpperCase();
+  document.getElementById('s0').innerHTML=db.temp+'<span class="stat-unit">K</span>';
+  document.getElementById('s1').innerHTML=db.dist+'<span class="stat-unit">LY</span>';
+  document.getElementById('s2').innerHTML=db.mag+'<span class="stat-unit">mag</span>';
+  document.getElementById('s3').textContent=db.type;
+  document.getElementById('detail-quote').innerHTML='"'+db.quote.replace(/\n/g,'<br>')+'"';
+  document.getElementById('detail-desc').innerHTML=db.desc.replace(/\n/g,'<br>');
+  document.getElementById('comment-count').textContent='✦ '+db.comments+' 감상';
+  cta.value='';
+  drawDetailStar(db.col);
+  detail.classList.add('open');
+  detail.scrollTop=0;
+}
+
+function hitStar(cx,cy){
+  for(let s of stars){
+    if(!s.special||s.dbIdx<0)continue;
+    const {sx,sy}=sp(s);
+    if(sx<-30||sx>W+30||sy<-30||sy>H+30)continue;
+    if(Math.hypot(cx-sx,cy-sy)<Math.max(s.r*8,28))return s;
+  }
+  return null;
+}
+
+function onDown(cx,cy){moved=false;sx=cx;sy=cy;lox=ox;loy=oy;}
+function onMove(cx,cy){
+  if(Math.hypot(cx-sx,cy-sy)>5)moved=true;
+  ox=lox+(cx-sx)*0.6;oy=loy+(cy-sy)*0.6;
+}
+function onUp(cx,cy){
+  if(!moved){
+    const s=hitStar(cx,cy);
+    if(s){
+      if(!hintGone){hintEl.style.opacity='0';hintGone=true;}
+      openDetail(s);
+    }
+  }
+}
+
+app.addEventListener('mousedown',e=>{
+  const r=app.getBoundingClientRect();
+  onDown(e.clientX-r.left,e.clientY-r.top);
+  const mm=e2=>{const r2=app.getBoundingClientRect();onMove(e2.clientX-r2.left,e2.clientY-r2.top)};
+  const mu=e2=>{const r2=app.getBoundingClientRect();onUp(e2.clientX-r2.left,e2.clientY-r2.top);removeEventListener('mousemove',mm);removeEventListener('mouseup',mu)};
+  addEventListener('mousemove',mm);addEventListener('mouseup',mu);
+});
+app.addEventListener('touchstart',e=>{
+  const t=e.touches[0],r=app.getBoundingClientRect();
+  onDown(t.clientX-r.left,t.clientY-r.top);
+},{passive:true});
+app.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  const t=e.touches[0],r=app.getBoundingClientRect();
+  onMove(t.clientX-r.left,t.clientY-r.top);
+},{passive:false});
+app.addEventListener('touchend',e=>{
+  const t=e.changedTouches[0],r=app.getBoundingClientRect();
+  onUp(t.clientX-r.left,t.clientY-r.top);
+});
+
+closeBtn.addEventListener('click',()=>detail.classList.remove('open'));
+
+sendBtn.addEventListener('click',()=>{
+  if(!currentDB||!cta.value.trim())return;
+  currentDB.comments++;
+  document.getElementById('detail-quote').innerHTML='"'+cta.value.replace(/\n/g,'<br>')+'"';
+  document.getElementById('comment-count').textContent='✦ '+currentDB.comments+' 감상';
+  cta.value='';
+  cta.placeholder='감상이 남겨졌습니다 ✦';
+  setTimeout(()=>{cta.placeholder='이 별에 대한 감상을 남겨보세요...';},2500);
+});
+
+window.addEventListener('resize',()=>resize());
+init();draw();
+</script>
+</body>
+</html>
