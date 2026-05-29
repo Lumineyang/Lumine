@@ -30,22 +30,15 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .ldot:nth-child(2){animation-delay:0.25s}.ldot:nth-child(3){animation-delay:0.5s}
 @keyframes ldot-pulse{0%,80%,100%{opacity:0.15;transform:scale(0.8)}40%{opacity:0.9;transform:scale(1.3)}}
 
-/* 온보딩 */
-#screen-onboarding{position:fixed;inset:0;z-index:90;background:#02030e;display:none;flex-direction:column;align-items:center;justify-content:center;padding:0 34px}
-#screen-onboarding.show{display:flex}
-.ob-page{display:none;flex-direction:column;align-items:center;text-align:center;width:100%;animation:ob-fadein 0.6s ease}
-.ob-page.active{display:flex}
-@keyframes ob-fadein{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.ob-icon{font-size:34px;margin-bottom:28px;opacity:0.65}
-.ob-title{font-family:Georgia,serif;font-size:21px;color:rgba(255,255,255,0.88);line-height:1.45;margin-bottom:18px}
-.ob-desc{font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.36);line-height:1.85;letter-spacing:0.02em}
-.ob-desc em{font-family:monospace;font-style:italic;color:rgba(255,200,80,0.48);display:block;margin-top:10px;font-size:11px;line-height:1.8}
-.ob-final-phrase{font-family:Georgia,serif;font-size:15px;color:rgba(255,215,140,0.65);margin-top:22px;letter-spacing:0.06em;font-style:italic;line-height:1.6}
-#ob-dots{display:flex;gap:7px;margin-top:42px}
-.ob-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.14);transition:background 0.35s,transform 0.35s}
-.ob-dot.active{background:rgba(255,255,255,0.72);transform:scale(1.15)}
-#ob-btn{margin-top:30px;padding:13px 44px;border-radius:30px;background:transparent;border:0.5px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.5);font-family:sans-serif;font-size:10px;letter-spacing:0.22em;cursor:pointer}
-#ob-skip{position:absolute;top:54px;right:26px;font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.18);letter-spacing:0.12em;cursor:pointer}
+/* 첫 진입 오버레이 */
+#intro-line{position:fixed;left:50%;transform:translateX(-50%);bottom:22%;z-index:60;font-family:Georgia,serif;font-size:13px;color:rgba(255,255,255,0.55);opacity:0;pointer-events:none;transition:opacity 2s ease;white-space:nowrap}
+#intro-line.show{opacity:1}
+#intro-line.hide{opacity:0;transition:opacity 1.4s ease}
+#whisper-layer{position:fixed;inset:0;pointer-events:none;z-index:55}
+.whisper-text{position:absolute;left:50%;transform:translateX(-50%);bottom:18%;width:90%;font-size:12px;font-family:Georgia,serif;color:rgba(255,255,255,0.5);letter-spacing:0.08em;text-align:center;pointer-events:none;opacity:0;transition:opacity 1.2s ease;line-height:1.6}
+.whisper-text.visible{opacity:1}
+.whisper-text.fade-out{opacity:0;transition:opacity 1s ease}
+.whisper-text.emphasis{color:rgba(255,255,255,0.75);font-style:italic}
 
 /* 탭바 */
 #tab-bar{position:absolute;top:0;left:0;right:0;z-index:11;display:flex;justify-content:center;align-items:center;padding:50px 0 10px;pointer-events:none;opacity:0;transition:opacity 0.6s}
@@ -113,7 +106,8 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 #note-badge{position:absolute;top:2px;right:2px;width:15px;height:15px;background:rgba(255,80,80,0.9);border-radius:50%;font-size:8px;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;font-weight:700;border:1.5px solid #000}
 
 /* 조이스틱 */
-#joystick-wrap{position:absolute;bottom:20px;left:20px;z-index:5;width:110px;height:110px;touch-action:none}
+#joystick-wrap{position:absolute;bottom:20px;left:20px;z-index:5;width:110px;height:110px;touch-action:none;opacity:0;transition:opacity 2s ease}
+#joystick-wrap.visible{opacity:1}
 #joystick-base{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.18);position:relative}
 #joystick-knob{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.16);border:0.5px solid rgba(255,255,255,0.32);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
 
@@ -345,35 +339,10 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
   <div id="loading-dots"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div>
 </div>
 
-<!-- 온보딩 -->
-<div id="screen-onboarding">
-  <span id="ob-skip">건너뛰기</span>
-  <div class="ob-page active" data-page="0">
-    <div class="ob-icon">✦</div>
-    <div class="ob-title">잠깐 멈춰도<br>괜찮아요</div>
-    <div class="ob-desc">빠르게 지나가는 피드가 아니에요.<br>루미네 유니버스는 우주 속<br>감정의 흔적을 발견하는 공간입니다.</div>
-  </div>
-  <div class="ob-page" data-page="1">
-    <div class="ob-icon">🚀</div>
-    <div class="ob-title">조이스틱으로<br>우주를 탐험하세요</div>
-    <div class="ob-desc">화면 왼쪽 아래 조이스틱을 움직이면<br>우주를 자유롭게 이동할 수 있어요.<em>이 우주는 실제입니다.<br>ESA Gaia 프로젝트 천문 데이터 기반</em></div>
-  </div>
-  <div class="ob-page" data-page="2">
-    <div class="ob-icon">⭐</div>
-    <div class="ob-title">빛나는 별을<br>발견해보세요</div>
-    <div class="ob-desc">탐험하다 별을 발견하면 터치해보세요.<br>최초 발견자는 별에 이름을 짓고<br>커스터마이징할 수 있어요.<br><br>누군가 남긴 감상을 읽고<br>당신의 흔적도 남겨보세요.</div>
-  </div>
-  <div class="ob-page" data-page="3">
-    <div class="ob-icon">🌌</div>
-    <div class="ob-title">친구 추천은 없어요</div>
-    <div class="ob-desc">같은 별을 발견한 사람과만 연결될 수 있어요.<br>알고리즘도, 전화번호도 아닌<br>우주 속 우연한 좌표에서 만나는 인연.<div class="ob-final-phrase">같은 별을 바라본 인연.</div></div>
-  </div>
-  <div id="ob-dots"><div class="ob-dot active"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div></div>
-  <button id="ob-btn">다음</button>
-</div>
-
 <div id="app">
   <canvas id="cv"></canvas>
+  <div id="intro-line">당신은 우주에 있습니다.</div>
+  <div id="whisper-layer"></div>
 
   <!-- 탭바 (온보딩 후 표시) -->
   <div id="tab-bar">
@@ -986,11 +955,12 @@ function draw(){
         // 미발견 별: 맥동하는 흰 고리 + 회전 반짝임으로 강하게 구분
         const t=s.tw;
         // 확장하는 두 개의 ripple 고리
+        const ripBoost=(db.id===12||db.id===13)?1.5:1;
         for(let k=0;k<2;k++){
           const phase=((t*0.6)+k*Math.PI)% (Math.PI*2);
           const rip=(phase/(Math.PI*2));
-          const ringR=sr*6+rip*sr*26;
-          const ringA=(1-rip)*0.5;
+          const ringR=sr*6+rip*sr*26*ripBoost;
+          const ringA=(1-rip)*0.5*ripBoost;
           ctx.beginPath();ctx.arc(sx,sy,ringR,0,Math.PI*2);
           ctx.strokeStyle=`rgba(255,250,235,${ringA})`;ctx.lineWidth=1.2;ctx.stroke();
         }
@@ -1242,9 +1212,41 @@ function handleStarTap(s){
   }
 }
 
+let whisperShown = false;
+
+function runWhisperSequence(){
+  if(whisperShown) return;
+  whisperShown = true;
+  const layer = document.getElementById('whisper-layer');
+  const steps = [
+    {text:'누군가는 이 별을 다시 발견하게 됩니다.', emphasis:false},
+    {text:'같은 별을 발견한 사람끼리만 연결됩니다.', emphasis:false},
+    {text:'같은 별을 바라본 인연.', emphasis:true}
+  ];
+  const FADE_IN=1200, HOLD=2500, FADE_OUT=1000, GAP=800;
+  function showStep(idx){
+    const step = steps[idx];
+    const el = document.createElement('div');
+    el.className = 'whisper-text'+(step.emphasis?' emphasis':'');
+    el.textContent = step.text;
+    layer.appendChild(el);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('visible')));
+    setTimeout(()=>{
+      el.classList.remove('visible');
+      el.classList.add('fade-out');
+      setTimeout(()=>{
+        el.remove();
+        if(idx+1<steps.length) setTimeout(()=>showStep(idx+1), GAP);
+      }, FADE_OUT);
+    }, FADE_IN+HOLD);
+  }
+  setTimeout(()=>showStep(0), 500);
+}
+
 document.getElementById('discover-ok').onclick = function(ev){
   if(ev){ ev.stopPropagation(); ev.preventDefault(); }
   document.getElementById('discover-modal').classList.remove('show');
+  runWhisperSequence();
   const s = pendingDiscoverStar;
   if(!s) return;
   const db = DB[s.dbIdx];
@@ -1516,47 +1518,37 @@ document.getElementById('prof-add-btn').addEventListener('click',function(){
 
 // ============================================================
 // ============================================================
-// LOADING & ONBOARDING
+// LOADING & FIRST ENTRY
 // ============================================================
 const loadingScreen = document.getElementById('screen-loading');
-const onboardingScreen = document.getElementById('screen-onboarding');
 const tabBar = document.getElementById('tab-bar');
-const obBtn = document.getElementById('ob-btn');
-const obSkip = document.getElementById('ob-skip');
-const obDots = document.querySelectorAll('.ob-dot');
-const obPages = document.querySelectorAll('.ob-page');
-let obCurrent = 0;
+const introLine = document.getElementById('intro-line');
+const joystickWrap = document.getElementById('joystick-wrap');
 
-function showOnboarding(){
+function showIntroLine(){
+  introLine.classList.add('show');
+  setTimeout(()=>{
+    introLine.classList.remove('show');
+    introLine.classList.add('hide');
+  }, 6000);
+}
+
+function afterLoading(){
   loadingScreen.classList.add('fade-out');
   setTimeout(()=>{
     loadingScreen.style.display='none';
-    onboardingScreen.classList.add('show');
+    startApp();
+    showIntroLine();
+    setTimeout(()=>joystickWrap.classList.add('visible'), 3000);
   },1400);
 }
 
-function goToPage(n){
-  obPages[obCurrent].classList.remove('active');
-  obDots[obCurrent].classList.remove('active');
-  obCurrent=n;
-  obPages[obCurrent].classList.add('active');
-  obDots[obCurrent].classList.add('active');
-  obBtn.textContent = obCurrent===obPages.length-1?'시작하기':'다음';
-}
-
-obBtn.addEventListener('click',()=>{
-  if(obCurrent<obPages.length-1){goToPage(obCurrent+1);}
-  else{startApp();}
-});
-obSkip.addEventListener('click',startApp);
-
 function startApp(){
-  onboardingScreen.classList.remove('show');
   tabBar.classList.add('show');
   document.getElementById('note-icon-btn').classList.add('show');
 }
 
-setTimeout(showOnboarding, 2000);
+setTimeout(afterLoading, 2000);
 
 // ============================================================
 // TAB SWITCHING
