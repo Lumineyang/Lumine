@@ -90,6 +90,8 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .u-nick.official{color:rgba(180,160,255,0.9)}
 .u-time{font-family:sans-serif;font-size:9px;color:rgba(255,255,255,0.3);margin-top:2px}
 .u-text{font-size:13px;color:rgba(255,255,255,0.72);line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.u-media{width:100%;aspect-ratio:4/3;border-radius:12px;margin-top:10px}
+.u-writing-title{font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,0.92);letter-spacing:0.02em;margin-top:2px;margin-bottom:2px}
 .u-ref-tag{display:inline-block;margin-top:8px;font-family:sans-serif;font-size:10px;color:rgba(180,160,255,0.7);background:rgba(180,160,255,0.08);border:0.5px solid rgba(180,160,255,0.2);border-radius:12px;padding:3px 10px;cursor:pointer}
 .u-ref-tag:active{background:rgba(180,160,255,0.15)}
 
@@ -130,6 +132,21 @@ canvas#dv{width:100%;height:260px;display:block}
 #detail-like-count{font-size:11px;color:rgba(255,255,255,0.5);font-family:sans-serif}
 #detail-orb-badge{display:none;font-size:8px;letter-spacing:0.1em;color:rgba(255,200,80,0.75);font-family:sans-serif;background:rgba(255,200,80,0.08);border:0.5px solid rgba(255,200,80,0.25);border-radius:18px;padding:5px 11px}
 #detail-support-btn{display:flex;align-items:center;gap:5px;cursor:pointer;background:rgba(255,200,80,0.06);border:0.5px solid rgba(255,200,80,0.2);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,200,80,0.7);font-family:sans-serif;letter-spacing:0.04em}
+#detail-wiki-btn{display:flex;align-items:center;gap:5px;cursor:pointer;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.14);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,255,255,0.55);font-family:sans-serif;letter-spacing:0.04em}
+
+/* ── 위키 ── */
+#screen-wiki{position:absolute;inset:0;z-index:18;background:#05060f;transform:translateY(100%);transition:transform 0.6s cubic-bezier(0.32,0.72,0,1);overflow-y:auto;-webkit-overflow-scrolling:touch}
+#screen-wiki.open{transform:translateY(0)}
+#wiki-close{position:absolute;top:14px;left:16px;z-index:20;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.55);font-size:14px;font-family:sans-serif}
+#wiki-content{padding:0 22px 80px}
+.wiki-title{font-family:Georgia,serif;font-size:28px;color:rgba(255,228,170,0.92);font-weight:400;line-height:1.2;padding-top:48px;margin-bottom:12px}
+.wiki-infobox{float:right;width:150px;border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px;margin:0 0 12px 14px;font-size:11px;color:rgba(255,255,255,0.55);font-family:sans-serif}
+.wiki-toc{border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 14px;font-size:12px;color:rgba(255,255,255,0.45);font-family:sans-serif;line-height:1.8;margin:14px 0;clear:both}
+.wiki-h{font-family:Georgia,serif;font-size:18px;color:rgba(255,228,170,0.85);margin:22px 0 8px;padding-bottom:5px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
+.wiki-section{font-size:13px;line-height:1.75;color:rgba(255,255,255,0.72);font-family:sans-serif}
+.wiki-section p{margin-bottom:10px}
+.wiki-quote{border-left:2px solid rgba(255,200,80,0.35);padding-left:12px;color:rgba(255,255,255,0.6);font-style:italic;margin:8px 0;font-size:13px;line-height:1.65}
+.wiki-link{color:rgba(255,200,80,0.7);text-decoration:underline;cursor:pointer}
 
 /* 받은 빛 누적 */
 #detail-received{display:none;font-size:10px;color:rgba(255,200,80,0.5);font-family:sans-serif;letter-spacing:0.06em;margin-bottom:14px}
@@ -358,7 +375,7 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
       <div id="u-prof-top">
         <div id="u-prof-av">밤</div>
         <div id="u-prof-right">
-          <div id="u-prof-nick">밤의_항해자</div>
+          <div id="u-prof-nick">*밤항해</div>
           <div id="u-prof-bio">밤마다 항해합니다. K형 별에서 고향 냄새가 나요.</div>
         </div>
       </div>
@@ -403,11 +420,12 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
     <div id="detail-star-wrap"><canvas id="dv"></canvas><div id="detail-close">←</div></div>
     <div id="detail-content">
       <div id="detail-name">Aurora</div>
-      <div id="detail-discoverer">DISCOVERED BY <span id="detail-discoverer-nick">OLIVIA</span></div>
+      <div id="detail-discoverer">DISCOVERED BY <span id="detail-discoverer-nick">*olivia</span></div>
       <div id="detail-action-row">
         <div id="detail-like-btn"><span class="hrt">♡</span><span id="detail-like-count">0</span></div>
         <div id="detail-orb-badge">✦ ORB 후보</div>
         <div id="detail-support-btn">✦ 빛 보내기</div>
+        <div id="detail-wiki-btn" onclick="openWikiByName(document.getElementById('detail-name').textContent)">✦ 이 별의 모든 것</div>
       </div>
       <div id="detail-received"></div>
       <div id="first-discover-banner">
@@ -432,6 +450,12 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- 위키 -->
+  <div id="screen-wiki">
+    <div id="wiki-close" onclick="closeWiki()">←</div>
+    <div id="wiki-content"></div>
   </div>
 
   <!-- 커스텀 모달 -->
@@ -582,181 +606,191 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
 // ============================================================
 // DATA — 별 12개, 프로필, DM
 // ============================================================
+const SPECTRAL = {
+ O:'가장 뜨겁고 푸른 별로, 우주에서 매우 드물며 수백만 년의 짧은 생을 폭발적으로 산다.',
+ B:'청백색으로 빛나는 뜨겁고 밝은 별로, 빠르게 타오르는 만큼 수명이 짧다.',
+ A:'희고 푸른빛이 도는 밝은 별로, 수명은 수십억 년 정도다.',
+ F:'흰빛에 옅은 노랑이 섞인 별로, 태양보다 조금 더 뜨겁다.',
+ G:'노란빛을 띠는 별로 우리 태양과 같은 종류이며, 주변에 생명이 있을 가능성이 자주 거론된다.',
+ K:'주황빛의 차분한 별로, 너무 뜨겁지도 차갑지도 않아 생명체 탐색에서 유망하게 꼽힌다.',
+ M:'붉고 어두운 적색왜성으로, 우주에서 가장 흔하지만 눈에 잘 띄지 않으며 수명이 매우 길다.'
+};
+
 const DB = [
-  {id:0, name:'Aurora', by:'별빛_소나타', temp:'5,325', dist:'42', mag:'4.2', type:'K2V', col:'#f5a030', likes:284, isFirst:false,
+  {id:0, name:'Aurora', by:'*sonata', temp:'5,325', dist:'42', mag:'4.2', type:'K2V', col:'#f5a030', likes:284, isFirst:false,
    superchats:[
-     {nick:'lucid', msg:'이 별 보고 시 한 편 썼어요', amt:'✦ 320', tier:'t1'},
-     {nick:'새벽_여행자', msg:'처음 발견자에게 경의를', amt:'✦ 180', tier:'t2'}
+     {nick:'*lucid', msg:'이 별 보고 시 한 편 썼어요', amt:'✦ 320', tier:'t1'},
+     {nick:'*4am', msg:'처음 발견자에게 경의를', amt:'✦ 180', tier:'t2'}
    ],
    comments:[
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'knowledge', best:true, likes:47,
-      text:'5,325K... 켈빈을 섭씨로 바꾸면 약 5,052도예요. 근데 재밌는 건 이게 우리 태양보다 500도 낮다는 거예요. 즉 이 주황빛은 상대적으로 "차가운" 별의 색깔이라는 거죠.',
-      time:'2일 전', tips:[{nick:'새벽_여행자', amt:'✦ 40'}, {nick:'lucid', amt:'✦ 60'}]},
-     {nick:'lucid', av:'#5a3a8a', ini:'lu', type:'art', best:false, likes:31,
-      text:'이 별 보면서 그렸어요. 주황빛이 너무 따뜻해서 손이 저절로 움직였어요.',
-      time:'3일 전', art:'aurora', tips:[{nick:'밤의_항해자', amt:'✦ 55'}]},
-     {nick:'새벽_여행자', av:'#3a5a8a', ini:'새', type:'feel', best:false, likes:18,
-      text:'이 별과 지구 사이 42광년. 지금 우리가 보는 저 빛은 42년 전에 출발한 거잖아요. 제가 태어나기도 전에 여기를 떠났을 이 빛이... 지금 내 눈에 닿아있다는 게 신기해요.',
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:47,
+      text:'주황색이면 태양보다 온도가 낮은 거랬어요. 뜨거우면 파란색 식으면 빨개진다고. 불꽃이랑 반대라 처음엔 헷갈렸는데ㅋㅋ',
+      time:'2일 전', tips:[{nick:'*4am', amt:'✦ 40'}, {nick:'*lucid', amt:'✦ 60'}]},
+     {nick:'*lucid', av:'#5a3a8a', ini:'lu', type:'art', best:false, likes:31,
+      text:'이 색 보고 그냥 그리고 싶어서 그렸어요. 주황빛이 너무 따뜻해서요.',
+      time:'3일 전', art:'aurora', tips:[{nick:'*밤항해', amt:'✦ 55'}]},
+     {nick:'*4am', av:'#3a5a8a', ini:'4a', type:'feel', best:false, likes:18,
+      text:'42광년이면 지금 보는 빛이 42년 전 거라는 거잖아요. 저보다 나이 많은 빛이네 ㅎㅎ',
       time:'4일 전', tips:[]},
-     {nick:'unknown', av:'#4a4a4a', ini:'?', type:'knowledge', best:false, likes:9,
-      text:'Astrophysical Journal 2023년 논문에서 봤는데, K2형 별 중에 핵이 탄소 압축으로 거대한 다이아몬드 결정인 경우가 있대요. 말 그대로 우주의 보석.',
-      time:'5일 전', tips:[{nick:'고요한_자', amt:'✦ 30'}]}
+     {nick:'*anon', av:'#4a4a4a', ini:'an', type:'knowledge', best:false, likes:9,
+      text:'예전에 어디서 봤는데 이런 별들 중엔 안쪽이 다이아몬드처럼 굳은 것도 있다더라고요. 진짜인지는 모르겠지만 상상하니까 좋네요',
+      time:'5일 전', tips:[{nick:'*jeong', amt:'✦ 30'}]}
    ]},
-  {id:1, name:'Veran', by:'drifter', temp:'8,900', dist:'138', mag:'3.8', type:'A7V', col:'#a0b8ff', likes:156, isFirst:false,
-   superchats:[{nick:'고요한_자', msg:'청백색이 이렇게 차가울 줄이야', amt:'✦ 200', tier:'t2'}],
+  {id:1, name:'Veran', by:'*drift', temp:'8,900', dist:'138', mag:'3.8', type:'A7V', col:'#a0b8ff', likes:156, isFirst:false,
+   superchats:[{nick:'*jeong', msg:'청백색이 이렇게 차가울 줄이야', amt:'✦ 200', tier:'t2'}],
    comments:[
-     {nick:'밤의_항해자', av:'#3a5070', ini:'밤', type:'knowledge', best:true, likes:52,
-      text:'A형 별은 수명이 20억 년 정도예요. 우리 태양의 4분의 1이죠. 근데 그 짧은 생애 동안 태양보다 20배 이상 밝아요. 마치 빨리 타오르는 불꽃 같은 별이에요.',
-      time:'1일 전', tips:[{nick:'새벽_여행자', amt:'✦ 90'}]},
-     {nick:'lucid', av:'#5a3a8a', ini:'lu', type:'art', best:false, likes:23,
-      text:'이 청백색 빛이 너무 좋아서. 차갑고 고독한 느낌.',
+     {nick:'*밤항해', av:'#3a5070', ini:'밤', type:'knowledge', best:true, likes:52,
+      text:'파란 별은 빨리 타고 빨리 죽는다고 들었어요. 밝게 타오르는 만큼 수명이 짧다고. 좀 안쓰럽기도 하고',
+      time:'1일 전', tips:[{nick:'*4am', amt:'✦ 90'}]},
+     {nick:'*lucid', av:'#5a3a8a', ini:'lu', type:'art', best:false, likes:23,
+      text:'이 청백색이 좋아서 담아봤어요. 차갑고 혼자 있는 느낌.',
       time:'2일 전', art:'veran', tips:[]},
-     {nick:'drifter', av:'#2a6a4a', ini:'dr', type:'feel', best:false, likes:15,
-      text:'138광년 거리에서 이 빛이 왔다는 게... 그 길고 먼 여행 끝에 여기 도착한 거잖아요.',
-      time:'3일 전', tips:[{nick:'고요한_자', amt:'✦ 25'}]}
+     {nick:'*drift', av:'#2a6a4a', ini:'dr', type:'feel', best:false, likes:15,
+      text:'138광년은 너무 멀어서 감이 안 와요. 근데 그 먼 데서 여기까지 왔다 생각하면 좀 뭉클',
+      time:'3일 전', tips:[{nick:'*jeong', amt:'✦ 25'}]}
    ]},
-  {id:2, name:'Solune', by:'새벽_여행자', temp:'5,780', dist:'18', mag:'5.1', type:'G2V', col:'#fff080', likes:198, isFirst:false,
+  {id:2, name:'Solune', by:'*4am', temp:'5,780', dist:'18', mag:'5.1', type:'G2V', col:'#fff080', likes:198, isFirst:false,
    superchats:[
-     {nick:'OLIVIA', msg:'태양형 별. 어딘가에 생명이', amt:'✦ 500', tier:'t1'},
-     {nick:'lucid', msg:'가장 친근한 빛', amt:'✦ 120', tier:'t2'}
+     {nick:'*olivia', msg:'태양형 별. 어딘가에 생명이', amt:'✦ 500', tier:'t1'},
+     {nick:'*lucid', msg:'가장 친근한 빛', amt:'✦ 120', tier:'t2'}
    ],
    comments:[
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'knowledge', best:true, likes:63,
-      text:'G2형 별은 생명체 서식 가능 구역을 가질 확률이 가장 높아요. 이 별 주변 0.9~1.4 AU 거리에 암석 행성이 있다면, 지금 이 순간 누군가 우리를 바라보고 있을 수도 있어요.',
-      time:'1일 전', tips:[{nick:'drifter', amt:'✦ 70'}, {nick:'OLIVIA', amt:'✦ 100'}]},
-     {nick:'새벽_여행자', av:'#3a5a8a', ini:'새', type:'art', best:false, likes:34,
-      text:'이 별을 처음 발견했을 때 손이 떨렸어요. 우리 태양과 너무 닮아서.',
-      time:'3일 전', art:'solune', tips:[{nick:'lucid', amt:'✦ 45'}]},
-     {nick:'drifter', av:'#2a6a4a', ini:'dr', type:'feel', best:false, likes:19,
-      text:'G형 별의 수명은 100억 년. 인류 문명 전체가 이 별의 1초 안에 들어가죠.',
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:63,
+      text:'이거 우리 태양이랑 거의 같은 종류라던데요. 이런 별 주변에 지구 같은 행성 있을 확률이 제일 높다고 들었어요. 어딘가 진짜 누가 살 수도ㅎㅎ',
+      time:'1일 전', tips:[{nick:'*drift', amt:'✦ 70'}, {nick:'*olivia', amt:'✦ 100'}]},
+     {nick:'*4am', av:'#3a5a8a', ini:'4a', type:'art', best:false, likes:34,
+      text:'발견했을 때 좀 떨렸어요. 우리 태양이랑 너무 닮아서.',
+      time:'3일 전', art:'solune', tips:[{nick:'*lucid', amt:'✦ 45'}]},
+     {nick:'*drift', av:'#2a6a4a', ini:'dr', type:'feel', best:false, likes:19,
+      text:'이런 별은 수명이 백억 년쯤 된대요. 그에 비하면 사람 한 평생은 진짜 눈 깜짝할 새네요',
       time:'4일 전', tips:[]}
    ]},
-  {id:3, name:'Nyx', by:'고요한_자', temp:'3,200', dist:'89', mag:'7.3', type:'M5V', col:'#ff5533', likes:97, isFirst:false,
+  {id:3, name:'Nyx', by:'*jeong', temp:'3,200', dist:'89', mag:'7.3', type:'M5V', col:'#ff5533', likes:97, isFirst:false,
    superchats:[],
    comments:[
-     {nick:'OLIVIA', av:'#8a3a5a', ini:'OL', type:'knowledge', best:true, likes:44,
-      text:'M형 적색왜성은 전체 별의 70%를 차지해요. 가장 흔하지만 가장 눈에 안 띄는 존재. 어둡고 차갑지만 수명은 수조 년. 우주에서 가장 오래 살아남는 별이에요. Nyx(밤의 여신)라는 이름이 완벽하게 맞아요.',
-      time:'2일 전', tips:[{nick:'고요한_자', amt:'✦ 50'}]},
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'art', best:false, likes:21,
-      text:'이 붉은 빛이 너무 조용해서 좋아요. 거대한 별들 사이에서 묵묵히 타오르는.',
-      time:'4일 전', art:'nyx', tips:[{nick:'새벽_여행자', amt:'✦ 35'}]},
-     {nick:'lucid', av:'#5a3a8a', ini:'lu', type:'feel', best:false, likes:12,
-      text:'3200K. 섭씨로 2927도. 이 온도에서 별이 빛을 낸다는 게 신기해요.',
+     {nick:'*olivia', av:'#8a3a5a', ini:'ol', type:'knowledge', best:true, likes:44,
+      text:'이런 작고 빨간 별이 우주에 제일 많대요. 눈엔 잘 안 띄는데 수명은 엄청 길고. 조용히 오래 사는 별이네요. 이름도 잘 어울려요',
+      time:'2일 전', tips:[{nick:'*jeong', amt:'✦ 50'}]},
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'art', best:false, likes:21,
+      text:'이 붉은 빛이 시끄럽지 않아서 좋아요. 큰 별들 사이에서 조용히 빛나는 느낌.',
+      time:'4일 전', art:'nyx', tips:[{nick:'*4am', amt:'✦ 35'}]},
+     {nick:'*lucid', av:'#5a3a8a', ini:'lu', type:'feel', best:false, likes:12,
+      text:'이렇게 온도가 낮은데도 빛을 낸다는 게 신기해요',
       time:'5일 전', tips:[]}
    ]},
-  {id:4, name:'Kael', by:'밤의_항해자', temp:'22,000', dist:'412', mag:'3.2', type:'B3III', col:'#c0d8ff', likes:231, isFirst:false,
+  {id:4, name:'Kael', by:'*밤항해', temp:'22,000', dist:'412', mag:'3.2', type:'B3III', col:'#c0d8ff', likes:231, isFirst:false,
    superchats:[
-     {nick:'새벽_여행자', msg:'이 빛의 압도감', amt:'✦ 380', tier:'t1'},
-     {nick:'unknown', msg:'B형 별을 직접 보다니', amt:'✦ 150', tier:'t3'}
+     {nick:'*4am', msg:'이 빛의 압도감', amt:'✦ 380', tier:'t1'},
+     {nick:'*anon', msg:'B형 별을 직접 보다니', amt:'✦ 150', tier:'t3'}
    ],
    comments:[
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'knowledge', best:true, likes:78,
-      text:'B형 항성풍은 초속 400~2,000km예요. 5만 톤짜리 철판도 순식간에 증발시켜 버리는 속도죠. 이 별 근처 1AU 이내에 있으면 방사선 때문에 DNA가 0.01초 안에 파괴돼요.',
-      time:'6시간 전', tips:[{nick:'밤의_항해자', amt:'✦ 120'}, {nick:'OLIVIA', amt:'✦ 80'}]},
-     {nick:'밤의_항해자', av:'#3a5070', ini:'밤', type:'art', best:false, likes:41,
-      text:'412광년 거리에서 이 청백색 빛이 왔어요. 실제 밝기는 태양의 20,000배예요.',
-      time:'1일 전', art:'kael', tips:[{nick:'새벽_여행자', amt:'✦ 55'}]},
-     {nick:'unknown', av:'#4a4a4a', ini:'?', type:'feel', best:false, likes:17,
-      text:'B형 별 주변엔 성운이 형성되는 경우가 많아요. 이 별이 내뿜는 자외선이 주변 가스를 이온화시켜서 빛나게 만들거든요.',
-      time:'2일 전', tips:[{nick:'고요한_자', amt:'✦ 40'}]}
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:78,
+      text:'이런 별은 가까이 가면 방사선 때문에 순식간에 타버린다던데요;; 멀리서 보니까 예쁜 거지 실제론 엄청 위험한 별. 무섭고 아름답고',
+      time:'6시간 전', tips:[{nick:'*밤항해', amt:'✦ 120'}, {nick:'*olivia', amt:'✦ 80'}]},
+     {nick:'*밤항해', av:'#3a5070', ini:'밤', type:'art', best:false, likes:41,
+      text:'412광년 밖에서 온 빛이에요. 실제론 태양보다 수만 배 밝다는데 상상이 안 가요.',
+      time:'1일 전', art:'kael', tips:[{nick:'*4am', amt:'✦ 55'}]},
+     {nick:'*anon', av:'#4a4a4a', ini:'an', type:'feel', best:false, likes:17,
+      text:'이런 별 주변엔 색깔 있는 가스 구름 같은 게 생긴다고 들었어요. 별이 뿜는 빛 때문에. 직접 보면 진짜 멋질 듯',
+      time:'2일 전', tips:[{nick:'*jeong', amt:'✦ 40'}]}
    ]},
-  {id:5, name:'Eiru', by:'lucid', temp:'4,100', dist:'67', mag:'5.8', type:'K5V', col:'#ff8c42', likes:143, isFirst:false,
-   superchats:[{nick:'고요한_자', msg:'주황빛이 저녁 노을 같아요', amt:'✦ 240', tier:'t2'}],
+  {id:5, name:'Eiru', by:'*lucid', temp:'4,100', dist:'67', mag:'5.8', type:'K5V', col:'#ff8c42', likes:143, isFirst:false,
+   superchats:[{nick:'*jeong', msg:'주황빛이 저녁 노을 같아요', amt:'✦ 240', tier:'t2'}],
    comments:[
-     {nick:'새벽_여행자', av:'#3a5a8a', ini:'새', type:'knowledge', best:true, likes:55,
-      text:'K형 별은 생명체가 살기엔 너무 뜨겁지도, 너무 차갑지도 않은 완벽한 온도예요. 실제로 천문학자들이 생명체 탐색에서 K형 별을 1순위로 꼽아요.',
-      time:'1일 전', tips:[{nick:'lucid', amt:'✦ 65'}, {nick:'drifter', amt:'✦ 30'}]},
-     {nick:'lucid', av:'#5a3a8a', ini:'lu', type:'art', best:false, likes:28,
-      text:'이 별 발견하고 바로 그렸어요. 저녁빛 같은 따뜻함.',
-      time:'2일 전', art:'eiru', tips:[{nick:'고요한_자', amt:'✦ 80'}]},
-     {nick:'OLIVIA', av:'#8a3a5a', ini:'OL', type:'feel', best:false, likes:14,
-      text:'67광년이면 제가 살아있는 동안 빛 속도로도 못 가는 거리. 근데 저 빛은 이미 여기까지 혼자 왔네요.',
+     {nick:'*4am', av:'#3a5a8a', ini:'4a', type:'knowledge', best:true, likes:55,
+      text:'K형 별이 너무 뜨겁지도 차갑지도 않아서 생명 찾기 좋다고 어디서 봤어요. 태양보단 좀 얌전한 별이래요',
+      time:'1일 전', tips:[{nick:'*lucid', amt:'✦ 65'}, {nick:'*drift', amt:'✦ 30'}]},
+     {nick:'*lucid', av:'#5a3a8a', ini:'lu', type:'art', best:false, likes:28,
+      text:'발견하자마자 그렸어요. 저녁 노을 같은 따뜻함이 있어서.',
+      time:'2일 전', art:'eiru', tips:[{nick:'*jeong', amt:'✦ 80'}]},
+     {nick:'*olivia', av:'#8a3a5a', ini:'ol', type:'feel', best:false, likes:14,
+      text:'67광년이면 평생 가도 못 닿는 거리잖아요. 근데 저 빛은 그 길을 혼자 다 왔네요. 좀 대단해요',
       time:'3일 전', tips:[]}
    ]},
-  {id:6, name:'Cygnis', by:'OLIVIA', temp:'38,000', dist:'1,240', mag:'4.5', type:'O8V', col:'#d0e8ff', likes:315, isFirst:false,
+  {id:6, name:'Cygnis', by:'*olivia', temp:'38,000', dist:'1,240', mag:'4.5', type:'O8V', col:'#d0e8ff', likes:315, isFirst:false,
    superchats:[
-     {nick:'새벽_여행자', msg:'O형 별을 발견하다니', amt:'✦ 600', tier:'t1'},
-     {nick:'lucid', msg:'우주 최상위 포식자', amt:'✦ 280', tier:'t1'},
-     {nick:'고요한_자', msg:'300만 년 후엔 없어질 별', amt:'✦ 160', tier:'t2'}
+     {nick:'*4am', msg:'O형 별을 발견하다니', amt:'✦ 600', tier:'t1'},
+     {nick:'*lucid', msg:'우주 최상위 포식자', amt:'✦ 280', tier:'t1'},
+     {nick:'*jeong', msg:'300만 년 후엔 없어질 별', amt:'✦ 160', tier:'t2'}
    ],
    comments:[
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'knowledge', best:true, likes:102,
-      text:'O8형은 전체 별의 0.00003%예요. 수명은 불과 300만 년. 반딧불이처럼 잠깐 빛나고 사라지는 거죠. 근데 그 짧은 생애 동안 태양 밝기의 백만 배로 타오르면서 주변 성운을 모두 이온화시켜요.',
-      time:'3시간 전', tips:[{nick:'OLIVIA', amt:'✦ 200'}, {nick:'밤의_항해자', amt:'✦ 150'}, {nick:'lucid', amt:'✦ 100'}]},
-     {nick:'OLIVIA', av:'#8a3a5a', ini:'OL', type:'art', best:false, likes:67,
-      text:'1240광년 거리에서 이 빛이 왔어요. 공룡이 살던 시대에 출발한 빛. 지금 이 순간 내 눈에 들어오는 게 신기해서 한참 봤어요.',
-      time:'6시간 전', art:'cygnis', tips:[{nick:'새벽_여행자', amt:'✦ 90'}]},
-     {nick:'밤의_항해자', av:'#3a5070', ini:'밤', type:'knowledge', best:false, likes:38,
-      text:'38,000K. 이 온도면 철 원자가 전자를 26개 전부 잃어요. 아름다움의 극단.',
-      time:'8시간 전', tips:[{nick:'고요한_자', amt:'✦ 60'}]}
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:102,
+      text:'이런 파란 별은 우주에서 진짜 드물대요. 엄청 밝게 타는 대신 수명이 몇백만 년밖에 안 된다고. 별 치고는 거의 한순간 사는 셈이네요',
+      time:'3시간 전', tips:[{nick:'*olivia', amt:'✦ 200'}, {nick:'*밤항해', amt:'✦ 150'}, {nick:'*lucid', amt:'✦ 100'}]},
+     {nick:'*olivia', av:'#8a3a5a', ini:'ol', type:'art', best:false, likes:67,
+      text:'1240광년이면 지금 보는 이 빛이 공룡 살던 때 출발한 거래요. 그 생각하면서 한참 봤어요.',
+      time:'6시간 전', art:'cygnis', tips:[{nick:'*4am', amt:'✦ 90'}]},
+     {nick:'*밤항해', av:'#3a5070', ini:'밤', type:'knowledge', best:false, likes:38,
+      text:'38000도라니 상상도 안 가는 온도네요. 이쯤 되면 그냥 다 녹아버릴 듯ㅋㅋ',
+      time:'8시간 전', tips:[{nick:'*jeong', amt:'✦ 60'}]}
    ]},
-  {id:7, name:'Mira-7', by:'unknown', temp:'2,900', dist:'56', mag:'8.2', type:'M9V', col:'#ff4a2a', likes:74, isFirst:false,
+  {id:7, name:'Mira-7', by:'*anon', temp:'2,900', dist:'56', mag:'8.2', type:'M9V', col:'#ff4a2a', likes:74, isFirst:false,
    superchats:[],
    comments:[
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'knowledge', best:true, likes:33,
-      text:'M9형은 거의 갈색왜성 직전이에요. 별의 최소 질량 한계가 태양의 0.08배인데, M9형 별들은 그 바로 위에서 간신히 핵융합을 유지해요. 불꽃의 마지막 자리.',
-      time:'2일 전', tips:[{nick:'unknown', amt:'✦ 25'}]},
-     {nick:'unknown', av:'#4a4a4a', ini:'?', type:'feel', best:false, likes:16,
-      text:'제가 탐험하다가 발견했는데 너무 붉고 희미해서 처음엔 그냥 지나쳤어요. 근데 뭔가 이끌려서 다시 돌아왔어요.',
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:33,
+      text:'이 별은 거의 별이 될까 말까 한 경계라던데요. 조금만 더 작았으면 빛도 못 냈을 거래요. 간신히 버티는 느낌이라 좀 짠하네요',
+      time:'2일 전', tips:[{nick:'*anon', amt:'✦ 25'}]},
+     {nick:'*anon', av:'#4a4a4a', ini:'an', type:'feel', best:false, likes:16,
+      text:'탐험하다 발견했는데 너무 붉고 희미해서 처음엔 그냥 지나쳤어요. 근데 뭔가 자꾸 생각나서 다시 돌아왔어요',
       time:'3일 전', tips:[]}
    ]},
-  {id:8, name:'Helion', by:'밤의_항해자', temp:'6,650', dist:'28', mag:'4.9', type:'F5V', col:'#fff0a0', likes:187, isFirst:false,
-   superchats:[{nick:'lucid', msg:'황금빛이 너무 아름다워', amt:'✦ 190', tier:'t3'}],
+  {id:8, name:'Helion', by:'*밤항해', temp:'6,650', dist:'28', mag:'4.9', type:'F5V', col:'#fff0a0', likes:187, isFirst:false,
+   superchats:[{nick:'*lucid', msg:'황금빛이 너무 아름다워', amt:'✦ 190', tier:'t3'}],
    comments:[
-     {nick:'새벽_여행자', av:'#3a5a8a', ini:'새', type:'knowledge', best:true, likes:49,
-      text:'F형 별은 태양과 A형 별 사이예요. 수명은 40억 년 정도. 만약 이 별 주변에 행성이 있다면, 아직 생명이 탄생할 시간이 있을 수 있어요.',
-      time:'1일 전', tips:[{nick:'밤의_항해자', amt:'✦ 75'}, {nick:'고요한_자', amt:'✦ 45'}]},
-     {nick:'밤의_항해자', av:'#3a5070', ini:'밤', type:'art', best:false, likes:31,
-      text:'황금빛 별이에요. 황금색 색연필로 마무리했어요.',
-      time:'2일 전', art:'helion', tips:[{nick:'lucid', amt:'✦ 40'}]},
-     {nick:'OLIVIA', av:'#8a3a5a', ini:'OL', type:'feel', best:false, likes:14,
-      text:'28광년 거리면 꽤 가까운 편이에요. 우리 은하 기준으로 이웃 별.',
+     {nick:'*4am', av:'#3a5a8a', ini:'4a', type:'knowledge', best:true, likes:49,
+      text:'F형은 태양보다 좀 더 뜨거운 별이래요. 수명도 꽤 길어서 혹시 주변에 행성 있으면 생명 생길 시간은 있을 것 같다고 하더라고요',
+      time:'1일 전', tips:[{nick:'*밤항해', amt:'✦ 75'}, {nick:'*jeong', amt:'✦ 45'}]},
+     {nick:'*밤항해', av:'#3a5070', ini:'밤', type:'art', best:false, likes:31,
+      text:'황금빛이라 황금색 색연필로 마무리했어요.',
+      time:'2일 전', art:'helion', tips:[{nick:'*lucid', amt:'✦ 40'}]},
+     {nick:'*olivia', av:'#8a3a5a', ini:'ol', type:'feel', best:false, likes:14,
+      text:'28광년이면 별치고는 가까운 편이래요. 우주 동네 이웃 같은 느낌ㅎㅎ',
       time:'3일 전', tips:[]}
    ]},
-  {id:9, name:'Vega-9', by:'lucid', temp:'9,600', dist:'25', mag:'4.0', type:'A0V', col:'#e0eaff', likes:262, isFirst:false,
+  {id:9, name:'Vega-9', by:'*lucid', temp:'9,600', dist:'25', mag:'4.0', type:'A0V', col:'#e0eaff', likes:262, isFirst:false,
    superchats:[
-     {nick:'고요한_자', msg:'직녀성의 사촌', amt:'✦ 340', tier:'t2'},
-     {nick:'drifter', msg:'Carl Sagan의 Contact가 생각났어요', amt:'✦ 220', tier:'t2'}
+     {nick:'*jeong', msg:'직녀성의 사촌', amt:'✦ 340', tier:'t2'},
+     {nick:'*drift', msg:'Carl Sagan의 Contact가 생각났어요', amt:'✦ 220', tier:'t2'}
    ],
    comments:[
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'knowledge', best:true, likes:88,
-      text:'Vega는 Carl Sagan의 소설 Contact에서 외계 신호가 온 별이에요. 실제로 1983년 Vega 주변에 먼지 원반이 발견되면서 행성계 가능성이 알려졌죠. Vega-9는 그 형제별이에요.',
-      time:'4시간 전', tips:[{nick:'lucid', amt:'✦ 120'}, {nick:'drifter', amt:'✦ 90'}]},
-     {nick:'lucid', av:'#5a3a8a', ini:'lu', type:'feel', best:false, likes:45,
-      text:'Vega라는 이름이 아랍어로 독수리가 내려앉다라는 의미래요. 이 빛을 보면서 뭔가 내려앉는 느낌을 받았어요.',
-      time:'1일 전', tips:[{nick:'고요한_자', amt:'✦ 55'}]},
-     {nick:'drifter', av:'#2a6a4a', ini:'dr', type:'feel', best:false, likes:22,
-      text:'25광년. 빛의 속도로 25년. 만약 오늘 Vega-9에서 신호를 보내면 2051년에 지구에 도착해요.',
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:88,
+      text:'베가라는 별이 옛날 영화에서 외계 신호 온 별로 나왔던 걸로 기억해요. 실제로도 주변에 먼지 고리 같은 게 있어서 행성 있을지도 모른다고. 이건 그 옆 별이래요',
+      time:'4시간 전', tips:[{nick:'*lucid', amt:'✦ 120'}, {nick:'*drift', amt:'✦ 90'}]},
+     {nick:'*lucid', av:'#5a3a8a', ini:'lu', type:'feel', best:false, likes:45,
+      text:'베가가 옛날 말로 내려앉는 독수리라는 뜻이래요. 이 빛 보고 있으니까 진짜 뭔가 가만히 내려앉는 기분이 들었어요',
+      time:'1일 전', tips:[{nick:'*jeong', amt:'✦ 55'}]},
+     {nick:'*drift', av:'#2a6a4a', ini:'dr', type:'feel', best:false, likes:22,
+      text:'25광년이면 지금 여기서 신호 보내도 도착하는 데 25년 걸리는 거잖아요. 답장 받으려면 평생 걸리겠네요ㅋㅋ',
       time:'2일 전', tips:[]}
    ]},
   {id:10, name:'Soran', by:'✦ LUMINE', temp:'5,500', dist:'33', mag:'4.7', type:'G5V', col:'#ffd060', likes:419, isFirst:true,
    superchats:[
-     {nick:'새벽_여행자', msg:'루미네의 첫 별', amt:'✦ 1000', tier:'t1'},
-     {nick:'OLIVIA', msg:'이 별이 오브가 되길', amt:'✦ 800', tier:'t1'},
-     {nick:'고요한_자', msg:'우주를 기록하는 것에 대하여', amt:'✦ 400', tier:'t2'}
+     {nick:'*4am', msg:'루미네의 첫 별', amt:'✦ 1000', tier:'t1'},
+     {nick:'*olivia', msg:'이 별이 오브가 되길', amt:'✦ 800', tier:'t1'},
+     {nick:'*jeong', msg:'우주를 기록하는 것에 대하여', amt:'✦ 400', tier:'t2'}
    ],
    comments:[
-     {nick:'밤의_항해자', av:'#3a5070', ini:'밤', type:'knowledge', best:true, likes:124,
-      text:'루미네가 처음 발견한 별이에요. G5형, 33광년 거리. 이 별을 발견하면서 루미네라는 공간이 시작됐죠. 어떤 의미에서 이 별은 우주 기록의 시작점이에요.',
-      time:'3일 전', tips:[{nick:'새벽_여행자', amt:'✦ 200'}, {nick:'OLIVIA', amt:'✦ 150'}, {nick:'lucid', amt:'✦ 80'}]},
+     {nick:'*밤항해', av:'#3a5070', ini:'밤', type:'knowledge', best:true, likes:124,
+      text:'루미네가 제일 처음 발견한 별이래요. G5형, 33광년 거리. 여기서부터 루미네가 시작됐다고 생각하니까 좀 의미 있게 느껴지네요',
+      time:'3일 전', tips:[{nick:'*4am', amt:'✦ 200'}, {nick:'*olivia', amt:'✦ 150'}, {nick:'*lucid', amt:'✦ 80'}]},
      {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', type:'feel', best:false, likes:89,
       text:'루미네 유니버스의 첫 번째 별, Soran. G5형, 33광년 거리. 이 별에서 시작합니다. 지식인과 예술가가 대우받는 우주에서.',
-      time:'7일 전', tips:[{nick:'새벽_여행자', amt:'✦ 500'}]},
-     {nick:'OLIVIA', av:'#8a3a5a', ini:'OL', type:'art', best:false, likes:56,
-      text:'33광년은 제 상상의 한계를 넘어요. 근데 루미네 덕분에 이 별이 내 일상의 일부가 됐어요.',
-      time:'4일 전', art:'soran', tips:[{nick:'고요한_자', amt:'✦ 100'}]}
+      time:'7일 전', tips:[{nick:'*4am', amt:'✦ 500'}]},
+     {nick:'*olivia', av:'#8a3a5a', ini:'ol', type:'art', best:false, likes:56,
+      text:'33광년은 솔직히 상상이 안 되는 거리예요. 근데 루미네 덕분에 이 별이 어쩌다 내 일상 속에 들어와 있네요',
+      time:'4일 전', art:'soran', tips:[{nick:'*jeong', amt:'✦ 100'}]}
    ]},
-  {id:11, name:'Duskara', by:'새벽_여행자', temp:'3,800', dist:'72', mag:'6.4', type:'K8V', col:'#ff7c50', likes:118, isFirst:false,
-   superchats:[{nick:'drifter', msg:'황혼의 별', amt:'✦ 170', tier:'t3'}],
+  {id:11, name:'Duskara', by:'*4am', temp:'3,800', dist:'72', mag:'6.4', type:'K8V', col:'#ff7c50', likes:118, isFirst:false,
+   superchats:[{nick:'*drift', msg:'황혼의 별', amt:'✦ 170', tier:'t3'}],
    comments:[
-     {nick:'고요한_자', av:'#3a5a6a', ini:'고', type:'knowledge', best:true, likes:41,
-      text:'K8형은 M형 직전 단계예요. 이 온도에서 별 표면에 종종 거대한 흑점이 생겨요. 태양 흑점의 수백 배 크기. 그 흑점이 자전하면서 밝기가 변하는 변광성의 원리예요.',
-      time:'1일 전', tips:[{nick:'새벽_여행자', amt:'✦ 60'}, {nick:'lucid', amt:'✦ 35'}]},
-     {nick:'새벽_여행자', av:'#3a5a8a', ini:'새', type:'art', best:false, likes:24,
+     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:41,
+      text:'K8형이면 거의 적색왜성 직전 단계라던데요. 이런 별은 표면에 큰 점 같은 게 생겨서 밝기가 왔다갔다 한다고 들었어요',
+      time:'1일 전', tips:[{nick:'*4am', amt:'✦ 60'}, {nick:'*lucid', amt:'✦ 35'}]},
+     {nick:'*4am', av:'#3a5a8a', ini:'4a', type:'art', best:false, likes:24,
       text:'황혼빛 같아서 Duskara라고 이름 지었어요. 저녁 하늘처럼 붉고 따뜻한 별.',
-      time:'2일 전', art:'duskara', tips:[{nick:'drifter', amt:'✦ 50'}]},
-     {nick:'OLIVIA', av:'#8a3a5a', ini:'OL', type:'feel', best:false, likes:13,
-      text:'72광년 밖에서 온 저녁빛. 오늘 진짜 저녁에 이 별 화면 켜놓고 노을 봤어요.',
+      time:'2일 전', art:'duskara', tips:[{nick:'*drift', amt:'✦ 50'}]},
+     {nick:'*olivia', av:'#8a3a5a', ini:'ol', type:'feel', best:false, likes:13,
+      text:'72광년 밖에서 온 저녁빛이라니. 오늘 진짜 저녁에 이 별 화면 켜놓고 노을 봤어요',
       time:'3일 전', tips:[]}
    ]},
   {id:12, name:'???', by:null, temp:'7,200', dist:'61', mag:'5.5', type:'F8V', col:'#fff4d6', likes:0, isFirst:false, undiscovered:true,
@@ -766,21 +800,21 @@ const DB = [
 ];
 
 const PROFILES = {
-  '별빛_소나타': {nick:'별빛_소나타', bio:'별을 기록하는 사람. 음악가.', av:'#5a4a7a', ini:'별', received:840, posts:12, comments:47, friends:8,
+  '*sonata': {nick:'*sonata', bio:'별을 기록하는 사람. 음악가.', av:'#5a4a7a', ini:'so', received:840, posts:12, comments:47, friends:8,
     grid:['travel','selfie','cafe','star_art','landscape','studio','travel','selfie','art']},
-  '새벽_여행자': {nick:'새벽_여행자', bio:'새벽 4시에 별을 보러 나가는 사람.', av:'#3a5a8a', ini:'새', received:1420, posts:8, comments:31, friends:5,
+  '*4am': {nick:'*4am', bio:'새벽 4시에 별을 보러 나가는 사람.', av:'#3a5a8a', ini:'4a', received:1420, posts:8, comments:31, friends:5,
     grid:['dawn','street','coffee','field','watercolor','mirror','desk','rain','city']},
-  'drifter': {nick:'drifter', bio:'표류 중. 방향 없이 우주를 떠다닙니다.', av:'#2a6a4a', ini:'dr', received:620, posts:6, comments:22, friends:3,
+  '*drift': {nick:'*drift', bio:'표류 중. 방향 없이 우주를 떠다닙니다.', av:'#2a6a4a', ini:'dr', received:620, posts:6, comments:22, friends:3,
     grid:['road','window','selfie_b','train','line_art','plant','back','fog','sketch']},
-  '고요한_자': {nick:'고요한_자', bio:'M형 적색왜성 연구 중. 침묵 속에 답이 있다고 믿어요.', av:'#3a5a6a', ini:'고', received:1840, posts:15, comments:58, friends:11,
+  '*jeong': {nick:'*jeong', bio:'M형 적색왜성 연구 중. 침묵 속에 답이 있다고 믿어요.', av:'#3a5a6a', ini:'je', received:1840, posts:15, comments:58, friends:11,
     grid:['library','temple','glasses','ink','tea','alley','cafe_s','journal','diagram']},
-  'lucid': {nick:'lucid', bio:'꿈처럼 선명한 우주. 보라빛 별을 찾고 있어요.', av:'#5a3a8a', ini:'lu', received:1120, posts:9, comments:35, friends:6,
+  '*lucid': {nick:'*lucid', bio:'꿈처럼 선명한 우주. 보라빛 별을 찾고 있어요.', av:'#5a3a8a', ini:'lu', received:1120, posts:9, comments:35, friends:6,
     grid:['light','dream','river','coffee_s','studio_s','palette','sunset','canvas','abstract']},
-  '밤의_항해자': {nick:'밤의_항해자', bio:'밤마다 항해합니다. K형 별에서 고향 냄새가 나요.', av:'#3a5070', ini:'밤', received:1560, posts:11, comments:40, friends:7,
+  '*밤항해': {nick:'*밤항해', bio:'밤마다 항해합니다. K형 별에서 고향 냄새가 나요.', av:'#3a5070', ini:'밤', received:1560, posts:11, comments:40, friends:7,
     grid:['night_sea','rooftop','compass','ocean','map_art','dark_s','telescope','cloud','wave']},
-  'unknown': {nick:'unknown', bio:'이름을 밝히지 않는 탐사자.', av:'#4a4a4a', ini:'?', received:280, posts:3, comments:12, friends:0,
+  '*anon': {nick:'*anon', bio:'이름을 밝히지 않는 탐사자.', av:'#4a4a4a', ini:'an', received:280, posts:3, comments:12, friends:0,
     grid:['fog','fog','fog','fog','fog','fog','fog','fog','fog']},
-  'OLIVIA': {nick:'OLIVIA', bio:'예술가. 우주를 그린다.', av:'#8a3a5a', ini:'OL', received:2100, posts:18, comments:47, friends:9,
+  '*olivia': {nick:'*olivia', bio:'예술가. 우주를 그린다.', av:'#8a3a5a', ini:'ol', received:2100, posts:18, comments:47, friends:9,
     grid:['galaxy','studio_s','museum','palette','canvas','city','abstract','art_s','paint']},
   '✦ LUMINE': {nick:'LUMINE', bio:'루미네 유니버스 공식 계정.\nAGI 이후, 감정과 발견이 가장 희소한 자원이 되는 세계.', av:'#3a3a6a', ini:'✦', received:0, posts:0, comments:0, friends:0,
     grid:['logo','orb','gaia','star_g','star_g','post','post','map','glow'], isOfficial:true}
@@ -793,23 +827,23 @@ const DM_DATA = [
      {from:'✦ LUMINE', text:'이번 시즌 오브 선정 기준이 확정됐습니다. 가장 많은 빛(후원)을 받은 별이 실물 크리스탈 오브로 제작됩니다. 발견자와 베스트 감상자에게 전 세계 판매 수익의 일부가 배분됩니다.', time:'2일 전', official:true},
      {from:'✦ LUMINE', text:'현재 오브 후보 TOP 3\n\n1위 · Soran ✦ 419 좋아요\n2위 · Cygnis ✦ 315 좋아요\n3위 · Kael ✦ 231 좋아요\n\n다음 공지까지 탐험을 계속해주세요 ✦', time:'1일 전', official:true}
    ]},
-  {nick:'새벽_여행자', av:'#3a5a8a', ini:'새', unread:1, preview:'Solune 발견 축하해요!', isOfficial:false,
+  {nick:'*4am', av:'#3a5a8a', ini:'4a', unread:1, preview:'Solune 발견 축하해요!', isOfficial:false,
    msgs:[
-     {from:'새벽_여행자', text:'Solune 발견했어요! G2형이에요, 우리 태양이랑 거의 같은 타입.', time:'3일 전', official:false},
+     {from:'*4am', text:'Solune 발견했어요! G2형이에요, 우리 태양이랑 거의 같은 타입.', time:'3일 전', official:false},
      {from:'나', text:'와 진짜요? 생명체 있을 수도 있겠다', time:'3일 전', official:false},
-     {from:'새벽_여행자', text:'고요한_자님이 그 별 주변에 누군가 우리 보고 있을 수도 라고 댓글 달았어요. 그 생각이 머릿속에서 안 떠나요.', time:'2일 전', official:false}
+     {from:'*4am', text:'*jeong님이 그 별 주변에 누군가 우리 보고 있을 수도 라고 댓글 달았어요. 그 생각이 머릿속에서 안 떠나요.', time:'2일 전', official:false}
    ]},
-  {nick:'lucid', av:'#5a3a8a', ini:'lu', unread:0, preview:'Eiru 그림 완성됐어요', isOfficial:false,
+  {nick:'*lucid', av:'#5a3a8a', ini:'lu', unread:0, preview:'Eiru 그림 완성됐어요', isOfficial:false,
    msgs:[
-     {from:'lucid', text:'Eiru 그림 완성됐어요. 댓글에 올렸어요.', time:'4일 전', official:false},
+     {from:'*lucid', text:'Eiru 그림 완성됐어요. 댓글에 올렸어요.', time:'4일 전', official:false},
      {from:'나', text:'봤어요, 너무 아름다워요', time:'4일 전', official:false},
-     {from:'lucid', text:'고마워요. 별 보면서 그리는 게 이제 일상이 됐어요.', time:'4일 전', official:false}
+     {from:'*lucid', text:'고마워요. 별 보면서 그리는 게 이제 일상이 됐어요.', time:'4일 전', official:false}
    ]},
-  {nick:'고요한_자', av:'#3a5a6a', ini:'고', unread:1, preview:'다이아몬드 핵 논문 찾았어요', isOfficial:false,
+  {nick:'*jeong', av:'#3a5a6a', ini:'je', unread:1, preview:'다이아몬드 핵 논문 찾았어요', isOfficial:false,
    msgs:[
-     {from:'고요한_자', text:'Aurora 댓글에 달았는데, 다이아몬드 핵 논문 찾았어요. Astrophysical Journal 2023.', time:'5일 전', official:false},
+     {from:'*jeong', text:'Aurora 댓글에 달았는데, 다이아몬드 핵 논문 찾았어요. Astrophysical Journal 2023.', time:'5일 전', official:false},
      {from:'나', text:'진짜요?? 읽고 싶어요', time:'5일 전', official:false},
-     {from:'고요한_자', text:'doi.org/10.3847/1538-4357 이쪽으로 찾아보세요.', time:'5일 전', official:false}
+     {from:'*jeong', text:'doi.org/10.3847/1538-4357 이쪽으로 찾아보세요.', time:'5일 전', official:false}
    ]}
 ];
 
@@ -817,23 +851,31 @@ const DM_DATA = [
 // UNIVERSE FEED DATA
 // ============================================================
 const UNIVERSE_POSTS = [
-  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'방금', isOfficial:true,
+  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'방금', isOfficial:true, type:'text',
    text:'✦ 루미네 오브 시즌 1 공지\n\n이번 분기 가장 많은 빛을 받은 별, Soran (발견자: ✦ LUMINE)이 오브 최유력 후보입니다.\n\n오브는 실물 크리스탈 무드등으로, 발견자 이름이 각인됩니다.',
    ref:'Soran'},
-  {nick:'고요한_자', av:'#3a5a6a', ini:'고', time:'2시간 전', isOfficial:false,
+  {nick:'*jeong', av:'#3a5a6a', ini:'je', time:'2시간 전', isOfficial:false, type:'text',
    text:'Kael을 한참 봤어요. 22,000K인 별이 4등성으로 보인다는 게, 거리가 공평하게 밝기를 나눠주는 것 같아서.', ref:'Kael'},
-  {nick:'새벽_여행자', av:'#3a5a8a', ini:'새', time:'5시간 전', isOfficial:false,
+  {nick:'*4am', av:'#3a5a8a', ini:'4a', time:'5시간 전', isOfficial:false, type:'text',
    text:'Duskara 보면서 저녁 먹었어요. 황혼빛 같은 별.', ref:'Duskara'},
-  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'1일 전', isOfficial:true,
+  {nick:'*lucid', av:'#5a3a8a', ini:'lu', time:'6시간 전', isOfficial:false, type:'art', ref:'Eiru', media:['#3a2418','#ff8c42'],
+   text:'Eiru를 그렸어요. 저녁빛이 자꾸 탁해져서 세 번 다시 칠했네요.'},
+  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'1일 전', isOfficial:true, type:'text',
    text:'이번 주 탐험 현황 ✦\n\n새로 발견된 별: 3개\n총 감상 기록: 147개\n총 후원 빛: ✦ 8,420\n\nAGI가 못 쓰는 글, 감사해요.',
    ref:null},
-  {nick:'lucid', av:'#5a3a8a', ini:'lu', time:'2일 전', isOfficial:false,
-   text:'Vega-9 발견하고 처음엔 별 감흥이 없었는데, 고요한_자님 댓글 읽고 나서 완전 달라졌어요.', ref:'Vega-9'},
-  {nick:'OLIVIA', av:'#8a3a5a', ini:'OL', time:'3일 전', isOfficial:false,
+  {nick:'*4am', av:'#3a5a8a', ini:'4a', time:'1일 전', isOfficial:false, type:'photo', ref:null, media:['#0a0e1a','#2a3550'],
+   text:'새벽에 옥상 올라갔어요. 별은 거의 안 보였는데 공기가 좋아서 한참 있었어요.'},
+  {nick:'*sonata', av:'#5a4a7a', ini:'so', time:'2일 전', isOfficial:false, type:'writing', ref:null, title:'빛의 나이',
+   text:'오늘 본 별빛은 내가 태어나기 전에 출발한 것이다. 어떤 빛은 부고처럼 도착한다. 우리가 보는 건 이미 사라졌을지 모를 별의, 살아있던 시절이다.'},
+  {nick:'*lucid', av:'#5a3a8a', ini:'lu', time:'2일 전', isOfficial:false, type:'text',
+   text:'Vega-9 발견하고 처음엔 별 감흥이 없었는데, *jeong님 댓글 읽고 나서 완전 달라졌어요.', ref:'Vega-9'},
+  {nick:'*olivia', av:'#8a3a5a', ini:'ol', time:'3일 전', isOfficial:false, type:'photo', ref:'Cygnis', media:['#0e1828','#3a5a8a'],
+   text:'작업실 구석. 요즘 Cygnis 색을 내보고 싶어서 파란색만 쓰고 있어요.'},
+  {nick:'*olivia', av:'#8a3a5a', ini:'ol', time:'3일 전', isOfficial:false, type:'text',
    text:'Cygnis를 발견했을 때 손이 떨렸어요. O형 별이라고.', ref:'Cygnis'},
-  {nick:'밤의_항해자', av:'#3a5070', ini:'밤', time:'4일 전', isOfficial:false,
+  {nick:'*밤항해', av:'#3a5070', ini:'밤', time:'4일 전', isOfficial:false, type:'text',
    text:'Helion을 발견하고 나서 황금색 색연필을 새로 샀어요.', ref:'Helion'},
-  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'5일 전', isOfficial:true,
+  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'5일 전', isOfficial:true, type:'text',
    text:'루미네 유니버스에 오신 것을 환영합니다 ✦\n\n이곳은 ESA Gaia 천문 데이터 기반 우주 탐험 공간입니다.\n같은 별을 발견한 사람끼리만 만납니다.',
    ref:null}
 ];
@@ -1104,16 +1146,16 @@ setTimeout(drawCsPreview, 0);
 // ============================================================
 function makeArtSVG(type, W, H){
   const arts={
-    aurora:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0d0408"/><ellipse cx="${W*.5}" cy="${H*.48}" rx="${W*.35}" ry="${H*.35}" fill="#f5a030" opacity=".15"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.16}" fill="#f5a030" opacity=".65"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.07}" fill="#ffe0c0"/><text x="${W*.08}" y="${H*.92}" fill="#c9906050" font-size="8" font-family="Georgia" font-style="italic">Aurora — lucid</text></svg>`,
-    veran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#05080f"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#a0b8ff" opacity=".18"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#a0b8ff" opacity=".65"/><line x1="${W*.5}" y1="0" x2="${W*.5}" y2="${H}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><line x1="0" y1="${H*.44}" x2="${W}" y2="${H*.44}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><text x="${W*.08}" y="${H*.92}" fill="#a0b8e050" font-size="8" font-family="Georgia" font-style="italic">Veran — lucid</text></svg>`,
-    solune:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8ef"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffe08040" stroke="#c8a030" stroke-width=".6"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffe080" opacity=".8"/><text x="${W*.1}" y="${H*.87}" fill="#9a8030" font-size="8" font-family="Georgia" font-style="italic">Solune, 18ly</text><text x="${W*.1}" y="${H*.96}" fill="#b09040" font-size="7" font-family="sans-serif">새벽_여행자</text></svg>`,
-    nyx:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#f9f7f4"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#30080820" stroke="#1a0808" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.07}" fill="#ff5533" opacity=".6"/>${Array.from({length:10},(_,i)=>`<line x1="${W*.5}" y1="${H*.44}" x2="${W*.5+Math.cos(i*36*Math.PI/180)*W*.28}" y2="${H*.44+Math.sin(i*36*Math.PI/180)*H*.28}" stroke="#1a080840" stroke-width=".4"/>`).join('')}<text x="${W*.1}" y="${H*.9}" fill="#3a1808" font-size="8" font-family="Georgia" font-style="italic">Nyx — 고요한_자</text></svg>`,
-    kael:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#020510"/>${Array.from({length:18},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*97)%H}" r="${.4+i%3*.4}" fill="white" opacity="${.15+i%4*.12}"/>`).join('')}<circle cx="${W*.5}" cy="${H*.45}" r="${W*.26}" fill="#b0c8ff" opacity=".12"/><circle cx="${W*.5}" cy="${H*.45}" r="${W*.12}" fill="#d0e0ff" opacity=".65"/><text x="${W*.08}" y="${H*.92}" fill="#8090c060" font-size="8" font-family="Georgia">Kael — 밤의_항해자</text></svg>`,
-    eiru:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8c42"/><stop offset="60%" stop-color="#c04010"/><stop offset="100%" stop-color="#0a0200"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#eg)"/><circle cx="${W*.5}" cy="${H*.36}" r="${W*.2}" fill="#ffe080" opacity=".85"/><rect x="0" y="${H*.72}" width="${W}" height="${H*.28}" fill="#0a0200" opacity=".7"/><text x="${W*.08}" y="${H*.93}" fill="#ff8c4260" font-size="8" font-family="Georgia">Eiru — lucid</text></svg>`,
-    cygnis:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#000816"/>${Array.from({length:20},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*97)%H}" r="${.3+i%3*.5}" fill="white" opacity="${.1+i%5*.12}"/>`).join('')}<circle cx="${W*.5}" cy="${H*.45}" r="${W*.28}" fill="#d0e8ff" opacity=".12"/><circle cx="${W*.5}" cy="${H*.45}" r="${W*.12}" fill="#e0efff" opacity=".8"/><text x="${W*.06}" y="${H*.93}" fill="#7090c060" font-size="8" font-family="Georgia">Cygnis — OLIVIA</text></svg>`,
-    helion:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#fafaf6"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.2}" fill="none" stroke="#c8a030" stroke-width="1.2"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#fff0a0"/>${Array.from({length:8},(_,i)=>`<line x1="${W*.5+Math.cos(i*45*Math.PI/180)*W*.22}" y1="${H*.44+Math.sin(i*45*Math.PI/180)*H*.22}" x2="${W*.5+Math.cos(i*45*Math.PI/180)*W*.32}" y2="${H*.44+Math.sin(i*45*Math.PI/180)*H*.32}" stroke="#c8a030" stroke-width=".7" opacity=".4"/>`).join('')}<text x="${W*.08}" y="${H*.89}" fill="#806020" font-size="8" font-family="Georgia" font-style="italic">Helion</text><text x="${W*.08}" y="${H*.97}" fill="#a08030" font-size="7" font-family="sans-serif">밤의_항해자</text></svg>`,
-    soran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8f0"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffd06040" stroke="#c9a030" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffd060" opacity=".8"/><text x="${W*.1}" y="${H*.82}" fill="#9a8030" font-size="9" font-family="Georgia" font-style="italic">Soran · 빛을 걷다</text><text x="${W*.12}" y="${H*.93}" fill="#b09040" font-size="7" font-family="sans-serif">OLIVIA</text></svg>`,
-    duskara:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff7c50"/><stop offset="55%" stop-color="#c03010"/><stop offset="100%" stop-color="#0a0200"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#dg)"/><circle cx="${W*.5}" cy="${H*.34}" r="${W*.16}" fill="#ff9060" opacity=".88"/><text x="${W*.08}" y="${H*.93}" fill="#ff7c5060" font-size="8" font-family="Georgia">Duskara — 새벽_여행자</text></svg>`
+    aurora:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0d0408"/><ellipse cx="${W*.5}" cy="${H*.48}" rx="${W*.35}" ry="${H*.35}" fill="#f5a030" opacity=".15"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.16}" fill="#f5a030" opacity=".65"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.07}" fill="#ffe0c0"/><text x="${W*.08}" y="${H*.92}" fill="#c9906050" font-size="8" font-family="Georgia" font-style="italic">Aurora — *lucid</text></svg>`,
+    veran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#05080f"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#a0b8ff" opacity=".18"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#a0b8ff" opacity=".65"/><line x1="${W*.5}" y1="0" x2="${W*.5}" y2="${H}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><line x1="0" y1="${H*.44}" x2="${W}" y2="${H*.44}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><text x="${W*.08}" y="${H*.92}" fill="#a0b8e050" font-size="8" font-family="Georgia" font-style="italic">Veran — *lucid</text></svg>`,
+    solune:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8ef"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffe08040" stroke="#c8a030" stroke-width=".6"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffe080" opacity=".8"/><text x="${W*.1}" y="${H*.87}" fill="#9a8030" font-size="8" font-family="Georgia" font-style="italic">Solune, 18ly</text><text x="${W*.1}" y="${H*.96}" fill="#b09040" font-size="7" font-family="sans-serif">*4am</text></svg>`,
+    nyx:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#f9f7f4"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#30080820" stroke="#1a0808" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.07}" fill="#ff5533" opacity=".6"/>${Array.from({length:10},(_,i)=>`<line x1="${W*.5}" y1="${H*.44}" x2="${W*.5+Math.cos(i*36*Math.PI/180)*W*.28}" y2="${H*.44+Math.sin(i*36*Math.PI/180)*H*.28}" stroke="#1a080840" stroke-width=".4"/>`).join('')}<text x="${W*.1}" y="${H*.9}" fill="#3a1808" font-size="8" font-family="Georgia" font-style="italic">Nyx — *jeong</text></svg>`,
+    kael:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#020510"/>${Array.from({length:18},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*97)%H}" r="${.4+i%3*.4}" fill="white" opacity="${.15+i%4*.12}"/>`).join('')}<circle cx="${W*.5}" cy="${H*.45}" r="${W*.26}" fill="#b0c8ff" opacity=".12"/><circle cx="${W*.5}" cy="${H*.45}" r="${W*.12}" fill="#d0e0ff" opacity=".65"/><text x="${W*.08}" y="${H*.92}" fill="#8090c060" font-size="8" font-family="Georgia">Kael — *밤항해</text></svg>`,
+    eiru:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8c42"/><stop offset="60%" stop-color="#c04010"/><stop offset="100%" stop-color="#0a0200"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#eg)"/><circle cx="${W*.5}" cy="${H*.36}" r="${W*.2}" fill="#ffe080" opacity=".85"/><rect x="0" y="${H*.72}" width="${W}" height="${H*.28}" fill="#0a0200" opacity=".7"/><text x="${W*.08}" y="${H*.93}" fill="#ff8c4260" font-size="8" font-family="Georgia">Eiru — *lucid</text></svg>`,
+    cygnis:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#000816"/>${Array.from({length:20},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*97)%H}" r="${.3+i%3*.5}" fill="white" opacity="${.1+i%5*.12}"/>`).join('')}<circle cx="${W*.5}" cy="${H*.45}" r="${W*.28}" fill="#d0e8ff" opacity=".12"/><circle cx="${W*.5}" cy="${H*.45}" r="${W*.12}" fill="#e0efff" opacity=".8"/><text x="${W*.06}" y="${H*.93}" fill="#7090c060" font-size="8" font-family="Georgia">Cygnis — *olivia</text></svg>`,
+    helion:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#fafaf6"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.2}" fill="none" stroke="#c8a030" stroke-width="1.2"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#fff0a0"/>${Array.from({length:8},(_,i)=>`<line x1="${W*.5+Math.cos(i*45*Math.PI/180)*W*.22}" y1="${H*.44+Math.sin(i*45*Math.PI/180)*H*.22}" x2="${W*.5+Math.cos(i*45*Math.PI/180)*W*.32}" y2="${H*.44+Math.sin(i*45*Math.PI/180)*H*.32}" stroke="#c8a030" stroke-width=".7" opacity=".4"/>`).join('')}<text x="${W*.08}" y="${H*.89}" fill="#806020" font-size="8" font-family="Georgia" font-style="italic">Helion</text><text x="${W*.08}" y="${H*.97}" fill="#a08030" font-size="7" font-family="sans-serif">*밤항해</text></svg>`,
+    soran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8f0"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffd06040" stroke="#c9a030" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffd060" opacity=".8"/><text x="${W*.1}" y="${H*.82}" fill="#9a8030" font-size="9" font-family="Georgia" font-style="italic">Soran · 빛을 걷다</text><text x="${W*.12}" y="${H*.93}" fill="#b09040" font-size="7" font-family="sans-serif">*olivia</text></svg>`,
+    duskara:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff7c50"/><stop offset="55%" stop-color="#c03010"/><stop offset="100%" stop-color="#0a0200"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#dg)"/><circle cx="${W*.5}" cy="${H*.34}" r="${W*.16}" fill="#ff9060" opacity=".88"/><text x="${W*.08}" y="${H*.93}" fill="#ff7c5060" font-size="8" font-family="Georgia">Duskara — *4am</text></svg>`
   };
   return arts[type]||`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0a0c1a"/></svg>`;
 }
@@ -1195,7 +1237,7 @@ function makeGridSVG(type, W, H){
 // ============================================================
 // STAR TAP — 미발견 별이면 발견 모달, 아니면 바로 상세
 // ============================================================
-const MY_NICK = '밤의_항해자';
+const MY_NICK = '*밤항해';
 let pendingDiscoverStar = null;
 
 function handleStarTap(s){
@@ -1371,6 +1413,50 @@ function toggleCommentLike(dbId,idx,el){
 
 document.getElementById('detail-close').onclick=()=>document.getElementById('screen-detail').classList.remove('open');
 
+function closeWiki(){
+  const w = document.getElementById('screen-wiki');
+  w.classList.remove('open');
+  w.scrollTop = 0;
+}
+
+function openWikiByName(name){
+  const s = DB.find(function(d){ return d.name === name; });
+  if(!s) return;
+  const spec = s.type ? s.type[0].toUpperCase() : 'G';
+  const specDesc = SPECTRAL[spec] || SPECTRAL.G;
+  const particle = /[가-힣]$/.test(s.name) && ((s.name.charCodeAt(s.name.length-1)-0xAC00)%28)!==0 ? '은' : '는';
+  const bestC = (s.comments||[]).find(function(c){ return c.best; });
+  const related = DB.filter(function(d){ return d.name!==s.name && !d.undiscovered && d.type && d.type[0]===s.type[0]; });
+  const relatedHTML = related.length
+    ? related.map(function(d){ return '<span class="wiki-link" onclick="openWikiByName(\''+d.name.replace(/'/g,"\\'")+'\')">'+d.name+'</span>'; }).join(' · ')
+    : '같은 분류의 다른 별이 아직 없다.';
+  let sec4 = '<p>발견자: '+(s.by||'미발견')+'</p>';
+  if(bestC) sec4 += '<div class="wiki-quote">'+bestC.text.replace(/</g,'&lt;')+'</div>';
+  const orbText = s.likes>=200 ? '현재 오브 후보로 거론되는 별이다.' : '아직 오브 후보 기준에는 미치지 못한다.';
+  document.getElementById('wiki-content').innerHTML =
+    '<div class="wiki-title">'+s.name+' ('+s.type+')</div>' +
+    '<div class="wiki-infobox">' +
+      '<div style="width:56px;height:56px;border-radius:50%;margin:0 auto 10px;background:radial-gradient(circle at 35% 35%,'+s.col+','+s.col+'88,transparent)"></div>' +
+      '<div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:8px">'+s.name+'</div>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:10px">' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">분광형</td><td style="text-align:right">'+s.type+'</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">표면온도</td><td style="text-align:right">'+s.temp+' K</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">거리</td><td style="text-align:right">'+s.dist+' 광년</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">겉보기등급</td><td style="text-align:right">'+s.mag+'</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">발견자</td><td style="text-align:right">'+(s.by||'미발견')+'</td></tr>' +
+      '</table></div>' +
+    '<div class="wiki-toc"><strong style="color:rgba(255,255,255,0.45);font-size:10px;letter-spacing:0.1em">목차</strong><br>1. 개요<br>2. 천문 정보<br>3. 이름과 빛의 나이<br>4. 발견과 감상<br>5. 오브 이력<br>6. 관련 별</div>' +
+    '<div class="wiki-h">1. 개요</div><div class="wiki-section"><p>'+s.name+particle+' '+s.type+'형 항성이다. 지구로부터 약 '+s.dist+'광년 떨어져 있으며 표면온도는 약 '+s.temp+'K이다. '+specDesc+'</p></div>' +
+    '<div class="wiki-h">2. 천문 정보</div><div class="wiki-section"><p>'+specDesc+' 겉보기 등급은 '+s.mag+'이며, 숫자가 작을수록 밝게 보인다.</p></div>' +
+    '<div class="wiki-h">3. 이름과 빛의 나이</div><div class="wiki-section"><p>지금 보는 이 빛은 약 '+s.dist+'년 전에 출발한 것이다. 별을 본다는 건 언제나 과거를 보는 일이다.</p><p>이름 \''+s.name+'\'은 최초 발견자 '+(s.by||'-')+'가 붙였다. (이름과 디자인은 발견자 권한이다.)</p></div>' +
+    '<div class="wiki-h">4. 발견과 감상</div><div class="wiki-section">'+sec4+'</div>' +
+    '<div class="wiki-h">5. 오브 이력</div><div class="wiki-section"><p>받은 빛: ✦ '+s.likes+'. '+orbText+'</p></div>' +
+    '<div class="wiki-h">6. 관련 별</div><div class="wiki-section"><p>'+relatedHTML+'</p></div>';
+  const w = document.getElementById('screen-wiki');
+  w.classList.add('open');
+  w.scrollTop = 0;
+}
+
 // 댓글 전송
 document.getElementById('comment-send').onclick=()=>{
   const cta=document.getElementById('cta');
@@ -1489,7 +1575,7 @@ function sendDM(){
 // PROFILE
 // ============================================================
 function openProfile(nick){
-  const p=PROFILES[nick]||PROFILES['unknown'];
+  const p=PROFILES[nick]||PROFILES['*anon'];
   document.getElementById('prof-avatar').style.background=p.av;
   document.getElementById('prof-avatar').textContent=p.ini;
   document.getElementById('prof-nick').textContent=p.nick;
@@ -1611,6 +1697,14 @@ function renderUniverseFeed(){
       const col = db ? db.col : '#aaa';
       refHTML = '<div><span class="u-ref-tag" onclick="openDetailByName(\'' + p.ref + '\')" style="border-color:' + col + '33;color:' + col + '">✦ ' + p.ref + '</span></div>';
     }
+    let bodyHTML = '';
+    if(p.title){
+      bodyHTML += '<div class="u-writing-title">' + p.title.replace(/</g,'&lt;') + '</div>';
+    }
+    if(p.media && p.media.length >= 2){
+      bodyHTML += '<div class="u-media" style="background:linear-gradient(135deg,' + p.media[0] + ',' + p.media[1] + ')"></div>';
+    }
+    bodyHTML += '<div class="u-text">' + p.text.replace(/</g,'&lt;') + '</div>';
     div.innerHTML =
       '<div class="u-post-top">' +
         '<div class="' + avClass + '" style="background:' + p.av + '" ' + (p.isOfficial?'':'onclick="openProfile(\''+p.nick+'\')"') + '>' + p.ini + '</div>' +
@@ -1619,7 +1713,7 @@ function renderUniverseFeed(){
           '<div class="u-time">' + p.time + '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="u-text">' + p.text.replace(/</g,'&lt;') + '</div>' +
+      bodyHTML +
       refHTML;
     feed.appendChild(div);
   });
@@ -1627,9 +1721,15 @@ function renderUniverseFeed(){
 
 // 마이 피드 — 내 프로필과 동일한 구조로 내 감상 포스트 렌더
 const MY_POSTS = [
-  {text:'Kael을 발견하고 황금색 색연필을 새로 샀어요. B3형이라는데 22,000K... 그 온도가 이 색을 만들어내는 거겠죠.', ref:'Kael', time:'3일 전'},
-  {text:'Helion이 F5형인데 색이 거의 흰 황금 같아요. 오늘 저녁 내내 이 별 화면 켜놨어요.', ref:'Helion', time:'5일 전'},
-  {text:'오늘 탐사 루트에서 처음으로 B형 별을 발견했어요. 빛이 차갑고 고요한데 어딘가 외로운 느낌.', ref:null, time:'1주 전'},
+  {type:'photo', time:'2일 전', ref:null, media:['#06080f','#1a2c44'],
+   text:'밤에 바다 보러 나왔어요. 별보다 파도 소리가 더 좋은 날이 있어요.'},
+  {type:'text', text:'Kael을 발견하고 황금색 색연필을 새로 샀어요. B3형이라는데 22,000K... 그 온도가 이 색을 만들어내는 거겠죠.', ref:'Kael', time:'3일 전'},
+  {type:'art', time:'4일 전', ref:'Helion', media:['#2a2008','#fff0a0'],
+   text:'Helion 그렸어요. 황금색이 손에 잘 안 잡혀서 한참 걸렸네요.'},
+  {type:'text', text:'Helion이 F5형인데 색이 거의 흰 황금 같아요. 오늘 저녁 내내 이 별 화면 켜놨어요.', ref:'Helion', time:'5일 전'},
+  {type:'writing', time:'6일 전', ref:null, title:'항해 일지',
+   text:'오늘은 아무 별도 발견하지 못했다. 그래도 우주를 떠다닌 건 마찬가지니까.'},
+  {type:'text', text:'오늘 탐사 루트에서 처음으로 B형 별을 발견했어요. 빛이 차갑고 고요한데 어딘가 외로운 느낌.', ref:null, time:'1주 전'},
 ];
 
 function renderMyFeed(){
@@ -1647,15 +1747,23 @@ function renderMyFeed(){
       const col = db ? db.col : '#aaa';
       refHTML = '<div><span class="u-ref-tag" onclick="openDetailByName(\'' + p.ref + '\')" style="border-color:' + col + '33;color:' + col + '">✦ ' + p.ref + '</span></div>';
     }
+    let bodyHTML = '';
+    if(p.title){
+      bodyHTML += '<div class="u-writing-title">' + p.title.replace(/</g,'&lt;') + '</div>';
+    }
+    if(p.media && p.media.length >= 2){
+      bodyHTML += '<div class="u-media" style="background:linear-gradient(135deg,' + p.media[0] + ',' + p.media[1] + ')"></div>';
+    }
+    bodyHTML += '<div class="u-text">' + p.text.replace(/</g,'&lt;') + '</div>';
     div.innerHTML =
       '<div class="u-post-top">' +
         '<div class="u-av" style="background:' + myCol + '">' + myAv + '</div>' +
         '<div class="u-post-meta">' +
-          '<div class="u-nick">밤의_항해자</div>' +
+          '<div class="u-nick">*밤항해</div>' +
           '<div class="u-time">' + p.time + '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="u-text">' + p.text + '</div>' +
+      bodyHTML +
       refHTML;
     wrap.appendChild(div);
   });
