@@ -147,6 +147,17 @@ canvas#dv{width:100%;height:260px;display:block}
 .wiki-section p{margin-bottom:10px}
 .wiki-quote{border-left:2px solid rgba(255,200,80,0.35);padding-left:12px;color:rgba(255,255,255,0.6);font-style:italic;margin:8px 0;font-size:13px;line-height:1.65}
 .wiki-link{color:rgba(255,200,80,0.7);text-decoration:underline;cursor:pointer}
+.wiki-badge{font-size:8px;letter-spacing:0.08em;color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.15);border-radius:10px;padding:2px 7px;margin-left:8px;vertical-align:middle;font-family:sans-serif;font-weight:400}
+.wiki-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-top:48px;margin-bottom:12px}
+.wiki-title-row .wiki-title{padding-top:0;margin-bottom:0;flex:1}
+#wiki-edit-btn{flex-shrink:0;display:flex;align-items:center;gap:5px;cursor:pointer;background:rgba(255,200,80,0.06);border:0.5px solid rgba(255,200,80,0.2);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,200,80,0.7);font-family:sans-serif;letter-spacing:0.04em;margin-top:4px}
+#wiki-edit-modal{display:none;position:fixed;inset:0;z-index:22;background:rgba(0,0,0,0.8);align-items:flex-end}
+#wiki-edit-modal.show{display:flex}
+#wiki-edit-sheet{background:#0e0f1a;border-radius:20px 20px 0 0;width:100%;padding:22px 22px 48px;border-top:0.5px solid rgba(255,200,80,0.15);position:relative}
+#we-close{position:absolute;top:16px;right:18px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.55);font-size:13px;font-family:sans-serif}
+#we-notice{font-size:11px;color:rgba(255,200,80,0.55);font-family:sans-serif;text-align:center;margin-bottom:16px;letter-spacing:0.04em;line-height:1.5;padding-right:28px}
+#wiki-edit-text{width:100%;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;font-size:13px;color:rgba(255,255,255,0.72);font-family:Georgia,serif;outline:none;margin-bottom:14px;resize:none;height:120px;line-height:1.65}
+#we-submit{width:100%;padding:13px;background:rgba(255,200,80,0.14);border:0.5px solid rgba(255,200,80,0.3);border-radius:13px;font-size:12px;color:rgba(255,200,80,0.85);font-family:sans-serif;cursor:pointer;text-align:center;letter-spacing:0.1em}
 
 /* 받은 빛 누적 */
 #detail-received{display:none;font-size:10px;color:rgba(255,200,80,0.5);font-family:sans-serif;letter-spacing:0.06em;margin-bottom:14px}
@@ -456,6 +467,16 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
   <div id="screen-wiki">
     <div id="wiki-close" onclick="closeWiki()">←</div>
     <div id="wiki-content"></div>
+  </div>
+
+  <!-- 위키 기여 모달 -->
+  <div id="wiki-edit-modal">
+    <div id="wiki-edit-sheet">
+      <div id="we-close" onclick="closeWikiEdit()">✕</div>
+      <div id="we-notice">✎ 기여는 검증된 사용자 검토 후 반영됩니다 (베타)</div>
+      <textarea id="wiki-edit-text" placeholder="여담을 작성해주세요..."></textarea>
+      <div id="we-submit" onclick="submitWikiEdit()">기여</div>
+    </div>
   </div>
 
   <!-- 커스텀 모달 -->
@@ -890,6 +911,10 @@ let jActive=false, jDX=0, jDY=0, jTouchId=null;
 const SPEED=0.9, JRADIUS=36;
 let hintGone=false;
 let currentStar=null, currentDB=null;
+const WIKI_NOTES = {};
+let currentWikiName = null;
+const CONNECTED = new Set();
+let currentProfileNick = null;
 let currentDMNick=null;
 let suppTarget={type:'', nick:'', commentIdx:-1};
 let suppAmt=500, suppTier='t1';
@@ -1417,11 +1442,35 @@ function closeWiki(){
   const w = document.getElementById('screen-wiki');
   w.classList.remove('open');
   w.scrollTop = 0;
+  closeWikiEdit();
+}
+
+function openWikiEdit(){
+  document.getElementById('wiki-edit-text').value = '';
+  document.getElementById('wiki-edit-modal').classList.add('show');
+}
+
+function closeWikiEdit(){
+  document.getElementById('wiki-edit-modal').classList.remove('show');
+}
+
+function submitWikiEdit(){
+  const text = document.getElementById('wiki-edit-text').value.trim();
+  if(!text || !currentWikiName) return;
+  if(!WIKI_NOTES[currentWikiName]) WIKI_NOTES[currentWikiName] = [];
+  WIKI_NOTES[currentWikiName].push(text);
+  closeWikiEdit();
+  openWikiByName(currentWikiName);
+}
+
+function wikiH(title, badge){
+  return '<div class="wiki-h">'+title+'<span class="wiki-badge">'+badge+'</span></div>';
 }
 
 function openWikiByName(name){
   const s = DB.find(function(d){ return d.name === name; });
   if(!s) return;
+  currentWikiName = s.name;
   const spec = s.type ? s.type[0].toUpperCase() : 'G';
   const specDesc = SPECTRAL[spec] || SPECTRAL.G;
   const particle = /[가-힣]$/.test(s.name) && ((s.name.charCodeAt(s.name.length-1)-0xAC00)%28)!==0 ? '은' : '는';
@@ -1433,8 +1482,15 @@ function openWikiByName(name){
   let sec4 = '<p>발견자: '+(s.by||'미발견')+'</p>';
   if(bestC) sec4 += '<div class="wiki-quote">'+bestC.text.replace(/</g,'&lt;')+'</div>';
   const orbText = s.likes>=200 ? '현재 오브 후보로 거론되는 별이다.' : '아직 오브 후보 기준에는 미치지 못한다.';
+  const notes = WIKI_NOTES[s.name] || [];
+  const secNotes = notes.length
+    ? notes.map(function(n){ return '<p>· '+n.replace(/</g,'&lt;')+'</p>'; }).join('')
+    : '<p style="color:rgba(255,255,255,0.35)">아직 기여된 여담이 없다. 첫 기여를 남겨보세요.</p>';
   document.getElementById('wiki-content').innerHTML =
-    '<div class="wiki-title">'+s.name+' ('+s.type+')</div>' +
+    '<div class="wiki-title-row">' +
+      '<div class="wiki-title">'+s.name+' ('+s.type+')</div>' +
+      '<div id="wiki-edit-btn" onclick="openWikiEdit()">✎ 기여하기</div>' +
+    '</div>' +
     '<div class="wiki-infobox">' +
       '<div style="width:56px;height:56px;border-radius:50%;margin:0 auto 10px;background:radial-gradient(circle at 35% 35%,'+s.col+','+s.col+'88,transparent)"></div>' +
       '<div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:8px">'+s.name+'</div>' +
@@ -1445,17 +1501,22 @@ function openWikiByName(name){
         '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">겉보기등급</td><td style="text-align:right">'+s.mag+'</td></tr>' +
         '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">발견자</td><td style="text-align:right">'+(s.by||'미발견')+'</td></tr>' +
       '</table></div>' +
-    '<div class="wiki-toc"><strong style="color:rgba(255,255,255,0.45);font-size:10px;letter-spacing:0.1em">목차</strong><br>1. 개요<br>2. 천문 정보<br>3. 이름과 빛의 나이<br>4. 발견과 감상<br>5. 오브 이력<br>6. 관련 별</div>' +
-    '<div class="wiki-h">1. 개요</div><div class="wiki-section"><p>'+s.name+particle+' '+s.type+'형 항성이다. 지구로부터 약 '+s.dist+'광년 떨어져 있으며 표면온도는 약 '+s.temp+'K이다. '+specDesc+'</p></div>' +
-    '<div class="wiki-h">2. 천문 정보</div><div class="wiki-section"><p>'+specDesc+' 겉보기 등급은 '+s.mag+'이며, 숫자가 작을수록 밝게 보인다.</p></div>' +
-    '<div class="wiki-h">3. 이름과 빛의 나이</div><div class="wiki-section"><p>지금 보는 이 빛은 약 '+s.dist+'년 전에 출발한 것이다. 별을 본다는 건 언제나 과거를 보는 일이다.</p><p>이름 \''+s.name+'\'은 최초 발견자 '+(s.by||'-')+'가 붙였다. (이름과 디자인은 발견자 권한이다.)</p></div>' +
-    '<div class="wiki-h">4. 발견과 감상</div><div class="wiki-section">'+sec4+'</div>' +
-    '<div class="wiki-h">5. 오브 이력</div><div class="wiki-section"><p>받은 빛: ✦ '+s.likes+'. '+orbText+'</p></div>' +
-    '<div class="wiki-h">6. 관련 별</div><div class="wiki-section"><p>'+relatedHTML+'</p></div>';
+    '<div class="wiki-toc"><strong style="color:rgba(255,255,255,0.45);font-size:10px;letter-spacing:0.1em">목차</strong><br>1. 개요<br>2. 천문 정보<br>3. 이름과 빛의 나이<br>4. 발견과 감상<br>5. 오브 이력<br>6. 관련 별<br>7. 여담</div>' +
+    wikiH('1. 개요','✎ 공동 편집')+'<div class="wiki-section"><p>'+s.name+particle+' '+s.type+'형 항성이다. 지구로부터 약 '+s.dist+'광년 떨어져 있으며 표면온도는 약 '+s.temp+'K이다. '+specDesc+'</p></div>' +
+    wikiH('2. 천문 정보','✎ 공동 편집')+'<div class="wiki-section"><p>'+specDesc+' 겉보기 등급은 '+s.mag+'이며, 숫자가 작을수록 밝게 보인다.</p></div>' +
+    wikiH('3. 이름과 빛의 나이','🔒 발견자 전용')+'<div class="wiki-section"><p>지금 보는 이 빛은 약 '+s.dist+'년 전에 출발한 것이다. 별을 본다는 건 언제나 과거를 보는 일이다.</p><p>이름 \''+s.name+'\'은 최초 발견자 '+(s.by||'-')+'가 붙였다. (이름과 디자인은 발견자 권한이다.)</p></div>' +
+    wikiH('4. 발견과 감상','⚙ 자동 기록')+'<div class="wiki-section">'+sec4+'</div>' +
+    wikiH('5. 오브 이력','⚙ 자동 기록')+'<div class="wiki-section"><p>받은 빛: ✦ '+s.likes+'. '+orbText+'</p></div>' +
+    wikiH('6. 관련 별','✎ 공동 편집')+'<div class="wiki-section"><p>'+relatedHTML+'</p></div>' +
+    wikiH('여담','✎ 공동 편집')+'<div class="wiki-section">'+secNotes+'</div>';
   const w = document.getElementById('screen-wiki');
   w.classList.add('open');
   w.scrollTop = 0;
 }
+
+document.getElementById('wiki-edit-modal').addEventListener('click', function(e){
+  if(e.target===document.getElementById('wiki-edit-modal')) closeWikiEdit();
+});
 
 // 댓글 전송
 document.getElementById('comment-send').onclick=()=>{
@@ -1574,7 +1635,26 @@ function sendDM(){
 // ============================================================
 // PROFILE
 // ============================================================
+function refreshProfileConnectUI(connected){
+  const btn = document.getElementById('prof-add-btn');
+  const note = document.getElementById('prof-note');
+  if(connected){
+    btn.textContent = '✦ 연결 완료';
+    btn.style.background = 'rgba(80,200,120,0.1)';
+    btn.style.borderColor = 'rgba(80,200,120,0.3)';
+    btn.style.color = 'rgba(80,200,120,0.8)';
+    note.textContent = '같은 별을 탐사한 인연으로 연결되었습니다 ✦';
+  } else {
+    btn.textContent = '✦ 같은 별 탐사자로 연결하기';
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+    note.textContent = '같은 별을 발견한 탐사자끼리만 연결이 가능합니다';
+  }
+}
+
 function openProfile(nick){
+  currentProfileNick = nick;
   const p=PROFILES[nick]||PROFILES['*anon'];
   document.getElementById('prof-avatar').style.background=p.av;
   document.getElementById('prof-avatar').textContent=p.ini;
@@ -1593,13 +1673,21 @@ function openProfile(nick){
     cell.innerHTML=makeGridSVG(type,cellW,cellW);
     grid.appendChild(cell);
   });
+  const addBtn = document.getElementById('prof-add-btn');
+  if(p.isOfficial){
+    addBtn.style.display = 'none';
+  } else {
+    addBtn.style.display = '';
+    refreshProfileConnectUI(CONNECTED.has(nick));
+  }
   document.getElementById('screen-profile').classList.add('open');
   document.getElementById('screen-profile').scrollTop=0;
 }
 document.getElementById('prof-back').onclick=()=>document.getElementById('screen-profile').classList.remove('open');
 document.getElementById('prof-add-btn').addEventListener('click',function(){
-  this.textContent='✦ 연결 완료';this.style.background='rgba(80,200,120,0.1)';this.style.borderColor='rgba(80,200,120,0.3)';this.style.color='rgba(80,200,120,0.8)';
-  document.getElementById('prof-note').textContent='같은 별을 탐사한 인연으로 연결되었습니다 ✦';
+  if(!currentProfileNick) return;
+  CONNECTED.add(currentProfileNick);
+  refreshProfileConnectUI(true);
 });
 
 // ============================================================
