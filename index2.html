@@ -30,75 +30,15 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .ldot:nth-child(2){animation-delay:0.25s}.ldot:nth-child(3){animation-delay:0.5s}
 @keyframes ldot-pulse{0%,80%,100%{opacity:0.15;transform:scale(0.8)}40%{opacity:0.9;transform:scale(1.3)}}
 
-/* 온보딩 */
-#screen-onboarding{position:fixed;inset:0;z-index:90;background:#02030e;display:none;flex-direction:column;align-items:center;justify-content:center;padding:0 34px}
-#screen-onboarding.show{display:flex}
-.ob-page{display:none;flex-direction:column;align-items:center;text-align:center;width:100%;animation:ob-fadein 0.6s ease}
-.ob-page.active{display:flex}
-@keyframes ob-fadein{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.ob-icon{font-size:34px;margin-bottom:28px;opacity:0.65}
-.ob-title{font-family:Georgia,serif;font-size:21px;color:rgba(255,255,255,0.88);line-height:1.45;margin-bottom:18px}
-.ob-desc{font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.36);line-height:1.85;letter-spacing:0.02em}
-.ob-desc em{font-family:monospace;font-style:italic;color:rgba(255,200,80,0.48);display:block;margin-top:10px;font-size:11px;line-height:1.8}
-.ob-final-phrase{font-family:Georgia,serif;font-size:15px;color:rgba(255,215,140,0.65);margin-top:22px;letter-spacing:0.06em;font-style:italic;line-height:1.6}
-#ob-dots{display:flex;gap:7px;margin-top:42px}
-.ob-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.14);transition:background 0.35s,transform 0.35s}
-.ob-dot.active{background:rgba(255,255,255,0.72);transform:scale(1.15)}
-#ob-btn{margin-top:30px;padding:13px 44px;border-radius:30px;background:transparent;border:0.5px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.5);font-family:sans-serif;font-size:10px;letter-spacing:0.22em;cursor:pointer}
-#ob-skip{position:absolute;top:54px;right:26px;font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.18);letter-spacing:0.12em;cursor:pointer}
-#intro-whisper{position:fixed;inset:0;z-index:95;background:#02030e;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 40px;opacity:0;transition:opacity 0.8s ease;pointer-events:none}
-#intro-whisper.show{opacity:1}
-#intro-whisper.fade-out{opacity:0}
-#intro-whisper .iw-text{font-family:Georgia,serif;font-size:19px;color:rgba(255,255,255,0.82);letter-spacing:0.08em;line-height:1.6;text-shadow:0 0 26px rgba(228,168,200,0.28)}
-.u-media{width:100%;aspect-ratio:4/3;border-radius:12px;margin-top:10px}
-.u-writing-title{font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,0.92);letter-spacing:0.02em;margin:2px 0}
-#detail-wiki-btn{display:inline-flex;align-items:center;cursor:pointer;background:rgba(255,200,80,0.06);border:0.5px solid rgba(255,200,80,0.2);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,200,80,0.7);font-family:sans-serif;letter-spacing:0.04em}
-#minimap{position:absolute;bottom:20px;right:18px;width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.12);overflow:hidden;z-index:9}
-#mm{width:84px;height:84px}
-#screen-wiki{position:absolute;inset:0;z-index:18;background:#05060f;transform:translateY(100%);transition:transform 0.6s cubic-bezier(0.32,0.72,0,1);overflow-y:auto;-webkit-overflow-scrolling:touch}
-#screen-wiki.open{transform:translateY(0)}
-#wiki-close{position:sticky;top:14px;margin:14px 0 0 16px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.55)}
-#wiki-content{padding:0 22px 80px}
-.wiki-title{font-family:Georgia,serif;font-size:30px;color:rgba(255,228,170,0.92);padding-top:8px;line-height:1.15}
-.wiki-type{font-size:16px;color:rgba(255,255,255,0.4)}
-#wiki-edit-btn{display:inline-block;margin:10px 0;font-size:11px;color:rgba(255,200,80,0.7);border:0.5px solid rgba(255,200,80,0.2);border-radius:18px;padding:5px 12px;cursor:pointer;font-family:sans-serif}
-.wiki-infobox{float:right;width:148px;border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px;margin:0 0 12px 14px;font-size:11px;color:rgba(255,255,255,0.6)}
-.wiki-orb{width:100%;height:78px;border-radius:8px;margin-bottom:8px}
-.wiki-infobox table{width:100%;border-collapse:collapse}
-.wiki-infobox td{padding:2px 0;vertical-align:top}
-.wiki-infobox td:first-child{color:rgba(255,255,255,0.35);width:52px}
-.wiki-toc{border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;font-size:11px;color:rgba(255,255,255,0.45);margin:14px 0;font-family:sans-serif;line-height:1.6}
-.wiki-h{font-family:Georgia,serif;font-size:18px;color:rgba(255,228,170,0.85);margin:22px 0 8px;padding-bottom:5px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
-.wiki-section{font-size:13px;line-height:1.75;color:rgba(255,255,255,0.72)}
-.wiki-quote{border-left:2px solid rgba(255,200,80,0.35);padding-left:12px;color:rgba(255,255,255,0.6);font-style:italic;margin:8px 0}
-.wiki-link{color:rgba(255,200,80,0.7);text-decoration:underline;cursor:pointer}
-.wiki-badge{font-size:8px;letter-spacing:0.08em;color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.15);border-radius:10px;padding:2px 7px;margin-left:6px;vertical-align:middle;font-family:sans-serif;white-space:nowrap}
-.wiki-badge.lock{color:rgba(255,200,80,0.55);border-color:rgba(255,200,80,0.25)}
-.wiki-badge.auto{color:rgba(255,255,255,0.3)}
-.wiki-note{font-size:12px;color:rgba(255,255,255,0.65);margin:4px 0}
-.wiki-dim{font-size:12px;color:rgba(255,255,255,0.3)}
-#wiki-edit-modal{display:none;position:fixed;inset:0;z-index:22;background:rgba(2,3,14,0.82);align-items:center;justify-content:center;padding:0 32px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-#wiki-edit-modal.show{display:flex}
-#wiki-edit-card{background:#0a0c18;border:0.5px solid rgba(255,255,255,0.12);border-radius:16px;padding:20px;width:100%;max-width:340px}
-.wiki-edit-guide{font-size:10px;color:rgba(255,200,80,0.6);margin-bottom:10px;font-family:sans-serif;letter-spacing:0.03em}
-#wiki-edit-input{width:100%;height:90px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.12);border-radius:8px;color:#fff;padding:10px;font-size:13px;resize:none;font-family:inherit;box-sizing:border-box}
-.wiki-edit-row{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-.wiki-edit-row button{background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);border-radius:8px;padding:7px 16px;cursor:pointer;font-size:12px}
-.lore-rare{font-size:11px;color:rgba(255,200,80,0.85);letter-spacing:0.04em;margin:10px 0 6px}
-.lore-line{font-family:Georgia,serif;font-size:12px;color:rgba(255,255,255,0.62);line-height:1.6;margin:4px 0}
-#connect-intro{display:none;position:fixed;inset:0;z-index:85;background:rgba(2,3,14,0.9);align-items:center;justify-content:center;padding:0 30px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-#connect-intro.show{display:flex;animation:dm-fade 0.6s ease}
-#ci-card{text-align:center;max-width:340px;width:100%}
-#ci-label{font-size:12px;color:rgba(255,200,80,0.8);letter-spacing:0.06em;margin-bottom:14px}
-#ci-starname{font-family:Georgia,serif;font-size:22px;color:rgba(255,228,170,0.92);margin-bottom:22px}
-#ci-person{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
-#ci-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-family:sans-serif}
-#ci-nick{font-size:15px;color:rgba(255,255,255,0.9)}
-#ci-quote{font-family:Georgia,serif;font-size:14px;font-style:italic;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:22px}
-#ci-tagline{font-family:Georgia,serif;font-size:16px;color:rgba(255,228,170,0.85);letter-spacing:0.04em;margin-bottom:26px}
-#ci-btns{display:flex;flex-direction:column;gap:10px}
-#ci-connect{background:rgba(255,200,80,0.14);border:0.5px solid rgba(255,200,80,0.4);color:rgba(255,220,140,0.95);border-radius:24px;padding:13px;font-size:14px;cursor:pointer;letter-spacing:0.04em}
-#ci-later{background:transparent;border:none;color:rgba(255,255,255,0.4);padding:6px;font-size:13px;cursor:pointer}
+/* 첫 진입 오버레이 */
+#intro-line{position:fixed;left:50%;transform:translateX(-50%);bottom:22%;z-index:60;font-family:Georgia,serif;font-size:13px;color:rgba(255,255,255,0.55);opacity:0;pointer-events:none;transition:opacity 2s ease;white-space:nowrap}
+#intro-line.show{opacity:1}
+#intro-line.hide{opacity:0;transition:opacity 1.4s ease}
+#whisper-layer{position:fixed;inset:0;pointer-events:none;z-index:55}
+.whisper-text{position:absolute;left:50%;transform:translateX(-50%);bottom:18%;width:90%;font-size:12px;font-family:Georgia,serif;color:rgba(255,255,255,0.5);letter-spacing:0.08em;text-align:center;pointer-events:none;opacity:0;transition:opacity 1.2s ease;line-height:1.6}
+.whisper-text.visible{opacity:1}
+.whisper-text.fade-out{opacity:0;transition:opacity 1s ease}
+.whisper-text.emphasis{color:rgba(255,255,255,0.75);font-style:italic}
 
 /* 탭바 */
 #tab-bar{position:absolute;top:0;left:0;right:0;z-index:11;display:flex;justify-content:center;align-items:center;padding:50px 0 10px;pointer-events:none;opacity:0;transition:opacity 0.6s}
@@ -133,12 +73,12 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .u-pstat-l{font-family:sans-serif;font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:0.08em;margin-top:3px}
 
 /* 유니버스 피드 */
-#universe-feed-wrap{flex:1;overflow-y:auto;padding:0 0 80px;display:none}
+#universe-feed-wrap{flex:1;overflow-y:auto;padding:0 0 80px}
 #universe-feed-wrap::-webkit-scrollbar{display:none}
 #u-feed-label{font-family:sans-serif;font-size:9px;letter-spacing:0.2em;color:rgba(255,255,255,0.25);padding:12px 20px 4px}
 
 /* 내 피드(마이 피드) */
-#u-my-feed-wrap{flex:1;overflow-y:auto;padding:0 0 80px;display:block}
+#u-my-feed-wrap{flex:1;overflow-y:auto;padding:0 0 80px;display:none}
 #u-my-feed-wrap::-webkit-scrollbar{display:none}
 
 .u-post{padding:16px 20px;border-bottom:0.5px solid rgba(255,255,255,0.06)}
@@ -150,6 +90,8 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .u-nick.official{color:rgba(180,160,255,0.9)}
 .u-time{font-family:sans-serif;font-size:9px;color:rgba(255,255,255,0.3);margin-top:2px}
 .u-text{font-size:13px;color:rgba(255,255,255,0.72);line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.u-media{width:100%;aspect-ratio:4/3;border-radius:12px;margin-top:10px}
+.u-writing-title{font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,0.92);letter-spacing:0.02em;margin-top:2px;margin-bottom:2px}
 .u-ref-tag{display:inline-block;margin-top:8px;font-family:sans-serif;font-size:10px;color:rgba(180,160,255,0.7);background:rgba(180,160,255,0.08);border:0.5px solid rgba(180,160,255,0.2);border-radius:12px;padding:3px 10px;cursor:pointer}
 .u-ref-tag:active{background:rgba(180,160,255,0.15)}
 
@@ -166,7 +108,8 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 #note-badge{position:absolute;top:2px;right:2px;width:15px;height:15px;background:rgba(255,80,80,0.9);border-radius:50%;font-size:8px;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;font-weight:700;border:1.5px solid #000}
 
 /* 조이스틱 */
-#joystick-wrap{position:absolute;bottom:20px;left:20px;z-index:5;width:110px;height:110px;touch-action:none}
+#joystick-wrap{position:absolute;bottom:20px;left:20px;z-index:5;width:110px;height:110px;touch-action:none;opacity:0;transition:opacity 2s ease}
+#joystick-wrap.visible{opacity:1}
 #joystick-base{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.18);position:relative}
 #joystick-knob{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.16);border:0.5px solid rgba(255,255,255,0.32);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
 
@@ -189,6 +132,32 @@ canvas#dv{width:100%;height:260px;display:block}
 #detail-like-count{font-size:11px;color:rgba(255,255,255,0.5);font-family:sans-serif}
 #detail-orb-badge{display:none;font-size:8px;letter-spacing:0.1em;color:rgba(255,200,80,0.75);font-family:sans-serif;background:rgba(255,200,80,0.08);border:0.5px solid rgba(255,200,80,0.25);border-radius:18px;padding:5px 11px}
 #detail-support-btn{display:flex;align-items:center;gap:5px;cursor:pointer;background:rgba(255,200,80,0.06);border:0.5px solid rgba(255,200,80,0.2);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,200,80,0.7);font-family:sans-serif;letter-spacing:0.04em}
+#detail-wiki-btn{display:flex;align-items:center;gap:5px;cursor:pointer;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.14);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,255,255,0.55);font-family:sans-serif;letter-spacing:0.04em}
+
+/* ── 위키 ── */
+#screen-wiki{position:absolute;inset:0;z-index:18;background:#05060f;transform:translateY(100%);transition:transform 0.6s cubic-bezier(0.32,0.72,0,1);overflow-y:auto;-webkit-overflow-scrolling:touch}
+#screen-wiki.open{transform:translateY(0)}
+#wiki-close{position:absolute;top:14px;left:16px;z-index:20;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.55);font-size:14px;font-family:sans-serif}
+#wiki-content{padding:0 22px 80px}
+.wiki-title{font-family:Georgia,serif;font-size:28px;color:rgba(255,228,170,0.92);font-weight:400;line-height:1.2;padding-top:48px;margin-bottom:12px}
+.wiki-infobox{float:right;width:150px;border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px;margin:0 0 12px 14px;font-size:11px;color:rgba(255,255,255,0.55);font-family:sans-serif}
+.wiki-toc{border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 14px;font-size:12px;color:rgba(255,255,255,0.45);font-family:sans-serif;line-height:1.8;margin:14px 0;clear:both}
+.wiki-h{font-family:Georgia,serif;font-size:18px;color:rgba(255,228,170,0.85);margin:22px 0 8px;padding-bottom:5px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
+.wiki-section{font-size:13px;line-height:1.75;color:rgba(255,255,255,0.72);font-family:sans-serif}
+.wiki-section p{margin-bottom:10px}
+.wiki-quote{border-left:2px solid rgba(255,200,80,0.35);padding-left:12px;color:rgba(255,255,255,0.6);font-style:italic;margin:8px 0;font-size:13px;line-height:1.65}
+.wiki-link{color:rgba(255,200,80,0.7);text-decoration:underline;cursor:pointer}
+.wiki-badge{font-size:8px;letter-spacing:0.08em;color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.15);border-radius:10px;padding:2px 7px;margin-left:8px;vertical-align:middle;font-family:sans-serif;font-weight:400}
+.wiki-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-top:48px;margin-bottom:12px}
+.wiki-title-row .wiki-title{padding-top:0;margin-bottom:0;flex:1}
+#wiki-edit-btn{flex-shrink:0;display:flex;align-items:center;gap:5px;cursor:pointer;background:rgba(255,200,80,0.06);border:0.5px solid rgba(255,200,80,0.2);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,200,80,0.7);font-family:sans-serif;letter-spacing:0.04em;margin-top:4px}
+#wiki-edit-modal{display:none;position:fixed;inset:0;z-index:22;background:rgba(0,0,0,0.8);align-items:flex-end}
+#wiki-edit-modal.show{display:flex}
+#wiki-edit-sheet{background:#0e0f1a;border-radius:20px 20px 0 0;width:100%;padding:22px 22px 48px;border-top:0.5px solid rgba(255,200,80,0.15);position:relative}
+#we-close{position:absolute;top:16px;right:18px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.55);font-size:13px;font-family:sans-serif}
+#we-notice{font-size:11px;color:rgba(255,200,80,0.55);font-family:sans-serif;text-align:center;margin-bottom:16px;letter-spacing:0.04em;line-height:1.5;padding-right:28px}
+#wiki-edit-text{width:100%;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;font-size:13px;color:rgba(255,255,255,0.72);font-family:Georgia,serif;outline:none;margin-bottom:14px;resize:none;height:120px;line-height:1.65}
+#we-submit{width:100%;padding:13px;background:rgba(255,200,80,0.14);border:0.5px solid rgba(255,200,80,0.3);border-radius:13px;font-size:12px;color:rgba(255,200,80,0.85);font-family:sans-serif;cursor:pointer;text-align:center;letter-spacing:0.1em}
 
 /* 받은 빛 누적 */
 #detail-received{display:none;font-size:10px;color:rgba(255,200,80,0.5);font-family:sans-serif;letter-spacing:0.06em;margin-bottom:14px}
@@ -398,37 +367,10 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
   <div id="loading-dots"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div>
 </div>
 
-<!-- 온보딩 -->
-<div id="screen-onboarding">
-  <span id="ob-skip">건너뛰기</span>
-  <div class="ob-page active" data-page="0">
-    <div class="ob-icon">✦</div>
-    <div class="ob-title">잠깐 멈춰도<br>괜찮아요</div>
-    <div class="ob-desc">빠르게 지나가는 피드가 아니에요.<br>루미네 유니버스는 우주 속<br>감정의 흔적을 발견하는 공간입니다.</div>
-  </div>
-  <div class="ob-page" data-page="1">
-    <div class="ob-icon">🚀</div>
-    <div class="ob-title">조이스틱으로<br>우주를 탐험하세요</div>
-    <div class="ob-desc">화면 왼쪽 아래 조이스틱을 움직이면<br>우주를 자유롭게 이동할 수 있어요.<em>이 우주는 실제입니다.<br>ESA Gaia 프로젝트 천문 데이터 기반</em></div>
-  </div>
-  <div class="ob-page" data-page="2">
-    <div class="ob-icon">⭐</div>
-    <div class="ob-title">빛나는 별을<br>발견해보세요</div>
-    <div class="ob-desc">탐험하다 별을 발견하면 터치해보세요.<br>최초 발견자는 별에 이름을 짓고<br>커스터마이징할 수 있어요.<br><br>누군가 남긴 감상을 읽고<br>당신의 흔적도 남겨보세요.</div>
-  </div>
-  <div class="ob-page" data-page="3">
-    <div class="ob-icon">🌌</div>
-    <div class="ob-title">친구 추천은 없어요</div>
-    <div class="ob-desc">같은 별을 발견한 사람과만 연결될 수 있어요.<br>알고리즘도, 전화번호도 아닌<br>우주 속 우연한 좌표에서 만나는 인연.<div class="ob-final-phrase">같은 별을 바라본 인연.</div></div>
-  </div>
-  <div id="ob-dots"><div class="ob-dot active"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div></div>
-  <button id="ob-btn">다음</button>
-</div>
-
 <div id="app">
   <canvas id="cv"></canvas>
-
-  <div id="intro-whisper"><div class="iw-text">당신은 우주에 있습니다.</div></div>
+  <div id="intro-line">당신은 우주에 있습니다.</div>
+  <div id="whisper-layer"></div>
 
   <!-- 탭바 (온보딩 후 표시) -->
   <div id="tab-bar">
@@ -457,8 +399,8 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
     </div>
     <!-- 유니버스 내부 탭: 유니버스 피드 / 마이 피드 -->
     <div id="u-inner-tab-row">
-      <div class="u-inner-tab" onclick="switchUniverseInnerTab('feed')">유니버스 피드</div>
-      <div class="u-inner-tab active" onclick="switchUniverseInnerTab('my')">마이 피드</div>
+      <div class="u-inner-tab active" onclick="switchUniverseInnerTab('feed')">유니버스 피드</div>
+      <div class="u-inner-tab" onclick="switchUniverseInnerTab('my')">마이 피드</div>
     </div>
     <div id="universe-feed-wrap">
       <div id="u-feed-label">UNIVERSE FEED</div>
@@ -473,8 +415,7 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
     <span id="exp-logo">POCKET SPACE</span>
     <span id="exp-coords">RA 00.0h · DEC +00.0°</span>
   </div>
-  <div id="exp-hint">✦ 빛나는 별을 터치해 발견하세요</div>
-  <div id="minimap"><canvas id="mm" width="84" height="84"></canvas></div>
+  <div id="exp-hint">✦ 빛나는 별을 터치</div>
 
   <!-- 노트 아이콘 -->
   <div id="note-icon-btn" onclick="openConnections()">
@@ -490,7 +431,7 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
     <div id="detail-star-wrap"><canvas id="dv"></canvas><div id="detail-close">←</div></div>
     <div id="detail-content">
       <div id="detail-name">Aurora</div>
-      <div id="detail-discoverer">DISCOVERED BY <span id="detail-discoverer-nick">OLIVIA</span></div>
+      <div id="detail-discoverer">DISCOVERED BY <span id="detail-discoverer-nick">*olivia</span></div>
       <div id="detail-action-row">
         <div id="detail-like-btn"><span class="hrt">♡</span><span id="detail-like-count">0</span></div>
         <div id="detail-orb-badge">✦ ORB 후보</div>
@@ -519,6 +460,22 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
           <button id="comment-send">남기기 ✦</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- 위키 -->
+  <div id="screen-wiki">
+    <div id="wiki-close" onclick="closeWiki()">←</div>
+    <div id="wiki-content"></div>
+  </div>
+
+  <!-- 위키 기여 모달 -->
+  <div id="wiki-edit-modal">
+    <div id="wiki-edit-sheet">
+      <div id="we-close" onclick="closeWikiEdit()">✕</div>
+      <div id="we-notice">✎ 기여는 검증된 사용자 검토 후 반영됩니다 (베타)</div>
+      <textarea id="wiki-edit-text" placeholder="여담을 작성해주세요..."></textarea>
+      <div id="we-submit" onclick="submitWikiEdit()">기여</div>
     </div>
   </div>
 
@@ -660,27 +617,26 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
       <div id="discover-icon">✦</div>
       <div id="discover-title">당신은 이 별을<br>최초로 발견하셨습니다</div>
       <div id="discover-desc">우주에서 아직 아무도 닿지 않은 빛이에요.<br>이 별에 이름을 붙이고 모양을 커스텀할 수 있어요.<br><br>최초 발견자는 분기별 루미네 오브 추첨 대상이 됩니다.</div>
-      <div id="discover-lore"></div>
       <button id="discover-ok">확인 ✦</button>
     </div>
   </div>
 
   <div id="toast"></div>
 </div>
-<div id="screen-wiki"><div id="wiki-close" onclick="closeWiki()">←</div><div id="wiki-content"></div></div>
-  <div id="wiki-edit-modal"><div id="wiki-edit-card"><div class="wiki-edit-guide">✎ 기여는 검증된 사용자 검토 후 반영됩니다 (베타)</div><textarea id="wiki-edit-input" placeholder="이 별에 대한 여담이나 정보를 남겨보세요"></textarea><div class="wiki-edit-row"><button onclick="closeWikiEdit()">취소</button><button onclick="submitWikiNote()">기여</button></div></div></div>
-<div id="connect-intro"><div id="ci-card">
-  <div id="ci-label">이 별을 바라본 또 한 사람이 있습니다</div>
-  <div id="ci-starname"></div>
-  <div id="ci-person"><div id="ci-av"></div><div id="ci-nick"></div></div>
-  <div id="ci-quote"></div>
-  <div id="ci-tagline">같은 별을 바라본 인연.</div>
-  <div id="ci-btns"><button id="ci-connect" onclick="connectGuide()">✦ 연결하기</button><button id="ci-later" onclick="closeConnectIntro()">나중에</button></div>
-</div></div>
 <script>
 // ============================================================
 // DATA — 별 12개, 프로필, DM
 // ============================================================
+const SPECTRAL = {
+ O:'가장 뜨겁고 푸른 별로, 우주에서 매우 드물며 수백만 년의 짧은 생을 폭발적으로 산다.',
+ B:'청백색으로 빛나는 뜨겁고 밝은 별로, 빠르게 타오르는 만큼 수명이 짧다.',
+ A:'희고 푸른빛이 도는 밝은 별로, 수명은 수십억 년 정도다.',
+ F:'흰빛에 옅은 노랑이 섞인 별로, 태양보다 조금 더 뜨겁다.',
+ G:'노란빛을 띠는 별로 우리 태양과 같은 종류이며, 주변에 생명이 있을 가능성이 자주 거론된다.',
+ K:'주황빛의 차분한 별로, 너무 뜨겁지도 차갑지도 않아 생명체 탐색에서 유망하게 꼽힌다.',
+ M:'붉고 어두운 적색왜성으로, 우주에서 가장 흔하지만 눈에 잘 띄지 않으며 수명이 매우 길다.'
+};
+
 const DB = [
   {id:0, name:'Aurora', by:'*sonata', temp:'5,325', dist:'42', mag:'4.2', type:'K2V', col:'#f5a030', likes:284, isFirst:false,
    superchats:[
@@ -916,23 +872,31 @@ const DM_DATA = [
 // UNIVERSE FEED DATA
 // ============================================================
 const UNIVERSE_POSTS = [
-  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'방금', isOfficial:true,
+  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'방금', isOfficial:true, type:'text',
    text:'✦ 루미네 오브 시즌 1 공지\n\n이번 분기 가장 많은 빛을 받은 별, Soran (발견자: ✦ LUMINE)이 오브 최유력 후보입니다.\n\n오브는 실물 크리스탈 무드등으로, 발견자 이름이 각인됩니다.',
    ref:'Soran'},
-  {nick:'*jeong', av:'#3a5a6a', ini:'je', time:'2시간 전', isOfficial:false,
+  {nick:'*jeong', av:'#3a5a6a', ini:'je', time:'2시간 전', isOfficial:false, type:'text',
    text:'Kael을 한참 봤어요. 22,000K인 별이 4등성으로 보인다는 게, 거리가 공평하게 밝기를 나눠주는 것 같아서.', ref:'Kael'},
-  {nick:'*4am', av:'#3a5a8a', ini:'4a', time:'5시간 전', isOfficial:false,
+  {nick:'*4am', av:'#3a5a8a', ini:'4a', time:'5시간 전', isOfficial:false, type:'text',
    text:'Duskara 보면서 저녁 먹었어요. 황혼빛 같은 별.', ref:'Duskara'},
-  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'1일 전', isOfficial:true,
+  {nick:'*lucid', av:'#5a3a8a', ini:'lu', time:'6시간 전', isOfficial:false, type:'art', ref:'Eiru', media:['#3a2418','#ff8c42'],
+   text:'Eiru를 그렸어요. 저녁빛이 자꾸 탁해져서 세 번 다시 칠했네요.'},
+  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'1일 전', isOfficial:true, type:'text',
    text:'이번 주 탐험 현황 ✦\n\n새로 발견된 별: 3개\n총 감상 기록: 147개\n총 후원 빛: ✦ 8,420\n\nAGI가 못 쓰는 글, 감사해요.',
    ref:null},
-  {nick:'*lucid', av:'#5a3a8a', ini:'lu', time:'2일 전', isOfficial:false,
+  {nick:'*4am', av:'#3a5a8a', ini:'4a', time:'1일 전', isOfficial:false, type:'photo', ref:null, media:['#0a0e1a','#2a3550'],
+   text:'새벽에 옥상 올라갔어요. 별은 거의 안 보였는데 공기가 좋아서 한참 있었어요.'},
+  {nick:'*sonata', av:'#5a4a7a', ini:'so', time:'2일 전', isOfficial:false, type:'writing', ref:null, title:'빛의 나이',
+   text:'오늘 본 별빛은 내가 태어나기 전에 출발한 것이다. 어떤 빛은 부고처럼 도착한다. 우리가 보는 건 이미 사라졌을지 모를 별의, 살아있던 시절이다.'},
+  {nick:'*lucid', av:'#5a3a8a', ini:'lu', time:'2일 전', isOfficial:false, type:'text',
    text:'Vega-9 발견하고 처음엔 별 감흥이 없었는데, *jeong님 댓글 읽고 나서 완전 달라졌어요.', ref:'Vega-9'},
-  {nick:'*olivia', av:'#8a3a5a', ini:'ol', time:'3일 전', isOfficial:false,
+  {nick:'*olivia', av:'#8a3a5a', ini:'ol', time:'3일 전', isOfficial:false, type:'photo', ref:'Cygnis', media:['#0e1828','#3a5a8a'],
+   text:'작업실 구석. 요즘 Cygnis 색을 내보고 싶어서 파란색만 쓰고 있어요.'},
+  {nick:'*olivia', av:'#8a3a5a', ini:'ol', time:'3일 전', isOfficial:false, type:'text',
    text:'Cygnis를 발견했을 때 손이 떨렸어요. O형 별이라고.', ref:'Cygnis'},
-  {nick:'*밤항해', av:'#3a5070', ini:'밤', time:'4일 전', isOfficial:false,
+  {nick:'*밤항해', av:'#3a5070', ini:'밤', time:'4일 전', isOfficial:false, type:'text',
    text:'Helion을 발견하고 나서 황금색 색연필을 새로 샀어요.', ref:'Helion'},
-  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'5일 전', isOfficial:true,
+  {nick:'✦ LUMINE', av:'#3a3a6a', ini:'✦', time:'5일 전', isOfficial:true, type:'text',
    text:'루미네 유니버스에 오신 것을 환영합니다 ✦\n\n이곳은 ESA Gaia 천문 데이터 기반 우주 탐험 공간입니다.\n같은 별을 발견한 사람끼리만 만납니다.',
    ref:null}
 ];
@@ -946,8 +910,11 @@ let shipX=0, shipY=0, shipAngle=Math.PI/2;
 let jActive=false, jDX=0, jDY=0, jTouchId=null;
 const SPEED=0.9, JRADIUS=36;
 let hintGone=false;
-let introPhase='idle', guideIdx=-1, guideStar=null;
 let currentStar=null, currentDB=null;
+const WIKI_NOTES = {};
+let currentWikiName = null;
+const CONNECTED = new Set();
+let currentProfileNick = null;
 let currentDMNick=null;
 let suppTarget={type:'', nick:'', commentIdx:-1};
 let suppAmt=500, suppTier='t1';
@@ -973,54 +940,6 @@ function resize(){
   dv.height=260;
 }
 
-// === 별의 서사 헬퍼 ===
-function parseDist(d){return parseInt(String(d).replace(/,/g,''))||0;}
-function loreLightYear(s){
-  var ly=parseDist(s.dist), year=2026-ly, era;
-  if(year>=2000)era='지구가 막 새로운 천 년에 들어서던 무렵.';
-  else if(year>=1980)era='카세트테이프와 브라운관의 시대, 어느 거리에선 그 시절의 노래가 흐르고 있었다.';
-  else if(year>=1950)era='전쟁의 잿더미 위로 도시가 다시 세워지던 시절.';
-  else if(year>=1900)era='비행기가 막 하늘을 가르기 시작한 세기의 초입.';
-  else if(year>=1500)era='대륙들이 처음 서로를 발견하던 대항해의 시대.';
-  else if(year>=1000)era='고려의 성과 중세의 탑이 서 있던 시절.';
-  else era='통일신라와 당이 번성하던 까마득한 옛날.';
-  return '이 빛은 서기 '+year+'년에 출발했다. '+era;
-}
-var SPECTRAL={O:'가장 뜨겁고 푸른 별로, 우주에서 매우 드물며 수백만 년의 짧은 생을 폭발적으로 산다.',B:'청백색으로 빛나는 뜨겁고 밝은 별로, 빠르게 타오르는 만큼 수명이 짧다.',A:'희고 푸른빛이 도는 밝은 별로, 수명은 수십억 년 정도다.',F:'흰빛에 옅은 노랑이 섞인 별로, 태양보다 조금 더 뜨겁다.',G:'노란빛을 띠는 별로 우리 태양과 같은 종류이며, 주변에 생명이 있을 가능성이 자주 거론된다.',K:'주황빛의 차분한 별로, 너무 뜨겁지도 차갑지도 않아 생명체 탐색에서 유망하게 꼽힌다.',M:'붉고 어두운 적색왜성으로, 우주에서 가장 흔하지만 눈에 잘 띄지 않으며 수명이 매우 길다.'};
-var SPECTRAL_FATE={O:'언젠가 거대한 초신성으로 폭발하고, 블랙홀이 되어 빛조차 삼킬 운명이다.',B:'짧고 강렬한 생의 끝에 초신성으로 터지며 사라질 별이다.',A:'부풀어 적색거성이 되었다가 천천히 식어 백색왜성으로 남을 것이다.',F:'수십억 년 뒤 부풀어 올랐다가 조용히 백색왜성으로 식어갈 것이다.',G:'우리 태양처럼 언젠가 적색거성으로 부풀고, 끝내 백색왜성으로 잠들 것이다.',K:'아주 느리게 타다가 먼 미래에 백색왜성으로 식어 사라질 것이다.',M:'수조 년을 타오를 별. 우주의 나이보다 오래 살아남아 마지막까지 빛날 것이다.'};
-var SPECTRAL_RARITY={O:'우주의 모든 별 중 0.00003%. 거의 전설에 가까운 별이다.',B:'별 1,000개 중 하나 남짓한 매우 희귀한 별이다.',A:'별 100개 중 하나도 안 되는 희귀한 별이다.',F:'별 100개 중 셋 정도인 조금 드문 별이다.',G:'태양과 같은 종류로, 별 100개 중 여덟 꼴이다.',K:'우주에 비교적 흔한, 주황빛의 차분한 별이다.',M:'우주에서 가장 흔한 별. 그럼에도 당신이 처음 이름을 줄 별이다.'};
-function loreFate(s){return SPECTRAL_FATE[s.type[0]]||'';}
-function loreRarity(s){return SPECTRAL_RARITY[s.type[0]]||'';}
-
-// === 위키 ===
-var WIKI_NOTES={}; var currentWikiName=null;
-function openWikiByName(name){
-  var s=DB.find(function(d){return d.name===name;}); if(!s)return;
-  currentWikiName=name;
-  var related=DB.filter(function(d){return d.type[0]===s.type[0] && d.name!==s.name && !d.undiscovered;});
-  var relHTML = related.length? related.map(function(d){return '<span class="wiki-link" onclick="openWikiByName(\''+d.name+'\')">'+d.name+'</span>';}).join(', ') : '같은 분류의 다른 별이 아직 없다.';
-  var best=(s.comments||[]).find(function(c){return c.best;});
-  var notes=WIKI_NOTES[name]||[];
-  var notesHTML = notes.length? notes.map(function(t){return '<div class="wiki-note">· '+t+'</div>';}).join('') : '<div class="wiki-dim">아직 기여된 여담이 없다. 첫 기여를 남겨보세요.</div>';
-  document.getElementById('wiki-content').innerHTML =
-    '<div class="wiki-title">'+s.name+' <span class="wiki-type">('+s.type+')</span></div>'+
-    '<div id="wiki-edit-btn" onclick="openWikiEdit()">✎ 기여하기</div>'+
-    '<div class="wiki-infobox"><div class="wiki-orb" style="background:radial-gradient(circle at 50% 40%,'+s.col+','+s.col+'22 70%)"></div><table><tr><td>분광형</td><td>'+s.type+'</td></tr><tr><td>표면온도</td><td>'+s.temp+' K</td></tr><tr><td>거리</td><td>'+s.dist+' 광년</td></tr><tr><td>겉보기등급</td><td>'+s.mag+'</td></tr><tr><td>발견자</td><td>'+(s.by||'미발견')+'</td></tr></table></div>'+
-    '<div class="wiki-toc">목차 — 개요 · 천문 정보 · 이름과 빛의 나이 · 발견과 감상 · 오브 이력 · 관련 별 · 여담</div>'+
-    '<div class="wiki-h">개요 <span class="wiki-badge">✎ 공동 편집</span></div><div class="wiki-section">'+s.name+'은(는) '+s.type+'형 항성이다. 지구로부터 약 '+s.dist+'광년 떨어져 있으며 표면온도는 약 '+s.temp+'K이다. '+SPECTRAL[s.type[0]]+'</div>'+
-    '<div class="wiki-h">천문 정보 <span class="wiki-badge">✎ 공동 편집</span></div><div class="wiki-section">'+SPECTRAL[s.type[0]]+' 겉보기 등급은 '+s.mag+'이며, 숫자가 작을수록 밝게 보인다.<br>희귀도: '+loreRarity(s)+'<br>운명: '+loreFate(s)+'</div>'+
-    '<div class="wiki-h">이름과 빛의 나이 <span class="wiki-badge lock">🔒 발견자 전용</span></div><div class="wiki-section">'+loreLightYear(s)+' 별을 본다는 건 언제나 과거를 보는 일이다.<br>이름은 최초 발견자 '+(s.by||'-')+'가 붙였다.</div>'+
-    '<div class="wiki-h">발견과 감상 <span class="wiki-badge auto">⚙ 자동 기록</span></div><div class="wiki-section">'+(s.by||'아직 누구도')+' 이 별을 발견했다.'+(best?'<div class="wiki-quote">'+best.text+'</div>':'')+'</div>'+
-    '<div class="wiki-h">오브 이력 <span class="wiki-badge auto">⚙ 자동 기록</span></div><div class="wiki-section">받은 빛: ✦ '+s.likes+'. '+(s.likes>=200?'현재 오브 후보로 거론되는 별이다.':'아직 오브 후보 기준에는 미치지 못한다.')+'</div>'+
-    '<div class="wiki-h">관련 별 <span class="wiki-badge">✎ 공동 편집</span></div><div class="wiki-section">'+relHTML+'</div>'+
-    '<div class="wiki-h">여담 <span class="wiki-badge">✎ 공동 편집</span></div><div class="wiki-section">'+notesHTML+'</div>';
-  document.getElementById('screen-wiki').classList.add('open');
-  document.getElementById('screen-wiki').scrollTop=0;
-}
-function closeWiki(){document.getElementById('screen-wiki').classList.remove('open');}
-function openWikiEdit(){document.getElementById('wiki-edit-modal').classList.add('show');}
-function closeWikiEdit(){document.getElementById('wiki-edit-modal').classList.remove('show');}
-function submitWikiNote(){var ta=document.getElementById('wiki-edit-input');var v=ta.value.trim();if(v&&currentWikiName){(WIKI_NOTES[currentWikiName]=WIKI_NOTES[currentWikiName]||[]).push(v);ta.value='';closeWikiEdit();openWikiByName(currentWikiName);}}
 function mkStar(){
   const special=Math.random()<0.045;
   const plain=!special&&Math.random()<0.4;
@@ -1039,19 +958,13 @@ function init(){
   const undiscoveredIdx = DB.map((d,i)=>d.undiscovered?i:-1).filter(i=>i>=0);
   undiscoveredIdx.forEach((dbIdx,n)=>{
     stars.push({
-      wx:(n===0?1500:-1400),
-      wy:(n===0?-1150:1300),
+      wx:(n===0?180:-220),
+      wy:(n===0?420:60),
       r:2.4, a:0.9,
       tw:Math.random()*Math.PI*2, sp:0.004,
       special:true, plain:false, dbIdx:dbIdx
     });
   });
-  // 안내별: 첫 경험용 '이미 누군가 본 별' (발견자가 LUMINE 공식이 아닌 첫 별)
-  guideIdx = DB.findIndex(function(d){return !d.undiscovered && d.by && d.by.indexOf('LUMINE')<0 && d.comments && d.comments.length;});
-  if(guideIdx>=0){
-    guideStar={ wx:0, wy:-1500, r:2.6, a:0.95, tw:Math.random()*Math.PI*2, sp:0.004, special:true, plain:false, dbIdx:guideIdx, guide:true };
-    stars.push(guideStar);
-  }
 }
 
 function worldToScreen(wx,wy){ return{sx:W/2+(wx-shipX),sy:H/2+(wy-shipY)}; }
@@ -1109,11 +1022,12 @@ function draw(){
         // 미발견 별: 맥동하는 흰 고리 + 회전 반짝임으로 강하게 구분
         const t=s.tw;
         // 확장하는 두 개의 ripple 고리
+        const ripBoost=(db.id===12||db.id===13)?1.5:1;
         for(let k=0;k<2;k++){
           const phase=((t*0.6)+k*Math.PI)% (Math.PI*2);
           const rip=(phase/(Math.PI*2));
-          const ringR=sr*6+rip*sr*26;
-          const ringA=(1-rip)*0.5;
+          const ringR=sr*6+rip*sr*26*ripBoost;
+          const ringA=(1-rip)*0.5*ripBoost;
           ctx.beginPath();ctx.arc(sx,sy,ringR,0,Math.PI*2);
           ctx.strokeStyle=`rgba(255,250,235,${ringA})`;ctx.lineWidth=1.2;ctx.stroke();
         }
@@ -1141,27 +1055,6 @@ function draw(){
     }
   });
   drawShip(W/2,H/2,shipAngle);
-  if(introPhase==='wait' && guideStar){
-    var gp=worldToScreen(guideStar.wx,guideStar.wy), gt=performance.now()/1000;
-    for(var gk=0;gk<2;gk++){ var gph=((gt*0.8)+gk*Math.PI)%(Math.PI*2), grip=gph/(Math.PI*2), grr=18+grip*40, gra=(1-grip)*0.6;
-      ctx.beginPath();ctx.arc(gp.sx,gp.sy,grr,0,Math.PI*2);ctx.strokeStyle='rgba(255,240,200,'+gra+')';ctx.lineWidth=1.4;ctx.stroke(); }
-    ctx.beginPath();ctx.arc(gp.sx,gp.sy,8,0,Math.PI*2);ctx.fillStyle='rgba(255,245,215,0.5)';ctx.fill();
-  }
-  stars.forEach(function(s){
-    if(!s.special||s.dbIdx<0)return; var db=DB[s.dbIdx]; if(!db||!db.undiscovered)return;
-    var p=worldToScreen(s.wx,s.wy); if(p.sx>=0&&p.sx<=W&&p.sy>=0&&p.sy<=H)return;
-    var ang=Math.atan2(p.sy-H/2,p.sx-W/2);
-    var ex=W/2+Math.cos(ang)*(W/2-44), ey=H/2+Math.sin(ang)*(H/2-44);
-    ex=Math.max(44,Math.min(W-44,ex)); ey=Math.max(44,Math.min(H-44,ey));
-    var d=Math.hypot(s.wx-shipX,s.wy-shipY), al=Math.max(0.12,Math.min(0.45,1-d/2200)), pl=0.6+0.4*Math.sin(performance.now()/600+s.tw);
-    var g=ctx.createRadialGradient(ex,ey,0,ex,ey,7); g.addColorStop(0,'rgba(255,250,235,'+(al*pl)+')'); g.addColorStop(1,'rgba(255,250,235,0)');
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(ex,ey,7,0,Math.PI*2); ctx.fill();
-  });
-  (function(){ var mm=document.getElementById('mm'); if(!mm)return; var mc=mm.getContext('2d'); mc.clearRect(0,0,84,84); var sc=42/1200;
-    stars.forEach(function(s){ if(!s.special||s.dbIdx<0)return; var db=DB[s.dbIdx]; if(!db||db.undiscovered)return; var mx=42+(s.wx-shipX)*sc, my=42+(s.wy-shipY)*sc; if(Math.hypot(mx-42,my-42)>40)return; mc.beginPath();mc.arc(mx,my,1.5,0,Math.PI*2);mc.fillStyle=db.col;mc.fill(); });
-    stars.forEach(function(s){ if(!s.special||s.dbIdx<0)return; var db=DB[s.dbIdx]; if(!db||!db.undiscovered)return; var ang=Math.atan2(s.wy-shipY,s.wx-shipX), mx=42+Math.cos(ang)*38, my=42+Math.sin(ang)*38; mc.beginPath();mc.arc(mx,my,2,0,Math.PI*2);mc.fillStyle='rgba(255,250,235,0.15)';mc.fill(); });
-    mc.beginPath();mc.arc(42,42,2,0,Math.PI*2);mc.fillStyle='rgba(255,255,255,0.9)';mc.fill();
-  })();
   requestAnimationFrame(draw);
 }
 
@@ -1175,19 +1068,7 @@ jWrap.addEventListener('touchend',()=>{jActive=false;jDX=0;jDY=0;jKnob.style.tra
 jBase.addEventListener('mousedown',e=>{jActive=true;updateJoystickM(e);const mm=e2=>updateJoystickM(e2);const mu=()=>{jActive=false;jDX=0;jDY=0;jKnob.style.transform='translate(-50%,-50%)';removeEventListener('mousemove',mm);removeEventListener('mouseup',mu)};addEventListener('mousemove',mm);addEventListener('mouseup',mu);});
 function updateJoystickM(e){const r=jBase.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;let dx=e.clientX-cx,dy=e.clientY-cy;const dist=Math.hypot(dx,dy);if(dist>JRADIUS){dx=dx/dist*JRADIUS;dy=dy/dist*JRADIUS;}jDX=dx/JRADIUS;jDY=dy/JRADIUS;jKnob.style.transform=`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;}
 function updateJoystick(t){const r=jBase.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;let dx=t.clientX-cx,dy=t.clientY-cy;const dist=Math.hypot(dx,dy);if(dist>JRADIUS){dx=dx/dist*JRADIUS;dy=dy/dist*JRADIUS;}jDX=dx/JRADIUS;jDY=dy/JRADIUS;jKnob.style.transform=`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;}
-function gameLoop(){
-  if(introPhase==='cruise'||introPhase==='arrive'){
-    if(guideStar){
-      var dx=guideStar.wx-shipX, dy=guideStar.wy-shipY, d=Math.hypot(dx,dy);
-      shipAngle=Math.atan2(dy,dx);
-      if(d>320){ if(d<=900) introPhase='arrive'; var sp=introPhase==='arrive'?Math.max(3,d*0.045):22; shipX+=dx/d*sp; shipY+=dy/d*sp; }
-      else { introPhase='wait'; onCruiseArrive(); }
-    } else { introPhase='done'; }
-  } else if(introPhase==='done' && jActive && (Math.abs(jDX)>0.05||Math.abs(jDY)>0.05)){
-    shipAngle=Math.atan2(jDY,jDX); shipX+=jDX*SPEED*2.5; shipY+=jDY*SPEED*2.5;
-  }
-  requestAnimationFrame(gameLoop);
-}
+function gameLoop(){if(jActive&&(Math.abs(jDX)>0.05||Math.abs(jDY)>0.05)){shipAngle=Math.atan2(jDY,jDX);shipX+=jDX*SPEED*2.5;shipY+=jDY*SPEED*2.5;}requestAnimationFrame(gameLoop);}
 function hitStar(cx,cy){for(let s of stars){if(!s.special||s.dbIdx<0)continue;const {sx,sy}=worldToScreen(s.wx,s.wy);if(sx<-40||sx>W+40||sy<-40||sy>H+40)continue;const c=starCustom[s.dbIdx]||{};if(Math.hypot(cx-sx,cy-sy)<Math.max(s.r*(c.sizeScale||1)*10,32))return s;}return null;}
 let tapSX,tapSY,tapMoved=false;
 app.addEventListener('touchstart',e=>{if(jWrap.contains(e.target))return;const t=e.touches[0];tapSX=t.clientX;tapSY=t.clientY;tapMoved=false;},{passive:true});
@@ -1290,15 +1171,15 @@ setTimeout(drawCsPreview, 0);
 // ============================================================
 function makeArtSVG(type, W, H){
   const arts={
-    aurora:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0d0408"/><ellipse cx="${W*.5}" cy="${H*.48}" rx="${W*.35}" ry="${H*.35}" fill="#f5a030" opacity=".15"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.16}" fill="#f5a030" opacity=".65"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.07}" fill="#ffe0c0"/><text x="${W*.08}" y="${H*.92}" fill="#c9906050" font-size="8" font-family="Georgia" font-style="italic">Aurora — lucid</text></svg>`,
-    veran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#05080f"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#a0b8ff" opacity=".18"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#a0b8ff" opacity=".65"/><line x1="${W*.5}" y1="0" x2="${W*.5}" y2="${H}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><line x1="0" y1="${H*.44}" x2="${W}" y2="${H*.44}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><text x="${W*.08}" y="${H*.92}" fill="#a0b8e050" font-size="8" font-family="Georgia" font-style="italic">Veran — lucid</text></svg>`,
+    aurora:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0d0408"/><ellipse cx="${W*.5}" cy="${H*.48}" rx="${W*.35}" ry="${H*.35}" fill="#f5a030" opacity=".15"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.16}" fill="#f5a030" opacity=".65"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.07}" fill="#ffe0c0"/><text x="${W*.08}" y="${H*.92}" fill="#c9906050" font-size="8" font-family="Georgia" font-style="italic">Aurora — *lucid</text></svg>`,
+    veran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#05080f"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#a0b8ff" opacity=".18"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#a0b8ff" opacity=".65"/><line x1="${W*.5}" y1="0" x2="${W*.5}" y2="${H}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><line x1="0" y1="${H*.44}" x2="${W}" y2="${H*.44}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><text x="${W*.08}" y="${H*.92}" fill="#a0b8e050" font-size="8" font-family="Georgia" font-style="italic">Veran — *lucid</text></svg>`,
     solune:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8ef"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffe08040" stroke="#c8a030" stroke-width=".6"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffe080" opacity=".8"/><text x="${W*.1}" y="${H*.87}" fill="#9a8030" font-size="8" font-family="Georgia" font-style="italic">Solune, 18ly</text><text x="${W*.1}" y="${H*.96}" fill="#b09040" font-size="7" font-family="sans-serif">*4am</text></svg>`,
     nyx:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#f9f7f4"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#30080820" stroke="#1a0808" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.07}" fill="#ff5533" opacity=".6"/>${Array.from({length:10},(_,i)=>`<line x1="${W*.5}" y1="${H*.44}" x2="${W*.5+Math.cos(i*36*Math.PI/180)*W*.28}" y2="${H*.44+Math.sin(i*36*Math.PI/180)*H*.28}" stroke="#1a080840" stroke-width=".4"/>`).join('')}<text x="${W*.1}" y="${H*.9}" fill="#3a1808" font-size="8" font-family="Georgia" font-style="italic">Nyx — *jeong</text></svg>`,
     kael:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#020510"/>${Array.from({length:18},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*97)%H}" r="${.4+i%3*.4}" fill="white" opacity="${.15+i%4*.12}"/>`).join('')}<circle cx="${W*.5}" cy="${H*.45}" r="${W*.26}" fill="#b0c8ff" opacity=".12"/><circle cx="${W*.5}" cy="${H*.45}" r="${W*.12}" fill="#d0e0ff" opacity=".65"/><text x="${W*.08}" y="${H*.92}" fill="#8090c060" font-size="8" font-family="Georgia">Kael — *밤항해</text></svg>`,
-    eiru:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8c42"/><stop offset="60%" stop-color="#c04010"/><stop offset="100%" stop-color="#0a0200"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#eg)"/><circle cx="${W*.5}" cy="${H*.36}" r="${W*.2}" fill="#ffe080" opacity=".85"/><rect x="0" y="${H*.72}" width="${W}" height="${H*.28}" fill="#0a0200" opacity=".7"/><text x="${W*.08}" y="${H*.93}" fill="#ff8c4260" font-size="8" font-family="Georgia">Eiru — lucid</text></svg>`,
-    cygnis:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#000816"/>${Array.from({length:20},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*97)%H}" r="${.3+i%3*.5}" fill="white" opacity="${.1+i%5*.12}"/>`).join('')}<circle cx="${W*.5}" cy="${H*.45}" r="${W*.28}" fill="#d0e8ff" opacity=".12"/><circle cx="${W*.5}" cy="${H*.45}" r="${W*.12}" fill="#e0efff" opacity=".8"/><text x="${W*.06}" y="${H*.93}" fill="#7090c060" font-size="8" font-family="Georgia">Cygnis — OLIVIA</text></svg>`,
+    eiru:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff8c42"/><stop offset="60%" stop-color="#c04010"/><stop offset="100%" stop-color="#0a0200"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#eg)"/><circle cx="${W*.5}" cy="${H*.36}" r="${W*.2}" fill="#ffe080" opacity=".85"/><rect x="0" y="${H*.72}" width="${W}" height="${H*.28}" fill="#0a0200" opacity=".7"/><text x="${W*.08}" y="${H*.93}" fill="#ff8c4260" font-size="8" font-family="Georgia">Eiru — *lucid</text></svg>`,
+    cygnis:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#000816"/>${Array.from({length:20},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*97)%H}" r="${.3+i%3*.5}" fill="white" opacity="${.1+i%5*.12}"/>`).join('')}<circle cx="${W*.5}" cy="${H*.45}" r="${W*.28}" fill="#d0e8ff" opacity=".12"/><circle cx="${W*.5}" cy="${H*.45}" r="${W*.12}" fill="#e0efff" opacity=".8"/><text x="${W*.06}" y="${H*.93}" fill="#7090c060" font-size="8" font-family="Georgia">Cygnis — *olivia</text></svg>`,
     helion:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#fafaf6"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.2}" fill="none" stroke="#c8a030" stroke-width="1.2"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#fff0a0"/>${Array.from({length:8},(_,i)=>`<line x1="${W*.5+Math.cos(i*45*Math.PI/180)*W*.22}" y1="${H*.44+Math.sin(i*45*Math.PI/180)*H*.22}" x2="${W*.5+Math.cos(i*45*Math.PI/180)*W*.32}" y2="${H*.44+Math.sin(i*45*Math.PI/180)*H*.32}" stroke="#c8a030" stroke-width=".7" opacity=".4"/>`).join('')}<text x="${W*.08}" y="${H*.89}" fill="#806020" font-size="8" font-family="Georgia" font-style="italic">Helion</text><text x="${W*.08}" y="${H*.97}" fill="#a08030" font-size="7" font-family="sans-serif">*밤항해</text></svg>`,
-    soran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8f0"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffd06040" stroke="#c9a030" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffd060" opacity=".8"/><text x="${W*.1}" y="${H*.82}" fill="#9a8030" font-size="9" font-family="Georgia" font-style="italic">Soran · 빛을 걷다</text><text x="${W*.12}" y="${H*.93}" fill="#b09040" font-size="7" font-family="sans-serif">OLIVIA</text></svg>`,
+    soran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8f0"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffd06040" stroke="#c9a030" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffd060" opacity=".8"/><text x="${W*.1}" y="${H*.82}" fill="#9a8030" font-size="9" font-family="Georgia" font-style="italic">Soran · 빛을 걷다</text><text x="${W*.12}" y="${H*.93}" fill="#b09040" font-size="7" font-family="sans-serif">*olivia</text></svg>`,
     duskara:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff7c50"/><stop offset="55%" stop-color="#c03010"/><stop offset="100%" stop-color="#0a0200"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#dg)"/><circle cx="${W*.5}" cy="${H*.34}" r="${W*.16}" fill="#ff9060" opacity=".88"/><text x="${W*.08}" y="${H*.93}" fill="#ff7c5060" font-size="8" font-family="Georgia">Duskara — *4am</text></svg>`
   };
   return arts[type]||`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0a0c1a"/></svg>`;
@@ -1384,52 +1265,55 @@ function makeGridSVG(type, W, H){
 const MY_NICK = '*밤항해';
 let pendingDiscoverStar = null;
 
-function openConnectIntro(){
-  if(guideIdx<0) return;
-  var db=DB[guideIdx];
-  var prof=PROFILES[db.by]||{};
-  var cs=db.comments||[];
-  var best=cs.find(function(c){return c.best;})||cs[0]||{};
-  document.getElementById('ci-av').style.background=prof.av||'#3a5070';
-  document.getElementById('ci-av').textContent=prof.ini||(db.by?db.by.replace('*','').slice(0,2):'');
-  document.getElementById('ci-nick').textContent=db.by||'누군가';
-  document.getElementById('ci-quote').textContent=best.text?('\u201c'+best.text+'\u201d'):'';
-  document.getElementById('ci-starname').textContent='\u2726 '+db.name;
-  document.getElementById('exp-hint').style.display='none';
-  document.getElementById('connect-intro').classList.add('show');
-}
-function closeConnectIntro(){
-  document.getElementById('connect-intro').classList.remove('show');
-  introPhase='done';
-  playWhisper('\uc774\uc81c \ub2f9\uc2e0\ub9cc\uc758 \ubcc4\uc744 \ucc3e\uc544\ubcf4\uc138\uc694.', function(){
-    document.getElementById('joystick-wrap').style.display='';
-    var h=document.getElementById('exp-hint'); h.textContent='\u2726 \ube5b\ub098\ub294 \ubcc4\uc744 \ud130\uce58\ud574 \ubc1c\uacac\ud558\uc138\uc694'; h.style.display='';
-  });
-}
-function connectGuide(){
-  var db=DB[guideIdx];
-  if(db&&db.by){ CONNECTED.add(db.by); showToast('\uac19\uc740 \ubcc4\uc744 \ubc14\ub77c\ubd24 \uc778\uc5f0\uc774 \uc5f0\uacb0\ub418\uc5c8\uc2b5\ub2c8\ub2e4 \u2726'); }
-  closeConnectIntro();
-}
 function handleStarTap(s){
   // 발견 모달이나 상세화면이 이미 열려있으면 무시 (중복 트리거 방지)
   if(document.getElementById('discover-modal').classList.contains('show')) return;
   if(document.getElementById('screen-detail').classList.contains('open')) return;
   const db = DB[s.dbIdx];
   if(!db) return;
-  if(introPhase!=='done'){ if(s.guide){ openConnectIntro(); } return; }
   if(db.undiscovered){
     pendingDiscoverStar = s;
-    document.getElementById('discover-lore').innerHTML='<div class="lore-rare">✦ '+loreRarity(db)+'</div><div class="lore-line">'+loreLightYear(db)+'</div><div class="lore-line">먼 미래 — '+loreFate(db)+'</div>';
     document.getElementById('discover-modal').classList.add('show');
   } else {
     openDetail(s);
   }
 }
 
+let whisperShown = false;
+
+function runWhisperSequence(){
+  if(whisperShown) return;
+  whisperShown = true;
+  const layer = document.getElementById('whisper-layer');
+  const steps = [
+    {text:'누군가는 이 별을 다시 발견하게 됩니다.', emphasis:false},
+    {text:'같은 별을 발견한 사람끼리만 연결됩니다.', emphasis:false},
+    {text:'같은 별을 바라본 인연.', emphasis:true}
+  ];
+  const FADE_IN=1200, HOLD=2500, FADE_OUT=1000, GAP=800;
+  function showStep(idx){
+    const step = steps[idx];
+    const el = document.createElement('div');
+    el.className = 'whisper-text'+(step.emphasis?' emphasis':'');
+    el.textContent = step.text;
+    layer.appendChild(el);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('visible')));
+    setTimeout(()=>{
+      el.classList.remove('visible');
+      el.classList.add('fade-out');
+      setTimeout(()=>{
+        el.remove();
+        if(idx+1<steps.length) setTimeout(()=>showStep(idx+1), GAP);
+      }, FADE_OUT);
+    }, FADE_IN+HOLD);
+  }
+  setTimeout(()=>showStep(0), 500);
+}
+
 document.getElementById('discover-ok').onclick = function(ev){
   if(ev){ ev.stopPropagation(); ev.preventDefault(); }
   document.getElementById('discover-modal').classList.remove('show');
+  runWhisperSequence();
   const s = pendingDiscoverStar;
   if(!s) return;
   const db = DB[s.dbIdx];
@@ -1554,6 +1438,86 @@ function toggleCommentLike(dbId,idx,el){
 
 document.getElementById('detail-close').onclick=()=>document.getElementById('screen-detail').classList.remove('open');
 
+function closeWiki(){
+  const w = document.getElementById('screen-wiki');
+  w.classList.remove('open');
+  w.scrollTop = 0;
+  closeWikiEdit();
+}
+
+function openWikiEdit(){
+  document.getElementById('wiki-edit-text').value = '';
+  document.getElementById('wiki-edit-modal').classList.add('show');
+}
+
+function closeWikiEdit(){
+  document.getElementById('wiki-edit-modal').classList.remove('show');
+}
+
+function submitWikiEdit(){
+  const text = document.getElementById('wiki-edit-text').value.trim();
+  if(!text || !currentWikiName) return;
+  if(!WIKI_NOTES[currentWikiName]) WIKI_NOTES[currentWikiName] = [];
+  WIKI_NOTES[currentWikiName].push(text);
+  closeWikiEdit();
+  openWikiByName(currentWikiName);
+}
+
+function wikiH(title, badge){
+  return '<div class="wiki-h">'+title+'<span class="wiki-badge">'+badge+'</span></div>';
+}
+
+function openWikiByName(name){
+  const s = DB.find(function(d){ return d.name === name; });
+  if(!s) return;
+  currentWikiName = s.name;
+  const spec = s.type ? s.type[0].toUpperCase() : 'G';
+  const specDesc = SPECTRAL[spec] || SPECTRAL.G;
+  const particle = /[가-힣]$/.test(s.name) && ((s.name.charCodeAt(s.name.length-1)-0xAC00)%28)!==0 ? '은' : '는';
+  const bestC = (s.comments||[]).find(function(c){ return c.best; });
+  const related = DB.filter(function(d){ return d.name!==s.name && !d.undiscovered && d.type && d.type[0]===s.type[0]; });
+  const relatedHTML = related.length
+    ? related.map(function(d){ return '<span class="wiki-link" onclick="openWikiByName(\''+d.name.replace(/'/g,"\\'")+'\')">'+d.name+'</span>'; }).join(' · ')
+    : '같은 분류의 다른 별이 아직 없다.';
+  let sec4 = '<p>발견자: '+(s.by||'미발견')+'</p>';
+  if(bestC) sec4 += '<div class="wiki-quote">'+bestC.text.replace(/</g,'&lt;')+'</div>';
+  const orbText = s.likes>=200 ? '현재 오브 후보로 거론되는 별이다.' : '아직 오브 후보 기준에는 미치지 못한다.';
+  const notes = WIKI_NOTES[s.name] || [];
+  const secNotes = notes.length
+    ? notes.map(function(n){ return '<p>· '+n.replace(/</g,'&lt;')+'</p>'; }).join('')
+    : '<p style="color:rgba(255,255,255,0.35)">아직 기여된 여담이 없다. 첫 기여를 남겨보세요.</p>';
+  document.getElementById('wiki-content').innerHTML =
+    '<div class="wiki-title-row">' +
+      '<div class="wiki-title">'+s.name+' ('+s.type+')</div>' +
+      '<div id="wiki-edit-btn" onclick="openWikiEdit()">✎ 기여하기</div>' +
+    '</div>' +
+    '<div class="wiki-infobox">' +
+      '<div style="width:56px;height:56px;border-radius:50%;margin:0 auto 10px;background:radial-gradient(circle at 35% 35%,'+s.col+','+s.col+'88,transparent)"></div>' +
+      '<div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:8px">'+s.name+'</div>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:10px">' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">분광형</td><td style="text-align:right">'+s.type+'</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">표면온도</td><td style="text-align:right">'+s.temp+' K</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">거리</td><td style="text-align:right">'+s.dist+' 광년</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">겉보기등급</td><td style="text-align:right">'+s.mag+'</td></tr>' +
+        '<tr><td style="padding:3px 0;color:rgba(255,255,255,0.35)">발견자</td><td style="text-align:right">'+(s.by||'미발견')+'</td></tr>' +
+      '</table></div>' +
+    '<div class="wiki-toc"><strong style="color:rgba(255,255,255,0.45);font-size:10px;letter-spacing:0.1em">목차</strong><br>1. 개요<br>2. 천문 정보<br>3. 이름과 빛의 나이<br>4. 발견과 감상<br>5. 오브 이력<br>6. 관련 별<br>7. 여담</div>' +
+    wikiH('1. 개요','✎ 공동 편집')+'<div class="wiki-section"><p>'+s.name+particle+' '+s.type+'형 항성이다. 지구로부터 약 '+s.dist+'광년 떨어져 있으며 표면온도는 약 '+s.temp+'K이다. '+specDesc+'</p></div>' +
+    wikiH('2. 천문 정보','✎ 공동 편집')+'<div class="wiki-section"><p>'+specDesc+' 겉보기 등급은 '+s.mag+'이며, 숫자가 작을수록 밝게 보인다.</p></div>' +
+    wikiH('3. 이름과 빛의 나이','🔒 발견자 전용')+'<div class="wiki-section"><p>지금 보는 이 빛은 약 '+s.dist+'년 전에 출발한 것이다. 별을 본다는 건 언제나 과거를 보는 일이다.</p><p>이름 \''+s.name+'\'은 최초 발견자 '+(s.by||'-')+'가 붙였다. (이름과 디자인은 발견자 권한이다.)</p></div>' +
+    wikiH('4. 발견과 감상','⚙ 자동 기록')+'<div class="wiki-section">'+sec4+'</div>' +
+    wikiH('5. 오브 이력','⚙ 자동 기록')+'<div class="wiki-section"><p>받은 빛: ✦ '+s.likes+'. '+orbText+'</p></div>' +
+    wikiH('6. 관련 별','✎ 공동 편집')+'<div class="wiki-section"><p>'+relatedHTML+'</p></div>' +
+    wikiH('여담','✎ 공동 편집')+'<div class="wiki-section">'+secNotes+'</div>';
+  const w = document.getElementById('screen-wiki');
+  w.classList.add('open');
+  w.scrollTop = 0;
+}
+
+document.getElementById('wiki-edit-modal').addEventListener('click', function(e){
+  if(e.target===document.getElementById('wiki-edit-modal')) closeWikiEdit();
+});
+
 // 댓글 전송
 document.getElementById('comment-send').onclick=()=>{
   const cta=document.getElementById('cta');
@@ -1671,22 +1635,27 @@ function sendDM(){
 // ============================================================
 // PROFILE
 // ============================================================
-let currentProfileNick=null; const CONNECTED=new Set();
-function updateConnectBtn(nick){
-  var btn=document.getElementById('prof-add-btn'), note=document.getElementById('prof-note');
-  var official = (nick==='✦ LUMINE'||nick==='LUMINE');
-  btn.style.display = official?'none':'';
-  if(CONNECTED.has(nick)){
-    btn.textContent='✦ 연결 완료'; btn.style.background='rgba(80,200,120,0.1)'; btn.style.borderColor='rgba(80,200,120,0.3)'; btn.style.color='rgba(80,200,120,0.8)';
-    note.textContent='같은 별을 탐사한 인연으로 연결되었습니다 ✦';
+function refreshProfileConnectUI(connected){
+  const btn = document.getElementById('prof-add-btn');
+  const note = document.getElementById('prof-note');
+  if(connected){
+    btn.textContent = '✦ 연결 완료';
+    btn.style.background = 'rgba(80,200,120,0.1)';
+    btn.style.borderColor = 'rgba(80,200,120,0.3)';
+    btn.style.color = 'rgba(80,200,120,0.8)';
+    note.textContent = '같은 별을 탐사한 인연으로 연결되었습니다 ✦';
   } else {
-    btn.textContent='✦ 같은 별 탐사자로 연결하기'; btn.style.background=''; btn.style.borderColor=''; btn.style.color='';
-    note.textContent='같은 별을 발견한 탐사자끼리만 연결이 가능합니다';
+    btn.textContent = '✦ 같은 별 탐사자로 연결하기';
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+    note.textContent = '같은 별을 발견한 탐사자끼리만 연결이 가능합니다';
   }
 }
+
 function openProfile(nick){
+  currentProfileNick = nick;
   const p=PROFILES[nick]||PROFILES['*anon'];
-  currentProfileNick=nick;
   document.getElementById('prof-avatar').style.background=p.av;
   document.getElementById('prof-avatar').textContent=p.ini;
   document.getElementById('prof-nick').textContent=p.nick;
@@ -1704,78 +1673,56 @@ function openProfile(nick){
     cell.innerHTML=makeGridSVG(type,cellW,cellW);
     grid.appendChild(cell);
   });
+  const addBtn = document.getElementById('prof-add-btn');
+  if(p.isOfficial){
+    addBtn.style.display = 'none';
+  } else {
+    addBtn.style.display = '';
+    refreshProfileConnectUI(CONNECTED.has(nick));
+  }
   document.getElementById('screen-profile').classList.add('open');
   document.getElementById('screen-profile').scrollTop=0;
-  updateConnectBtn(nick);
 }
 document.getElementById('prof-back').onclick=()=>document.getElementById('screen-profile').classList.remove('open');
 document.getElementById('prof-add-btn').addEventListener('click',function(){
-  if(currentProfileNick){ CONNECTED.add(currentProfileNick); updateConnectBtn(currentProfileNick); }
+  if(!currentProfileNick) return;
+  CONNECTED.add(currentProfileNick);
+  refreshProfileConnectUI(true);
 });
 
 // ============================================================
 // ============================================================
-// LOADING & ONBOARDING
+// LOADING & FIRST ENTRY
 // ============================================================
 const loadingScreen = document.getElementById('screen-loading');
-const onboardingScreen = document.getElementById('screen-onboarding');
 const tabBar = document.getElementById('tab-bar');
-const obBtn = document.getElementById('ob-btn');
-const obSkip = document.getElementById('ob-skip');
-const obDots = document.querySelectorAll('.ob-dot');
-const obPages = document.querySelectorAll('.ob-page');
-let obCurrent = 0;
+const introLine = document.getElementById('intro-line');
+const joystickWrap = document.getElementById('joystick-wrap');
 
-function showOnboarding(){
+function showIntroLine(){
+  introLine.classList.add('show');
+  setTimeout(()=>{
+    introLine.classList.remove('show');
+    introLine.classList.add('hide');
+  }, 6000);
+}
+
+function afterLoading(){
   loadingScreen.classList.add('fade-out');
   setTimeout(()=>{
     loadingScreen.style.display='none';
-    onboardingScreen.classList.add('show');
+    startApp();
+    showIntroLine();
+    setTimeout(()=>joystickWrap.classList.add('visible'), 3000);
   },1400);
 }
-
-function goToPage(n){
-  obPages[obCurrent].classList.remove('active');
-  obDots[obCurrent].classList.remove('active');
-  obCurrent=n;
-  obPages[obCurrent].classList.add('active');
-  obDots[obCurrent].classList.add('active');
-  obBtn.textContent = obCurrent===obPages.length-1?'시작하기':'다음';
-}
-
-obBtn.addEventListener('click',()=>{
-  if(obCurrent<obPages.length-1){goToPage(obCurrent+1);}
-  else{startApp();}
-});
-obSkip.addEventListener('click',startApp);
 
 function startApp(){
-  onboardingScreen.classList.remove('show');
   tabBar.classList.add('show');
   document.getElementById('note-icon-btn').classList.add('show');
-  document.getElementById('joystick-wrap').style.display='none';
-  document.getElementById('exp-hint').style.display='none';
 }
 
-function startExploration(){
-  loadingScreen.classList.add('fade-out');
-  setTimeout(function(){
-    loadingScreen.style.display='none';
-    startApp();
-    playIntroWhisper();
-  },1400);
-}
-function playWhisper(text, cb){
-  var w=document.getElementById('intro-whisper');
-  w.querySelector('.iw-text').textContent=text;
-  w.classList.remove('fade-out'); void w.offsetWidth; w.classList.add('show');
-  setTimeout(function(){w.classList.add('fade-out');},2000);
-  setTimeout(function(){w.classList.remove('show'); w.classList.remove('fade-out'); if(cb)cb(); },2800);
-}
-function playIntroWhisper(){ playWhisper('당신은 우주에 있습니다.', startCruise); }
-function startCruise(){ introPhase='cruise'; }
-function onCruiseArrive(){ var h=document.getElementById('exp-hint'); h.textContent='✦ 이 별을 터치하세요'; h.style.display=''; }
-setTimeout(startExploration, 2000);
+setTimeout(afterLoading, 2000);
 
 // ============================================================
 // TAB SWITCHING
@@ -1822,12 +1769,6 @@ function switchTopTab(name){
     renderMyFeed();
   }
 }
-UNIVERSE_POSTS.push(
- {nick:'*lucid',av:'#5a3a8a',ini:'lu',time:'6시간 전',ref:'Eiru',media:['#3a2418','#ff8c42'],text:'Eiru를 그렸어요. 저녁빛이 자꾸 탁해져서 세 번 다시 칠했네요.'},
- {nick:'*4am',av:'#3a5a8a',ini:'4a',time:'1일 전',ref:null,media:['#0a0e1a','#2a3550'],text:'새벽에 옥상 올라갔어요. 별은 거의 안 보였는데 공기가 좋아서 한참 있었어요.'},
- {nick:'*sonata',av:'#5a4a7a',ini:'so',time:'2일 전',ref:null,title:'빛의 나이',text:'오늘 본 별빛은 내가 태어나기 전에 출발한 것이다. 어떤 빛은 부고처럼 도착한다. 우리가 보는 건 이미 사라졌을지 모를 별의, 살아있던 시절이다.'},
- {nick:'*olivia',av:'#8a3a5a',ini:'ol',time:'3일 전',ref:'Cygnis',media:['#0e1828','#3a5a8a'],text:'작업실 구석. 요즘 Cygnis 색을 내보고 싶어서 파란색만 쓰고 있어요.'}
-);
 function renderUniverseFeed(){
   const feed = document.getElementById('universe-feed');
   if(feed.childElementCount > 0) return; // 이미 렌더됨
@@ -1844,6 +1785,14 @@ function renderUniverseFeed(){
       const col = db ? db.col : '#aaa';
       refHTML = '<div><span class="u-ref-tag" onclick="openDetailByName(\'' + p.ref + '\')" style="border-color:' + col + '33;color:' + col + '">✦ ' + p.ref + '</span></div>';
     }
+    let bodyHTML = '';
+    if(p.title){
+      bodyHTML += '<div class="u-writing-title">' + p.title.replace(/</g,'&lt;') + '</div>';
+    }
+    if(p.media && p.media.length >= 2){
+      bodyHTML += '<div class="u-media" style="background:linear-gradient(135deg,' + p.media[0] + ',' + p.media[1] + ')"></div>';
+    }
+    bodyHTML += '<div class="u-text">' + p.text.replace(/</g,'&lt;') + '</div>';
     div.innerHTML =
       '<div class="u-post-top">' +
         '<div class="' + avClass + '" style="background:' + p.av + '" ' + (p.isOfficial?'':'onclick="openProfile(\''+p.nick+'\')"') + '>' + p.ini + '</div>' +
@@ -1852,9 +1801,7 @@ function renderUniverseFeed(){
           '<div class="u-time">' + p.time + '</div>' +
         '</div>' +
       '</div>' +
-      (p.media?'<div class="u-media" style="background:linear-gradient(135deg,'+p.media[0]+','+p.media[1]+')"></div>':'') +
-      (p.title?'<div class="u-writing-title">'+p.title+'</div>':'') +
-      '<div class="u-text">' + p.text.replace(/</g,'&lt;') + '</div>' +
+      bodyHTML +
       refHTML;
     feed.appendChild(div);
   });
@@ -1862,16 +1809,17 @@ function renderUniverseFeed(){
 
 // 마이 피드 — 내 프로필과 동일한 구조로 내 감상 포스트 렌더
 const MY_POSTS = [
-  {text:'Kael을 발견하고 황금색 색연필을 새로 샀어요. B3형이라는데 22,000K... 그 온도가 이 색을 만들어내는 거겠죠.', ref:'Kael', time:'3일 전'},
-  {text:'Helion이 F5형인데 색이 거의 흰 황금 같아요. 오늘 저녁 내내 이 별 화면 켜놨어요.', ref:'Helion', time:'5일 전'},
-  {text:'오늘 탐사 루트에서 처음으로 B형 별을 발견했어요. 빛이 차갑고 고요한데 어딘가 외로운 느낌.', ref:null, time:'1주 전'},
+  {type:'photo', time:'2일 전', ref:null, media:['#06080f','#1a2c44'],
+   text:'밤에 바다 보러 나왔어요. 별보다 파도 소리가 더 좋은 날이 있어요.'},
+  {type:'text', text:'Kael을 발견하고 황금색 색연필을 새로 샀어요. B3형이라는데 22,000K... 그 온도가 이 색을 만들어내는 거겠죠.', ref:'Kael', time:'3일 전'},
+  {type:'art', time:'4일 전', ref:'Helion', media:['#2a2008','#fff0a0'],
+   text:'Helion 그렸어요. 황금색이 손에 잘 안 잡혀서 한참 걸렸네요.'},
+  {type:'text', text:'Helion이 F5형인데 색이 거의 흰 황금 같아요. 오늘 저녁 내내 이 별 화면 켜놨어요.', ref:'Helion', time:'5일 전'},
+  {type:'writing', time:'6일 전', ref:null, title:'항해 일지',
+   text:'오늘은 아무 별도 발견하지 못했다. 그래도 우주를 떠다닌 건 마찬가지니까.'},
+  {type:'text', text:'오늘 탐사 루트에서 처음으로 B형 별을 발견했어요. 빛이 차갑고 고요한데 어딘가 외로운 느낌.', ref:null, time:'1주 전'},
 ];
 
-MY_POSTS.push(
- {time:'2일 전',ref:null,media:['#06080f','#1a2c44'],text:'밤에 바다 보러 나왔어요. 별보다 파도 소리가 더 좋은 날이 있어요.'},
- {time:'4일 전',ref:'Helion',media:['#2a2008','#fff0a0'],text:'Helion 그렸어요. 황금색이 손에 잘 안 잡혀서 한참 걸렸네요.'},
- {time:'6일 전',ref:null,title:'항해 일지',text:'오늘은 아무 별도 발견하지 못했다. 그래도 우주를 떠다닌 건 마찬가지니까.'}
-);
 function renderMyFeed(){
   const wrap = document.getElementById('u-my-feed');
   if(wrap.childElementCount > 0) return;
@@ -1887,6 +1835,14 @@ function renderMyFeed(){
       const col = db ? db.col : '#aaa';
       refHTML = '<div><span class="u-ref-tag" onclick="openDetailByName(\'' + p.ref + '\')" style="border-color:' + col + '33;color:' + col + '">✦ ' + p.ref + '</span></div>';
     }
+    let bodyHTML = '';
+    if(p.title){
+      bodyHTML += '<div class="u-writing-title">' + p.title.replace(/</g,'&lt;') + '</div>';
+    }
+    if(p.media && p.media.length >= 2){
+      bodyHTML += '<div class="u-media" style="background:linear-gradient(135deg,' + p.media[0] + ',' + p.media[1] + ')"></div>';
+    }
+    bodyHTML += '<div class="u-text">' + p.text.replace(/</g,'&lt;') + '</div>';
     div.innerHTML =
       '<div class="u-post-top">' +
         '<div class="u-av" style="background:' + myCol + '">' + myAv + '</div>' +
@@ -1895,9 +1851,7 @@ function renderMyFeed(){
           '<div class="u-time">' + p.time + '</div>' +
         '</div>' +
       '</div>' +
-      (p.media?'<div class="u-media" style="background:linear-gradient(135deg,'+p.media[0]+','+p.media[1]+')"></div>':'') +
-      (p.title?'<div class="u-writing-title">'+p.title+'</div>':'') +
-      '<div class="u-text">' + p.text + '</div>' +
+      bodyHTML +
       refHTML;
     wrap.appendChild(div);
   });
