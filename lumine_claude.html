@@ -1859,12 +1859,12 @@ function playIntroWhisper(){ playWhisper('당신은 지금, 진짜 우주에 있
 function startCruise(){ introPhase='cruise'; }
 function onCruiseArrive(){
   playWhisper('민정이라는 이름의 별 · 지구에서 3광년', function(){
-    playWhisper('이 별빛은 3년을 건너, 길 한 번 잃지 않고 너에게 닿았어.', function(){
-      playWhisper('그동안 내 마음도, 멀리 돌아 결국 다시 너에게로 왔나 봐.', function(){
+    playWhisper('이 별빛은 3년을 건너, 길 한 번 잃지 않고 닿아왔어요.', function(){
+      playWhisper('그동안 내 마음도, 항상 같은곳으로 빛을 보내왔구요.', function(){
         playWhisper('말 한마디 못 하고 헤어진 그날부터, 넌 한 번도 내 하늘에서 진 적이 없어.', function(){
           playWhisper('네 곁을 지키는 보리처럼, 나도 그냥… 네 옆에 오래 있고 싶어.', function(){
             playWhisper('민정아, 좋아해. 3년 전에도, 지금도, 똑같이.', function(){
-              playWhisper('이번엔 그 말을 삼키지 않을게. 앞으로도 — 같은 별을, 같이 볼래?', function(){
+              playWhisper('이번엔 그 말을 안삼키려고해. 앞으로도 나랑 같은 별을, 같이 보는 사이가 되어줘?', function(){
                 introPhase='done';
                 document.getElementById('joystick-wrap').style.display='';
                 var h=document.getElementById('exp-hint'); h.textContent='✦ 이제, 우리 우주를 천천히 둘러봐'; h.style.display='';
