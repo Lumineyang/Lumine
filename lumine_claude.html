@@ -682,24 +682,24 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
 // DATA — 별 12개, 프로필, DM
 // ============================================================
 const DB = [
-  {id:0, name:'북극성', by:'*sonata', temp:'6,000', dist:'430', mag:'2.0', type:'F7Ib', col:'#fbf3da', likes:284, isFirst:false,
+  {id:0, name:'민정', by:'지웅', temp:'5,800', dist:'3', mag:'1.4', type:'G2V', col:'#ffe7b0', likes:284, isFirst:false,
    superchats:[
-     {nick:'*lucid', msg:'이 별 보고 시 한 편 썼어요', amt:'✦ 320', tier:'t1'},
-     {nick:'*4am', msg:'처음 발견자에게 경의를', amt:'✦ 180', tier:'t2'}
+     {nick:'*달밤', msg:'늘 응원해요. 오래오래 빛나길', amt:'✦ 320', tier:'t1'},
+     {nick:'*하루', msg:'이 별 보면 마음이 놓여요', amt:'✦ 180', tier:'t2'}
    ],
    comments:[
-     {nick:'*jeong', av:'#3a5a6a', ini:'je', type:'knowledge', best:true, likes:47,
-      text:'이게 그 북극성이라니. 밤새 봐도 거의 한 자리에 그대로 있어서 옛날 뱃사람들이 길 찾을 때 기준으로 삼았다잖아요. 흰빛 도는 게 태양보다 살짝 더 뜨거운 별이래요.',
-      time:'2일 전', tips:[{nick:'*4am', amt:'✦ 40'}, {nick:'*lucid', amt:'✦ 60'}]},
-     {nick:'*lucid', av:'#5a3a8a', ini:'lu', type:'art', best:false, likes:31,
-      text:'한 자리를 지키며 길을 알려주는 별이라는 게 좋아서 그려봤어요. 맑은 흰빛이요.',
-      time:'3일 전', art:'aurora', tips:[{nick:'*밤항해', amt:'✦ 55'}]},
-     {nick:'*4am', av:'#3a5a8a', ini:'4a', type:'feel', best:false, likes:18,
-      text:'430광년이면 지금 보는 이 빛이 임진왜란 때쯤 출발했다는 거잖아요. 저보다 한참 어른인 빛이네 ㅎㅎ',
+     {nick:'*하루', av:'#6a5a8a', ini:'하루', type:'feel', best:true, likes:52,
+      text:'이 별, 보고 있으면 다 잘될 것 같은 기분이 들어요. 빛이 참 다정해.',
+      time:'2일 전', tips:[{nick:'*달밤', amt:'✦ 40'}, {nick:'*온유', amt:'✦ 60'}]},
+     {nick:'*온유', av:'#3a6a6a', ini:'온유', type:'feel', best:false, likes:33,
+      text:'민정이라는 이름이 별이랑 참 잘 어울려요. 응원할게요!',
+      time:'3일 전', tips:[{nick:'*하루', amt:'✦ 55'}]},
+     {nick:'*달밤', av:'#5a5a8a', ini:'달밤', type:'feel', best:false, likes:21,
+      text:'처음 봤을 때부터 좋았어요. 여기 자주 들를게요.',
       time:'4일 전', tips:[]},
-     {nick:'*anon', av:'#4a4a4a', ini:'an', type:'knowledge', best:false, likes:9,
-      text:'예전에 어디서 봤는데 북극성이 사실 별 하나가 아니라 셋이 같이 도는 거래요. 게다가 아주 살짝 밝아졌다 어두워졌다 한다고. 진짜인지는 모르겠지만 상상하니까 좋네요',
-      time:'5일 전', tips:[{nick:'*jeong', amt:'✦ 30'}]}
+     {nick:'*소란', av:'#4a4a5a', ini:'소란', type:'feel', best:false, likes:14,
+      text:'오늘도 이 별 보러 왔어요. 늘 응원해요.',
+      time:'5일 전', tips:[{nick:'*온유', amt:'✦ 30'}]}
    ]},
   {id:1, name:'Veran', by:'*drift', temp:'8,900', dist:'138', mag:'3.8', type:'A7V', col:'#a0b8ff', likes:156, isFirst:false,
    superchats:[{nick:'*jeong', msg:'청백색이 이렇게 차가울 줄이야', amt:'✦ 200', tier:'t2'}],
@@ -862,6 +862,20 @@ const DB = [
    superchats:[], comments:[]},
   {id:13, name:'???', by:null, temp:'3,500', dist:'94', mag:'6.9', type:'M3V', col:'#ff6a40', likes:0, isFirst:false, undiscovered:true,
    superchats:[], comments:[]}
+,
+  {id:777, name:'보리', by:'*sonata', temp:'4,200', dist:'3', mag:'4.5', type:'K5V', col:'#ffc99a', likes:96, isFirst:false,
+   superchats:[ {nick:'*하루', msg:'보리 너무 귀여워요', amt:'✦ 90', tier:'t3'} ],
+   comments:[
+     {nick:'*온유', av:'#7a5a4a', ini:'온유', type:'feel', best:true, likes:40,
+      text:'작은 별인데 왜 이렇게 귀엽지. 보고 있으면 강아지 한 마리가 졸졸 따라다니는 것 같아요.',
+      time:'2일 전', tips:[{nick:'*하루', amt:'✦ 30'}]},
+     {nick:'*달밤', av:'#6a5a5a', ini:'달밤', type:'feel', best:false, likes:25,
+      text:'보리라는 이름 너무 잘 어울려요. 세상에서 제일 귀여운 별.',
+      time:'3일 전', tips:[]},
+     {nick:'*하루', av:'#6a5a8a', ini:'하루', type:'feel', best:false, likes:17,
+      text:'이 별 볼 때마다 쓰다듬어주고 싶어요. 복슬복슬할 것 같아.',
+      time:'4일 전', tips:[{nick:'*온유', amt:'✦ 20'}]}
+   ]}
 ];
 
 const PROFILES = {
@@ -904,9 +918,9 @@ const DM_DATA = [
      {from:'나', text:'봤어요, 너무 아름다워요', time:'4일 전', official:false},
      {from:'*lucid', text:'고마워요. 별 보면서 그리는 게 이제 일상이 됐어요.', time:'4일 전', official:false}
    ]},
-  {nick:'*jeong', av:'#3a5a6a', ini:'je', unread:1, preview:'북극성 삼중성 논문 찾았어요', isOfficial:false,
+  {nick:'*jeong', av:'#3a5a6a', ini:'je', unread:1, preview:'민정 별 보러 왔어요', isOfficial:false,
    msgs:[
-     {from:'*jeong', text:'북극성 댓글에 달았는데, 북극성이 세 겹 별이라는 논문 찾았어요. Astrophysical Journal 2023.', time:'5일 전', official:false},
+     {from:'*jeong', text:'민정 별 댓글에 달았는데, 진짜 다정한 별이에요. 응원해요!', time:'5일 전', official:false},
      {from:'나', text:'진짜요?? 읽고 싶어요', time:'5일 전', official:false},
      {from:'*jeong', text:'doi.org/10.3847/1538-4357 이쪽으로 찾아보세요.', time:'5일 전', official:false}
    ]}
@@ -1059,6 +1073,8 @@ function init(){
     guideStar={ wx:0, wy:-1500, r:2.6, a:0.95, tw:Math.random()*Math.PI*2, sp:0.004, special:true, plain:false, dbIdx:guideIdx, guide:true };
     stars.push(guideStar);
   }
+  var boriIdx = DB.findIndex(function(d){return d.name==='보리';});
+  if(boriIdx>=0){ stars.push({ wx:110, wy:-1470, r:1.7, a:0.9, tw:Math.random()*Math.PI*2, sp:0.004, special:true, plain:false, dbIdx:boriIdx }); }
 }
 
 function worldToScreen(wx,wy){ return{sx:W/2+(wx-shipX),sy:H/2+(wy-shipY)}; }
@@ -1204,9 +1220,9 @@ function hitStar(cx,cy){for(let s of stars){if(!s.special||s.dbIdx<0)continue;co
 let tapSX,tapSY,tapMoved=false;
 app.addEventListener('touchstart',e=>{if(jWrap.contains(e.target))return;const t=e.touches[0];tapSX=t.clientX;tapSY=t.clientY;tapMoved=false;},{passive:true});
 app.addEventListener('touchmove',e=>{if(jWrap.contains(e.target))return;const t=e.touches[0];if(Math.hypot(t.clientX-tapSX,t.clientY-tapSY)>8)tapMoved=true;},{passive:true});
-app.addEventListener('touchend',e=>{if(jWrap.contains(e.target))return;if(tapMoved)return;const t=e.changedTouches[0],r=app.getBoundingClientRect();const s=hitStar(t.clientX-r.left,t.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else if(introPhase==='done'){moveTarget={x:(t.clientX-r.left)-W/2+shipX,y:(t.clientY-r.top)-H/2+shipY};}});
+app.addEventListener('touchend',e=>{if(jWrap.contains(e.target))return;if(e.target!==cv)return;if(tapMoved)return;const t=e.changedTouches[0],r=app.getBoundingClientRect();const s=hitStar(t.clientX-r.left,t.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else if(introPhase==='done'){moveTarget={x:(t.clientX-r.left)-W/2+shipX,y:(t.clientY-r.top)-H/2+shipY};}});
 let mSX,mSY,mMoved=false;
-app.addEventListener('mousedown',e=>{if(jWrap.contains(e.target))return;mSX=e.clientX;mSY=e.clientY;mMoved=false;const mm=e2=>{if(Math.hypot(e2.clientX-mSX,e2.clientY-mSY)>5)mMoved=true};const mu=e2=>{removeEventListener('mousemove',mm);removeEventListener('mouseup',mu);if(mMoved)return;const r=app.getBoundingClientRect();const s=hitStar(e2.clientX-r.left,e2.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else if(introPhase==='done'){moveTarget={x:(e2.clientX-r.left)-W/2+shipX,y:(e2.clientY-r.top)-H/2+shipY};}};addEventListener('mousemove',mm);addEventListener('mouseup',mu);});
+app.addEventListener('mousedown',e=>{if(jWrap.contains(e.target))return;if(e.target!==cv)return;mSX=e.clientX;mSY=e.clientY;mMoved=false;const mm=e2=>{if(Math.hypot(e2.clientX-mSX,e2.clientY-mSY)>5)mMoved=true};const mu=e2=>{removeEventListener('mousemove',mm);removeEventListener('mouseup',mu);if(mMoved)return;const r=app.getBoundingClientRect();const s=hitStar(e2.clientX-r.left,e2.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else if(introPhase==='done'){moveTarget={x:(e2.clientX-r.left)-W/2+shipX,y:(e2.clientY-r.top)-H/2+shipY};}};addEventListener('mousemove',mm);addEventListener('mouseup',mu);});
 
 // ============================================================
 // DETAIL STAR CANVAS
@@ -1302,7 +1318,7 @@ setTimeout(drawCsPreview, 0);
 // ============================================================
 function makeArtSVG(type, W, H){
   const arts={
-    aurora:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0d0408"/><ellipse cx="${W*.5}" cy="${H*.48}" rx="${W*.35}" ry="${H*.35}" fill="#cdd8f0" opacity=".14"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.16}" fill="#e3ebff" opacity=".6"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.07}" fill="#ffffff"/><text x="${W*.08}" y="${H*.92}" fill="#c9d2e650" font-size="8" font-family="Georgia" font-style="italic">북극성 — lucid</text></svg>`,
+    aurora:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#0d0408"/><ellipse cx="${W*.5}" cy="${H*.48}" rx="${W*.35}" ry="${H*.35}" fill="#cdd8f0" opacity=".14"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.16}" fill="#e3ebff" opacity=".6"/><circle cx="${W*.5}" cy="${H*.48}" r="${W*.07}" fill="#ffffff"/><text x="${W*.08}" y="${H*.92}" fill="#c9d2e650" font-size="8" font-family="Georgia" font-style="italic">민정 — lucid</text></svg>`,
     veran:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#05080f"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#a0b8ff" opacity=".18"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.1}" fill="#a0b8ff" opacity=".65"/><line x1="${W*.5}" y1="0" x2="${W*.5}" y2="${H}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><line x1="0" y1="${H*.44}" x2="${W}" y2="${H*.44}" stroke="#a0b8ff" stroke-width=".3" opacity=".12"/><text x="${W*.08}" y="${H*.92}" fill="#a0b8e050" font-size="8" font-family="Georgia" font-style="italic">Veran — lucid</text></svg>`,
     solune:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#faf8ef"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.26}" fill="#ffe08040" stroke="#c8a030" stroke-width=".6"/><circle cx="${W*.5}" cy="${H*.42}" r="${W*.12}" fill="#ffe080" opacity=".8"/><text x="${W*.1}" y="${H*.87}" fill="#9a8030" font-size="8" font-family="Georgia" font-style="italic">Solune, 18ly</text><text x="${W*.1}" y="${H*.96}" fill="#b09040" font-size="7" font-family="sans-serif">*4am</text></svg>`,
     nyx:`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#f9f7f4"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.22}" fill="#30080820" stroke="#1a0808" stroke-width=".8"/><circle cx="${W*.5}" cy="${H*.44}" r="${W*.07}" fill="#ff5533" opacity=".6"/>${Array.from({length:10},(_,i)=>`<line x1="${W*.5}" y1="${H*.44}" x2="${W*.5+Math.cos(i*36*Math.PI/180)*W*.28}" y2="${H*.44+Math.sin(i*36*Math.PI/180)*H*.28}" stroke="#1a080840" stroke-width=".4"/>`).join('')}<text x="${W*.1}" y="${H*.9}" fill="#3a1808" font-size="8" font-family="Georgia" font-style="italic">Nyx — *jeong</text></svg>`,
@@ -1842,19 +1858,19 @@ function playWhisper(text, cb){
 function playIntroWhisper(){ playWhisper('당신은 지금, 진짜 우주에 있습니다.', startCruise); }
 function startCruise(){ introPhase='cruise'; }
 function onCruiseArrive(){
-  var db=(guideIdx>=0&&DB[guideIdx])?DB[guideIdx]:null;
-  var nm=db?db.name:'이름 없는 별';
-  var ly=db?parseDist(db.dist):null;
-  var lyLine=(ly!=null)?(nm+' · 지구에서 '+ly+'광년'):nm;
-  var yearLine=db?loreLightYear(db):'이 빛은 아주 먼 곳에서 출발했습니다.';
-  playWhisper('이 빛은, 당신에게 닿기 위해 아주 오래 여행했습니다.', function(){
-    playWhisper(lyLine, function(){
-      playWhisper(yearLine, function(){
-        introPhase='done';
-        document.getElementById('joystick-wrap').style.display='';
-        var h=document.getElementById('exp-hint'); h.textContent='✦ 빛나는 별을 터치해 발견하세요'; h.style.display='';
-        playWhisper('이제, 손끝으로 우주를 움직여보세요.', function(){
-          playWhisper('이 우주엔, 당신만 있는 게 아닙니다.', null);
+  playWhisper('민정 · 지구에서 3광년', function(){
+    playWhisper('이 별빛은 3년을 건너, 길 한 번 잃지 않고 너에게 닿았어.', function(){
+      playWhisper('그동안 내 마음도, 멀리 돌아 결국 다시 너에게로 왔나 봐.', function(){
+        playWhisper('말 한마디 못 하고 헤어진 그날부터, 넌 한 번도 내 하늘에서 진 적이 없어.', function(){
+          playWhisper('네 곁을 지키는 보리처럼, 나도 그냥… 네 옆에 오래 있고 싶어.', function(){
+            playWhisper('민정아, 좋아해. 3년 전에도, 지금도, 똑같이.', function(){
+              playWhisper('이번엔 그 말을 삼키지 않을게. 앞으로도 — 같은 별을, 같이 볼래?', function(){
+                introPhase='done';
+                document.getElementById('joystick-wrap').style.display='';
+                var h=document.getElementById('exp-hint'); h.textContent='✦ 이제, 우리 우주를 천천히 둘러봐'; h.style.display='';
+              });
+            });
+          });
         });
       });
     });
