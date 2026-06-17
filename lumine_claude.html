@@ -55,13 +55,18 @@ canvas#cv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .u-media{width:100%;aspect-ratio:4/3;border-radius:12px;margin-top:10px}
 .u-writing-title{font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,0.92);letter-spacing:0.02em;margin:2px 0}
 #detail-wiki-btn{display:inline-flex;align-items:center;cursor:pointer;background:rgba(255,200,80,0.06);border:0.5px solid rgba(255,200,80,0.2);border-radius:22px;padding:7px 14px;font-size:11px;color:rgba(255,200,80,0.7);font-family:sans-serif;letter-spacing:0.04em}
-#minimap{position:absolute;bottom:20px;right:18px;width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.12);overflow:hidden;z-index:9}
+#minimap{position:absolute;bottom:20px;right:18px;width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,0.03);border:0.7px solid rgba(190,210,255,0.3);overflow:hidden;z-index:9;transition:transform 0.15s ease,border-color 0.15s ease;animation:mm-breathe 3s ease-in-out infinite}
 #nav-controls{position:absolute;bottom:112px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:10}
 #screen-universe.open ~ #minimap,#screen-universe.open ~ #nav-controls,#screen-universe.open ~ #joystick-wrap,#screen-universe.open ~ #exp-header,#screen-universe.open ~ #exp-hint{display:none!important}
 #minimap{cursor:pointer}
+@keyframes mm-breathe{0%,100%{box-shadow:0 0 5px 0 rgba(170,200,255,0.15)}50%{box-shadow:0 0 19px 4px rgba(170,200,255,0.52)}}
+#minimap:active{transform:scale(0.93);border-color:rgba(255,255,255,0.45)}
+#mm-expand{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:17px;height:17px;pointer-events:none;animation:mm-exp 3s ease-in-out infinite}
+@keyframes mm-exp{0%,100%{opacity:0.42}50%{opacity:0.92}}
 #bigmap-modal{position:absolute;inset:0;z-index:55;background:rgba(2,3,12,0.96);display:none}
 #bigmap-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 #bigmap-close{position:absolute;top:16px;right:18px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.2);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+#bigmap-recenter{position:absolute;top:18px;left:18px;z-index:2;padding:8px 14px;border-radius:20px;background:rgba(10,14,28,0.72);border:0.5px solid rgba(255,255,255,0.2);color:rgba(235,240,255,0.92);font-size:11px;font-family:sans-serif;cursor:pointer;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 #bigmap-hint{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:rgba(255,255,255,0.4);font-size:11px;font-family:sans-serif;pointer-events:none;padding:0 20px}
 #mylist-modal{position:absolute;inset:0;z-index:58;background:rgba(2,3,12,0.94);display:none;flex-direction:column}
 #mylist-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
@@ -516,10 +521,10 @@ canvas#cs-canvas{width:120px;height:120px;border-radius:50%;display:block}
     <span id="exp-coords">RA 00.0h · DEC +00.0°</span>
   </div>
   <div id="exp-hint">✦ 빛나는 별을 터치해 발견하세요</div>
-  <div id="minimap" onclick="openBigMap()"><canvas id="mm" width="84" height="84"></canvas></div>
+  <div id="minimap" onclick="openBigMap()"><canvas id="mm" width="84" height="84"></canvas><svg id="mm-expand" viewBox="0 0 24 24" fill="none" stroke="#dce8ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></div>
   <div id="nav-controls" style="display:none"><div class="nav-btn" id="btn-goto" onclick="openGoto()">🧭 별 주소</div><div class="nav-btn" id="btn-home">🌍 지구로</div></div>
   <div id="goto-modal"><div id="goto-sheet"><div id="goto-title">친구가 보낸 별로 이동</div><div id="goto-sub">친구가 보내준 별 주소(예: HD 48915)나 별 이름을 입력하면 그 별로 이동합니다.</div><input id="goto-input" placeholder="HD 48915 / 시리우스 / Sirius" autocomplete="off" onkeydown="if(event.key==='Enter')gotoStar()"><div id="goto-actions"><div id="goto-cancel" onclick="document.getElementById('goto-modal').style.display='none'">취소</div><div id="goto-go" onclick="gotoStar()">이동 ✦</div></div></div></div>
-  <div id="bigmap-modal"><canvas id="bigmap-canvas"></canvas><div id="bigmap-close" onclick="closeBigMap()">✕</div><div id="bigmap-hint">손가락 두 개로 확대·축소 · 지도를 탭하면 그곳으로 항해합니다</div></div>
+  <div id="bigmap-modal"><canvas id="bigmap-canvas"></canvas><div id="bigmap-close" onclick="closeBigMap()">✕</div><div id="bigmap-recenter" onclick="recenterBigMap()">⌖ 내 위치</div><div id="bigmap-hint">드래그로 이동 · 두 손가락으로 확대·축소 · 탭하면 그곳으로 항해합니다</div></div>
   <div id="mylist-modal"><div id="mylist-head"><div id="mylist-title">발견한 별</div><div id="mylist-close" onclick="closeMyList()">✕</div></div><div id="mylist-body"></div></div>
 
   <!-- 노트 아이콘 -->
@@ -1056,6 +1061,49 @@ let suppTarget={type:'', nick:'', commentIdx:-1};
 let suppAmt=500, suppTier='t1';
 let csState={color:'#f5a030', size:'M', shape:'circle', surface:'smooth', ring:'none', atmo:'none', aura:'glow'};
 
+// ── 태양계: 전 세계 이용자에게 가장 익숙한 기준점 (원점=태양) ──
+// orbit=월드 반지름, ang=배치 각도. comments는 메인 별과 동일 구조.
+function _scm(nick,ini,av,likes,text,time){return {nick:nick,ini:ini,av:av,type:'feel',best:false,likes:likes,text:text,time:time,tips:[]};}
+const SOLAR_BODIES=[
+  {id:90000,name:'Sun',kn:'태양',by:'✦ LUMINE',temp:'5,778',dist:'0',distUnit:'AU',mag:'-26.7',type:'항성 · G2V',col:'#ffd24a',cat:'Sol',likes:512,isFirst:false,undiscovered:false,orbit:0,ang:0,
+   superchats:[],comments:[
+     _scm('별헤는밤','별헤','#7a6a3a',31,'모든 항해가 여기서 시작됐다고 생각하면 좀 뭉클하다','방금'),
+     _scm('haneul','ha','#4a6a7a',18,'우리 별. 너무 가까이 있어서 오히려 신기해요','어제')]},
+  {id:90001,name:'Mercury',kn:'수성',by:'✦ LUMINE',temp:'440',dist:'0.39',distUnit:'AU',mag:'0.0',type:'행성 · 암석형',col:'#b8a48c',cat:'Mercury',likes:96,isFirst:false,undiscovered:false,orbit:110,ang:-0.5,
+   superchats:[],comments:[
+     _scm('구름냥','구름','#5a7a5a',7,'제일 작은데 제일 빠르게 도는 애','3일 전'),
+     _scm('star_log','st','#6a4a6a',4,'낮밤 온도차가 어마어마하다던데','1주 전')]},
+  {id:90002,name:'Venus',kn:'금성',by:'✦ LUMINE',temp:'737',dist:'0.72',distUnit:'AU',mag:'-4.4',type:'행성 · 암석형',col:'#e8c27a',cat:'Venus',likes:142,isFirst:false,undiscovered:false,orbit:175,ang:0.4,
+   superchats:[],comments:[
+     _scm('밤바다','밤바','#5a7a5a',12,'새벽에 보이는 샛별이 얘라면서요','2일 전'),
+     _scm('nova_','no','#3a5a8a',6,'제일 뜨거운 행성. 태양 옆 수성보다 더 뜨겁다는 게 반전','어제')]},
+  {id:90003,name:'Earth',kn:'지구',by:'✦ LUMINE',temp:'288',dist:'1.00',distUnit:'AU',mag:'—',type:'행성 · 우리 집',col:'#5aa0e0',cat:'Earth',likes:404,isFirst:false,undiscovered:false,orbit:250,ang:1.2,
+   superchats:[],comments:[
+     _scm('루나','루나','#5a5a8a',47,'다른 별 보다가 돌아오니까 여기가 제일 예쁘네','방금'),
+     _scm('jiwoong','ji','#4a7a6a',22,'창백한 푸른 점, 그 말이 계속 생각나요','3일 전')]},
+  {id:90004,name:'Mars',kn:'화성',by:'✦ LUMINE',temp:'210',dist:'1.52',distUnit:'AU',mag:'-2.9',type:'행성 · 암석형',col:'#d9714a',cat:'Mars',likes:188,isFirst:false,undiscovered:false,orbit:330,ang:2.1,
+   superchats:[],comments:[
+     _scm('코스모','코스','#6a4a6a',15,'붉은 게 멀리서도 딱 보여서 좋다','2일 전'),
+     _scm('첫눈','첫눈','#8a5a5a',9,'언젠가 사람이 살게 될까 상상하게 되는 별','1주 전')]},
+  {id:90005,name:'Jupiter',kn:'목성',by:'✦ LUMINE',temp:'165',dist:'5.20',distUnit:'AU',mag:'-2.9',type:'행성 · 가스형',col:'#d8b48a',cat:'Jupiter',likes:233,isFirst:false,undiscovered:false,orbit:560,ang:3.0,
+   superchats:[],comments:[
+     _scm('오리온덕후','오리','#7a5a4a',19,'제일 큰 행성. 줄무늬랑 대적점 실물로 보고 싶다','어제'),
+     _scm('은하수','은하','#3a5a8a',8,'위성이 수십 개라는 게 진짜 신기함','3일 전')]},
+  {id:90006,name:'Saturn',kn:'토성',by:'✦ LUMINE',temp:'134',dist:'9.58',distUnit:'AU',mag:'0.4',type:'행성 · 가스형',col:'#e6d3a3',cat:'Saturn',likes:301,isFirst:false,undiscovered:false,orbit:780,ang:3.9,
+   superchats:[],comments:[
+     _scm('달빛','달빛','#6a4a6a',26,'고리 때문에 행성 중에 제일 좋아함','방금'),
+     _scm('byeol_jip','by','#4a6a7a',11,'고리가 사실 얼음 알갱이라는 거 알고 더 좋아짐','2일 전')]},
+  {id:90007,name:'Uranus',kn:'천왕성',by:'✦ LUMINE',temp:'76',dist:'19.2',distUnit:'AU',mag:'5.7',type:'행성 · 얼음형',col:'#9fd8e0',cat:'Uranus',likes:74,isFirst:false,undiscovered:false,orbit:1010,ang:4.8,
+   superchats:[],comments:[
+     _scm('시리우스팬','시리','#4a7a6a',6,'옆으로 누워서 도는 별이라던데 상상이 안 감','1주 전'),
+     _scm('navi','na','#5a5a8a',3,'민트색 보고 좀 놀랐어요','어제')]},
+  {id:90008,name:'Neptune',kn:'해왕성',by:'✦ LUMINE',temp:'72',dist:'30.1',distUnit:'AU',mag:'7.8',type:'행성 · 얼음형',col:'#5a78d0',cat:'Neptune',likes:88,isFirst:false,undiscovered:false,orbit:1240,ang:5.6,
+   superchats:[],comments:[
+     _scm('우주먼지','우주','#5a5a8a',9,'제일 멀고 제일 파랗다. 바람이 엄청 분다던데','3일 전'),
+     _scm('밤항해','밤항','#3a5070',5,'끝에 있어서 그런가 좀 외로워 보여','어제')]}
+];
+SOLAR_BODIES.forEach(function(b){ DB.push(b); });
+
 const starLikes={}, commentLikes={}, starCustom={};
 DB.forEach(d=>{
   starLikes[d.id]={count:d.likes, liked:false};
@@ -1152,6 +1200,17 @@ function init(){
   resize();
   stars=buildRealStars();
   shipY=200;
+  // 태양계 배치: 태양은 원점(홈), 행성은 궤도 위 고정 위치
+  SOLAR_BODIES.forEach(function(b){
+    var di=DB.findIndex(function(d){return d.id===b.id;});
+    if(di<0)return;
+    var vr=(b.id===90000?3.2:((b.id===90005||b.id===90006)?2.3:1.7));
+    stars.push({
+      wx:Math.cos(b.ang)*b.orbit, wy:Math.sin(b.ang)*b.orbit,
+      r:vr, a:0.95, tw:Math.random()*Math.PI*2, sp:0.003,
+      special:true, plain:false, dbIdx:di, solar:true
+    });
+  });
   // 미발견 별(undiscovered)을 시작 지점 근처에 확정 배치
   const undiscoveredIdx = DB.map((d,i)=>d.undiscovered?i:-1).filter(i=>i>=0);
   undiscoveredIdx.forEach((dbIdx,n)=>{
@@ -1205,24 +1264,27 @@ function drawStarShape(c,sx,sy,r,shape,col){
 function drawEarth(){
   ctx.save();
   var e=worldToScreen(0,0);
-  var ly=Math.round(Math.hypot(shipX,shipY)/STAR_SCALE*3.26156);
-  if(e.sx>-40&&e.sx<W+40&&e.sy>-40&&e.sy<H+40){
-    var g=ctx.createRadialGradient(e.sx,e.sy,0,e.sx,e.sy,16);
-    g.addColorStop(0,'rgba(120,180,255,0.9)');g.addColorStop(0.5,'rgba(70,130,230,0.45)');g.addColorStop(1,'rgba(70,130,230,0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(e.sx,e.sy,16,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(e.sx,e.sy,5,0,Math.PI*2);ctx.fillStyle='rgba(150,200,255,0.95)';ctx.fill();
-    ctx.fillStyle='rgba(205,228,255,0.9)';ctx.font='10px sans-serif';ctx.textAlign='center';
-    ctx.fillText('지구',e.sx,e.sy-23);
+  // 행성 궤도 링 (원점=태양 기준)
+  ctx.strokeStyle='rgba(255,240,200,0.05)';ctx.lineWidth=1;
+  for(var oi=0;oi<SOLAR_BODIES.length;oi++){ var ob=SOLAR_BODIES[oi]; if(!ob.orbit)continue;
+    ctx.beginPath();ctx.arc(e.sx,e.sy,ob.orbit,0,Math.PI*2);ctx.stroke(); }
+  if(e.sx>-60&&e.sx<W+60&&e.sy>-60&&e.sy<H+60){
+    var g=ctx.createRadialGradient(e.sx,e.sy,0,e.sx,e.sy,26);
+    g.addColorStop(0,'rgba(255,224,140,0.85)');g.addColorStop(0.45,'rgba(255,190,70,0.34)');g.addColorStop(1,'rgba(255,190,70,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(e.sx,e.sy,26,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(e.sx,e.sy,6,0,Math.PI*2);ctx.fillStyle='rgba(255,238,190,0.98)';ctx.fill();
+    ctx.fillStyle='rgba(255,236,180,0.92)';ctx.font='10px sans-serif';ctx.textAlign='center';
+    ctx.fillText('태양',e.sx,e.sy-32);
   } else {
     var ang=Math.atan2(0-shipY,0-shipX);
     var rad=Math.min(W,H)/2-54;
     var ex=W/2+Math.cos(ang)*rad, ey=H/2+Math.sin(ang)*rad;
     var g2=ctx.createRadialGradient(ex,ey,0,ex,ey,10);
-    g2.addColorStop(0,'rgba(120,180,255,0.9)');g2.addColorStop(1,'rgba(70,130,230,0)');
+    g2.addColorStop(0,'rgba(255,220,130,0.9)');g2.addColorStop(1,'rgba(255,190,70,0)');
     ctx.fillStyle=g2;ctx.beginPath();ctx.arc(ex,ey,10,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(ex,ey,3.5,0,Math.PI*2);ctx.fillStyle='rgba(160,205,255,0.95)';ctx.fill();
-    ctx.fillStyle='rgba(205,228,255,0.92)';ctx.font='9px sans-serif';ctx.textAlign='center';
-    ctx.fillText('🌍 지구',ex,ey-15);
+    ctx.beginPath();ctx.arc(ex,ey,3.5,0,Math.PI*2);ctx.fillStyle='rgba(255,236,180,0.95)';ctx.fill();
+    ctx.fillStyle='rgba(255,236,180,0.92)';ctx.font='9px sans-serif';ctx.textAlign='center';
+    ctx.fillText('☀ 태양',ex,ey-15);
   }
   ctx.restore();
 }
@@ -1277,6 +1339,7 @@ function draw(){
         ctx.beginPath();ctx.arc(sx,sy,sr*3.5,0,Math.PI*2);ctx.fillStyle=`rgba(${r2},${gc},${b},${0.12*pulse})`;ctx.fill();
         if(c.ring&&c.ring!=='none'){ctx.save();ctx.translate(sx,sy);ctx.rotate(-0.5);ctx.scale(1,0.4);ctx.beginPath();ctx.arc(0,0,_shR*1.9,0,Math.PI*2);ctx.strokeStyle=`rgba(${r2},${gc},${b},0.75)`;ctx.lineWidth=1.8;ctx.stroke();ctx.restore();}
         drawStarShape(ctx,sx,sy,_shR,_shp,`rgba(${r2},${gc},${b},${Math.min(1,s.a*f+0.5)})`);
+        if(s.solar && db.id!==90000){ ctx.fillStyle='rgba(255,240,214,0.78)'; ctx.font='9px sans-serif'; ctx.textAlign='center'; ctx.fillText(db.kn||db.name, sx, sy-Math.max(_shR,sr)-6); }
       }
     } else if(s.plain){
       var _nm=(s.ri!=null&&LUMINE_STARS[s.ri])?LUMINE_STARS[s.ri].n:'';
@@ -1315,8 +1378,8 @@ function draw(){
     stars.forEach(function(s){ if(!s.special||s.dbIdx<0)return; var db=DB[s.dbIdx]; if(!db||db.undiscovered)return; var mx=42+(s.wx-shipX)*sc, my=42+(s.wy-shipY)*sc; if(Math.hypot(mx-42,my-42)>40)return; mc.beginPath();mc.arc(mx,my,1.5,0,Math.PI*2);mc.fillStyle=db.col;mc.fill(); });
     stars.forEach(function(s){ if(!s.special||s.dbIdx<0)return; var db=DB[s.dbIdx]; if(!db||!db.undiscovered)return; var ang=Math.atan2(s.wy-shipY,s.wx-shipX), mx=42+Math.cos(ang)*38, my=42+Math.sin(ang)*38; mc.beginPath();mc.arc(mx,my,2,0,Math.PI*2);mc.fillStyle='rgba(255,250,235,0.15)';mc.fill(); });
     var emx=42+(0-shipX)*sc, emy=42+(0-shipY)*sc;
-    if(Math.hypot(emx-42,emy-42)<=39){ mc.beginPath();mc.arc(emx,emy,2.8,0,Math.PI*2);mc.fillStyle='rgba(110,175,255,0.95)';mc.fill(); }
-    else { var ea=Math.atan2(0-shipY,0-shipX); mc.beginPath();mc.arc(42+Math.cos(ea)*38,42+Math.sin(ea)*38,2.8,0,Math.PI*2);mc.fillStyle='rgba(110,175,255,0.9)';mc.fill(); }
+    if(Math.hypot(emx-42,emy-42)<=39){ mc.beginPath();mc.arc(emx,emy,2.8,0,Math.PI*2);mc.fillStyle='rgba(255,210,90,0.95)';mc.fill(); }
+    else { var ea=Math.atan2(0-shipY,0-shipX); mc.beginPath();mc.arc(42+Math.cos(ea)*38,42+Math.sin(ea)*38,2.8,0,Math.PI*2);mc.fillStyle='rgba(255,210,90,0.9)';mc.fill(); }
     mc.beginPath();mc.arc(42,42,2,0,Math.PI*2);mc.fillStyle='rgba(255,255,255,0.9)';mc.fill();
   })();
   (function(){var ec=document.getElementById('exp-coords'); if(ec){var ra=((Math.atan2(shipY,shipX)/(Math.PI*2))*24+24)%24; var dec=Math.max(-89.9,Math.min(89.9,-shipY/(STAR_SCALE*12))); ec.textContent='RA '+ra.toFixed(1)+'h \u00b7 DEC '+(dec>=0?'+':'')+dec.toFixed(1)+'\u00b0';}})();
@@ -1410,9 +1473,9 @@ function hitStar(cx,cy){for(let s of stars){if(!s.special||s.dbIdx<0)continue;co
 let tapSX,tapSY,tapMoved=false;
 app.addEventListener('touchstart',e=>{if(jWrap.contains(e.target))return;const t=e.touches[0];tapSX=t.clientX;tapSY=t.clientY;tapMoved=false;},{passive:true});
 app.addEventListener('touchmove',e=>{if(jWrap.contains(e.target))return;const t=e.touches[0];if(Math.hypot(t.clientX-tapSX,t.clientY-tapSY)>8)tapMoved=true;},{passive:true});
-app.addEventListener('touchend',e=>{if(jWrap.contains(e.target))return;if(tapMoved)return;const t=e.changedTouches[0],r=app.getBoundingClientRect();const s=hitStar(t.clientX-r.left,t.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else{var _rs=hitRealStar(t.clientX-r.left,t.clientY-r.top);if(_rs)openRealStar(_rs);else if(introPhase==='done'&&e.target===cv){moveTarget={wx:(t.clientX-r.left)-W/2+shipX,wy:(t.clientY-r.top)-H/2+shipY};homeMode=false;}}});
+app.addEventListener('touchend',e=>{if(jWrap.contains(e.target))return;if(tapMoved)return;if(e.target!==cv)return;const t=e.changedTouches[0],r=app.getBoundingClientRect();const s=hitStar(t.clientX-r.left,t.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else{var _rs=hitRealStar(t.clientX-r.left,t.clientY-r.top);if(_rs)openRealStar(_rs);else if(introPhase==='done'&&e.target===cv){moveTarget={wx:(t.clientX-r.left)-W/2+shipX,wy:(t.clientY-r.top)-H/2+shipY};homeMode=false;}}});
 let mSX,mSY,mMoved=false;
-app.addEventListener('mousedown',e=>{if(jWrap.contains(e.target))return;mSX=e.clientX;mSY=e.clientY;mMoved=false;const mm=e2=>{if(Math.hypot(e2.clientX-mSX,e2.clientY-mSY)>5)mMoved=true};const mu=e2=>{removeEventListener('mousemove',mm);removeEventListener('mouseup',mu);if(mMoved)return;const r=app.getBoundingClientRect();const s=hitStar(e2.clientX-r.left,e2.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else{var _rs=hitRealStar(e2.clientX-r.left,e2.clientY-r.top);if(_rs)openRealStar(_rs);else if(introPhase==='done'&&e2.target===cv){moveTarget={wx:(e2.clientX-r.left)-W/2+shipX,wy:(e2.clientY-r.top)-H/2+shipY};homeMode=false;}}};addEventListener('mousemove',mm);addEventListener('mouseup',mu);});
+app.addEventListener('mousedown',e=>{if(jWrap.contains(e.target))return;if(e.target!==cv)return;mSX=e.clientX;mSY=e.clientY;mMoved=false;const mm=e2=>{if(Math.hypot(e2.clientX-mSX,e2.clientY-mSY)>5)mMoved=true};const mu=e2=>{removeEventListener('mousemove',mm);removeEventListener('mouseup',mu);if(mMoved)return;const r=app.getBoundingClientRect();const s=hitStar(e2.clientX-r.left,e2.clientY-r.top);if(s){if(!hintGone){document.getElementById('exp-hint').style.opacity='0';hintGone=true;}handleStarTap(s);}else{var _rs=hitRealStar(e2.clientX-r.left,e2.clientY-r.top);if(_rs)openRealStar(_rs);else if(introPhase==='done'&&e2.target===cv){moveTarget={wx:(e2.clientX-r.left)-W/2+shipX,wy:(e2.clientY-r.top)-H/2+shipY};homeMode=false;}}};addEventListener('mousemove',mm);addEventListener('mouseup',mu);});
 
 // ============================================================
 // DETAIL STAR CANVAS
@@ -1711,7 +1774,7 @@ function openDetail(s){
   document.getElementById('first-discover-banner').style.display=db.isFirst?'block':'none';
   // stats
   document.getElementById('s0').innerHTML=db.temp+'<span class="stat-unit">K</span>';
-  document.getElementById('s1').innerHTML=db.dist+'<span class="stat-unit">LY</span>';
+  document.getElementById('s1').innerHTML=db.dist+'<span class="stat-unit">'+(db.distUnit||'LY')+'</span>';
   document.getElementById('s2').innerHTML=db.mag+'<span class="stat-unit">mag</span>';
   document.getElementById('s3').textContent=db.type;
   // superchats
@@ -2229,9 +2292,10 @@ function gotoStar(){
   showToast('\u2726 '+nm+'에 도착했어요');
 }
 function openGoto(){ var gm=document.getElementById('goto-modal'); if(gm){gm.style.display='flex'; setTimeout(function(){var el=document.getElementById('goto-input');if(el)el.focus();},50);} }
-let bigMapOpen=false, bigSpan=6000;
-function openBigMap(){ if(introPhase!=='done')return; bigMapOpen=true; var m=document.getElementById('bigmap-modal'); m.style.display='block'; sizeBigMap(); drawBigMap(); }
+let bigMapOpen=false, bigSpan=6000, bigCX=0, bigCY=0;
+function openBigMap(){ if(introPhase!=='done')return; bigMapOpen=true; bigCX=shipX; bigCY=shipY; var m=document.getElementById('bigmap-modal'); m.style.display='block'; sizeBigMap(); drawBigMap(); }
 function closeBigMap(){ bigMapOpen=false; var m=document.getElementById('bigmap-modal'); if(m)m.style.display='none'; }
+function recenterBigMap(){ bigCX=shipX; bigCY=shipY; drawBigMap(); }
 function sizeBigMap(){ var c=document.getElementById('bigmap-canvas'); if(!c)return; c.width=c.clientWidth||W; c.height=c.clientHeight||H; }
 function drawBigMap(){
   var c=document.getElementById('bigmap-canvas'); if(!c)return; var g=c.getContext('2d');
@@ -2239,32 +2303,60 @@ function drawBigMap(){
   g.clearRect(0,0,cw,ch); g.fillStyle='#03040e'; g.fillRect(0,0,cw,ch);
   g.strokeStyle='rgba(255,255,255,0.06)'; g.lineWidth=1;
   [0.33,0.66,1].forEach(function(f){ g.beginPath(); g.arc(cx,cy,half*f,0,Math.PI*2); g.stroke(); });
+  // 태양계 궤도 링 (원점=태양 기준)
+  g.strokeStyle='rgba(255,224,150,0.08)';
+  for(var so=0;so<SOLAR_BODIES.length;so++){ var sb=SOLAR_BODIES[so]; if(!sb.orbit)continue;
+    var orx=cx+(0-bigCX)*bms, ory=cy+(0-bigCY)*bms;
+    g.beginPath();g.arc(orx,ory,sb.orbit*bms,0,Math.PI*2);g.stroke(); }
   for(var i=0;i<stars.length;i++){ var s=stars[i]; if(s.ri==null)continue; var L=LUMINE_STARS[s.ri]; if(!L||!L.n)continue;
-    var bx=cx+(s.wx-shipX)*bms, by=cy+(s.wy-shipY)*bms; if(bx<-4||bx>cw+4||by<-4||by>ch+4)continue;
-    g.beginPath();g.arc(bx,by,1.6,0,Math.PI*2);g.fillStyle='rgba(255,224,150,0.5)';g.fill(); }
+    var bx=cx+(s.wx-bigCX)*bms, by=cy+(s.wy-bigCY)*bms;
+    if(L.tr){ /* 의미를 붙인 큐레이션 별 — 방문 여부 무관, 로즈 글로우 */
+      if(bx<-26||bx>cw+26||by<-26||by>ch+26)continue;
+      var gr=g.createRadialGradient(bx,by,0,bx,by,22); gr.addColorStop(0,'rgba(255,148,205,0.95)'); gr.addColorStop(0.45,'rgba(244,128,198,0.42)'); gr.addColorStop(1,'rgba(244,128,198,0)');
+      g.beginPath();g.arc(bx,by,22,0,Math.PI*2);g.fillStyle=gr;g.fill();
+      g.strokeStyle='rgba(255,176,220,0.95)';g.lineWidth=1.6;g.beginPath();g.arc(bx,by,10,0,Math.PI*2);g.stroke();
+      g.beginPath();g.arc(bx,by,5.4,0,Math.PI*2);g.fillStyle='rgba(255,236,248,1)';g.fill();
+      var cnm=L.kn||L.n; g.fillStyle='rgba(255,202,233,0.98)';g.font='bold 11px sans-serif';g.textAlign='center';g.fillText(cnm,bx,by-12);
+    } else {
+      if(bx<-4||bx>cw+4||by<-4||by>ch+4)continue;
+      g.beginPath();g.arc(bx,by,1.6,0,Math.PI*2);g.fillStyle='rgba(255,224,150,0.5)';g.fill();
+    } }
   stars.forEach(function(s){ if(!s.special||s.dbIdx<0)return; var db=DB[s.dbIdx]; if(!db||db.undiscovered)return;
-    var bx=cx+(s.wx-shipX)*bms, by=cy+(s.wy-shipY)*bms; if(bx<-12||bx>cw+12||by<-12||by>ch+12)return;
-    g.beginPath();g.arc(bx,by,3.4,0,Math.PI*2);g.fillStyle=db.col||'#fff';g.fill();
-    var nm=db.kn||db.name||''; if(nm){ g.fillStyle='rgba(255,255,255,0.62)';g.font='10px sans-serif';g.textAlign='center';g.fillText(nm,bx,by-7); } });
-  var ex=cx+(0-shipX)*bms, ey=cy+(0-shipY)*bms;
-  if(ex>-20&&ex<cw+20&&ey>-20&&ey<ch+20){ g.beginPath();g.arc(ex,ey,4,0,Math.PI*2);g.fillStyle='rgba(110,175,255,0.95)';g.fill(); g.fillStyle='rgba(150,200,255,0.8)';g.font='10px sans-serif';g.textAlign='center';g.fillText('지구',ex,ey-7); }
-  g.beginPath();g.arc(cx,cy,4,0,Math.PI*2);g.fillStyle='#fff';g.fill();
-  g.strokeStyle='rgba(255,255,255,0.5)';g.lineWidth=1;g.beginPath();g.arc(cx,cy,8,0,Math.PI*2);g.stroke();
+    if(db.tr)return; /* 큐레이션 별은 위 루프에서 이미 로즈로 그림 */
+    if(db.id===90000)return; /* 태양은 원점 마커로 별도 표시 */
+    var bx=cx+(s.wx-bigCX)*bms, by=cy+(s.wy-bigCY)*bms; if(bx<-12||bx>cw+12||by<-12||by>ch+12)return;
+    var nm=db.kn||db.name||'';
+    g.beginPath();g.arc(bx,by,s.solar?3.0:3.4,0,Math.PI*2);g.fillStyle=db.col||'#fff';g.fill();
+    if(nm){ g.fillStyle='rgba(255,255,255,0.62)';g.font='10px sans-serif';g.textAlign='center';g.fillText(nm,bx,by-7); } });
+  // 태양 (원점)
+  var ex=cx+(0-bigCX)*bms, ey=cy+(0-bigCY)*bms;
+  if(ex>-20&&ex<cw+20&&ey>-20&&ey<ch+20){ g.beginPath();g.arc(ex,ey,4.5,0,Math.PI*2);g.fillStyle='rgba(255,212,90,0.98)';g.fill(); g.fillStyle='rgba(255,224,150,0.9)';g.font='bold 11px sans-serif';g.textAlign='center';g.fillText('태양',ex,ey-8); }
+  // 현재 위치(우주선)
+  var spx=cx+(shipX-bigCX)*bms, spy=cy+(shipY-bigCY)*bms;
+  g.beginPath();g.arc(spx,spy,4,0,Math.PI*2);g.fillStyle='#fff';g.fill();
+  g.strokeStyle='rgba(255,255,255,0.5)';g.lineWidth=1;g.beginPath();g.arc(spx,spy,8,0,Math.PI*2);g.stroke();
 }
 function navFromBigMap(px,py){
   var c=document.getElementById('bigmap-canvas'); if(!c)return; var cw=c.width,ch=c.height,half=Math.min(cw,ch)/2,bms=half/bigSpan;
   var r=c.getBoundingClientRect(); var sx=px*(cw/r.width), sy=py*(ch/r.height);
-  var wx=shipX+(sx-cw/2)/bms, wy=shipY+(sy-ch/2)/bms;
+  var wx=bigCX+(sx-cw/2)/bms, wy=bigCY+(sy-ch/2)/bms;
   moveTarget={wx:wx,wy:wy}; homeMode=false; closeBigMap();
   showToast('\u2726 \uadf8 \uc9c0\uc810\uc73c\ub85c \ud56d\ud574\ub97c \uc2dc\uc791\ud569\ub2c8\ub2e4');
 }
 (function(){
   var c=document.getElementById('bigmap-canvas'); if(!c)return;
-  var tsx=0,tsy=0,tmoved=false,pd=0,pinching=false;
-  c.addEventListener('touchstart',function(e){ if(e.touches.length===2){pinching=true;pd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);} else if(e.touches.length===1){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;tmoved=false;} e.preventDefault(); },{passive:false});
-  c.addEventListener('touchmove',function(e){ if(pinching&&e.touches.length>=2){ var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); if(pd>0){ bigSpan*=pd/d; bigSpan=Math.max(1200,Math.min(200000,bigSpan)); drawBigMap(); } pd=d; } else if(e.touches.length===1){ if(Math.hypot(e.touches[0].clientX-tsx,e.touches[0].clientY-tsy)>8)tmoved=true; } e.preventDefault(); },{passive:false});
+  var tsx=0,tsy=0,lx=0,ly=0,tmoved=false,pd=0,pinching=false;
+  function sclX(r){return c.width/r.width;} function sclY(r){return c.height/r.height;}
+  function panBy(dxClient,dyClient,r){ var half=Math.min(c.width,c.height)/2,bms=half/bigSpan;
+    bigCX-=dxClient*sclX(r)/bms; bigCY-=dyClient*sclY(r)/bms; }
+  c.addEventListener('touchstart',function(e){ if(e.touches.length===2){pinching=true;pd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);} else if(e.touches.length===1){tsx=lx=e.touches[0].clientX;tsy=ly=e.touches[0].clientY;tmoved=false;} e.preventDefault(); },{passive:false});
+  c.addEventListener('touchmove',function(e){ if(pinching&&e.touches.length>=2){ var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); if(pd>0){ bigSpan*=pd/d; bigSpan=Math.max(1200,Math.min(200000,bigSpan)); drawBigMap(); } pd=d; } else if(e.touches.length===1){ var t=e.touches[0],r=c.getBoundingClientRect(); if(Math.hypot(t.clientX-tsx,t.clientY-tsy)>8)tmoved=true; if(tmoved){ panBy(t.clientX-lx,t.clientY-ly,r); drawBigMap(); } lx=t.clientX; ly=t.clientY; } e.preventDefault(); },{passive:false});
   c.addEventListener('touchend',function(e){ if(pinching){ if(e.touches.length===0)pinching=false; return; } if(tmoved)return; var r=c.getBoundingClientRect(),t=e.changedTouches[0]; navFromBigMap(t.clientX-r.left,t.clientY-r.top); },{passive:false});
-  c.addEventListener('click',function(e){ if(pinching)return; var r=c.getBoundingClientRect(); navFromBigMap(e.clientX-r.left,e.clientY-r.top); });
+  var mdown=false,mmoved=false,msx=0,msy=0,mlx=0,mly=0;
+  c.addEventListener('mousedown',function(e){ mdown=true;mmoved=false;msx=mlx=e.clientX;msy=mly=e.clientY; });
+  c.addEventListener('mousemove',function(e){ if(!mdown)return; var r=c.getBoundingClientRect(); if(Math.hypot(e.clientX-msx,e.clientY-msy)>4)mmoved=true; if(mmoved){ panBy(e.clientX-mlx,e.clientY-mly,r); drawBigMap(); } mlx=e.clientX;mly=e.clientY; });
+  c.addEventListener('mouseup',function(e){ if(!mdown)return; mdown=false; if(pinching||mmoved)return; var r=c.getBoundingClientRect(); navFromBigMap(e.clientX-r.left,e.clientY-r.top); });
+  c.addEventListener('mouseleave',function(){ mdown=false; });
   c.addEventListener('wheel',function(e){ e.preventDefault(); bigSpan*=(e.deltaY>0?1.15:0.87); bigSpan=Math.max(1200,Math.min(200000,bigSpan)); drawBigMap(); },{passive:false});
 })();
 function closeMyList(){var m=document.getElementById('mylist-modal');if(m)m.style.display='none';}
